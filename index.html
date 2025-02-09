@@ -50,8 +50,8 @@ crossorigin="anonymous"></script>
       display: block;
     }
     .topButtons, .actionButtons, .playlistControls {
-  text-align: center;
-  margin: 15px auto;
+      text-align: center;
+      margin: 15px auto;
     }
     .topButtons button,
     .actionButtons button,
@@ -272,21 +272,21 @@ video.m3u8, 00:00:05, 00:00:10.5"
       </div>
 
       
-     <center><div class="playlistControls" style="display: none;">
+      <div class="playlistControls" style="display: none;">
         <button id="prevButton"><< Previous Video</button>
         <button id="loopButton">Loop: Off</button>
         <button id="restartButton">Restart Playlist</button>
         <button id="nextButton">Next Video >></button>
-      </div></center>
+      </div>
 
       
-      <div class="playlistControls" style="display: none;">
-  <button id="prevButton"><< Previous Video</button>
-  <button id="loopButton">Loop: Off</button>
-  <button id="restartButton">Restart Playlist</button>
-  <button id="nextButton">Next Video >></button>
-</div>
-
+      <div class="actionButtons">
+        <button id="generatePlaylistButton">Play Playlist</button>
+        <button id="shuffleButton" style="display: none;">Shuffle Playlist</button>
+        <button id="defaultOrderButton" style="display: none;">Return to Default Order</button>
+        <button id="fullscreenButton">Full Screen</button>
+        <button id="hideUIButton">Minimal UI</button>
+      </div>
 
       
       <div id="playlistContainer"></div>
