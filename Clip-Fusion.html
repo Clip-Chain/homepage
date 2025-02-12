@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <center><img src="Clip_Chain_Logo_New.png" width="500" height="200"></center>
+  <title>Clip-Fusion</title>
+  <!-- External Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <style>
+    /* Global Styles (inspired by Clip-Chain) */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.6;
+      color: #333;
+    }
+    header, main, footer {
+      width: 100%;
+      max-width: 1000px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    /* Navigation Bar */
+    .nav-bar {
+      border-top: 2px solid #007bff;
+      margin-bottom: 20px;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 1.2em;
+    }
+    .nav-bar a {
+      color: #007bff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    /* Add a vertical bar between links */
+    .nav-bar a:not(:last-child)::after {
+      content: " |";
+      margin-left: 10px;
+      color: #007bff;
+    }
+    .nav-bar a.active {
+      font-weight: bold;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin: 0;
+    }
+    h2, h3 {
+      margin-top: 0;
+    }
+    textarea {
+      width: 100%;
+      max-width: 800px;
+      margin: 10px auto;
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+      display: block;
+    }
+    /* Button Containers (from Clip-Chain) */
+    .topButtons, .actionButtons, .playlistControls {
+      text-align: center;
+      margin: 15px auto;
+    }
+    .topButtons button,
+    .actionButtons button,
+    .playlistControls button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      font-size: 1em;
+      margin: 5px;
+      border-radius: 5px;
+    }
+    .topButtons button:hover,
+    .actionButtons button:hover,
+    .playlistControls button:hover {
+      background-color: #0056b3;
+    }
+    /* Extra controls buttons override to use #17a2b8 */
+    #extraControls button {
+      background-color: #17a2b8;
+    }
+    #extraControls button:hover {
+      background-color: #138496;
+    }
+    #extraControls button:active {
+      background-color: #117a8b;
+    }
+    /* Make Remove Category button red */
+    .removeCategoryButton {
+      background-color: #d9534f;
+    }
+    .removeCategoryButton:hover {
+      background-color: #c9302c;
+    }
+    /* Category Input Styles */
+    .category {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .category input.categoryName,
+    .category textarea.videoLinks {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      display: block;
+    }
+    /* Manual Timestamps Editor Styles */
+    .manualTimestampsContainer {
+      margin-top: 15px;
+      padding-top: 10px;
+      border-top: 1px solid #ddd;
+    }
+    .manualVideoItem {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      margin-bottom: 10px;
+    }
+    .videoPreviewContainer {
+      margin-right: 15px;
+    }
+    .videoPreviewContainer iframe,
+    .videoPreviewContainer video {
+      width: 150px;
+      height: 100px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .timeInputs {
+      display: flex;
+      flex-direction: column;
+    }
+    .timeInputs span {
+      font-weight: bold;
+      margin-top: 5px;
+    }
+    .timeInputs div {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    .timeInputs input {
+      width: 50px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    /* Video Player Container */
+    #videoPlayerContainer {
+      width: 100%;
+      max-width: 640px;
+      margin: 20px auto;
+      position: relative;
+      text-align: center;
+      background-color: #000;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    #videoPlayerContainer.full {
+      width: 100vw !important;
+      height: 100vh !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      max-width: none !important;
+    }
+    #videoPlayerContainer.full #videoPlayer,
+    #videoPlayerContainer.full #youtubePlayerContainer {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    #videoPlayerContainer.full #youtubePlayerContainer iframe {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    #videoPlayer, #youtubePlayerContainer {
+      width: 100%;
+      height: 360px;
+      background-color: #000;
+      display: none;
+      border-radius: 8px;
+    }
+    #emptyMessage {
+      color: #ccc;
+      font-size: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+    /* About & FAQ Sections */
+    .publisherContent, .faqContent {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      text-align: left;
+    }
+    .faqContent h3 {
+      margin-bottom: 5px;
+    }
+    .faqContent p {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-bar">
+      <a href="index.html" class="nav-button">Clip-Chain</a>
+      <a href="Clip-Fusion.html" class="nav-button active">Clip-Fusion</a>
+    </div>
+    <center><h1>Clip-Fusion - Multi-Category Video Playlist Generator</h1></center>
+  </header>
+  <main>
+    <section id="videoTool">
+      <!-- Categories Input -->
+      <div id="categoriesContainer">
+        <div class="category">
+          <input type="text" class="categoryName" placeholder="Category Name (e.g., Video Group A)" />
+          <textarea class="videoLinks" rows="5" placeholder="Enter video links here (one per line). Format: link, start time, end time
+Example:
+https://youtu.be/XYZabc, 00:00:05, 00:00:15
+video.mp4, 00:00:10, 00:00:20"></textarea>
+          <div class="actionButtons">
+            <button class="removeCategoryButton" onclick="removeCategory(this)">Remove Category</button>
+            <button class="manualTimestampsButton" onclick="toggleManualTimestamps(this)">Manually change timestamps</button>
+          </div>
+          <div class="manualTimestampsContainer" style="display: none;"></div>
+        </div>
+      </div>
+      <!-- Control Buttons -->
+      <div class="topButtons">
+        <button onclick="addCategory()">Add Category</button>
+      </div>
+      <div class="actionButtons">
+        <button onclick="generatePlaylist()">Generate Playlist & Play</button>
+        <button onclick="clearPlaylist()">Clear Playlist</button>
+      </div>
+      
+      <!-- Video Player Area -->
+      <div id="videoPlayerContainer">
+        <video id="videoPlayer" controls></video>
+        <div id="youtubePlayerContainer"></div>
+        <div id="emptyMessage">No video playing</div>
+      </div>
+      
+      <!-- Extra Controls -->
+      <div class="actionButtons" id="extraControls">
+        <button id="minimalUIButton" onclick="toggleMinimalMode()">Minimal UI</button>
+        <button id="fullscreenButton" onclick="toggleFullScreen()">Full Screen</button>
+      </div>
+    </section>
+    
+    <!-- About Section (approx. 800 words) -->
+    <section id="about" class="publisherContent">
+      <h2>About Clip-Fusion</h2>
+      <p>
+        Welcome to Clip-Fusion, a cutting-edge solution for curating, trimming, and seamlessly playing back video content across multiple categories. In today’s digital landscape, where video is the dominant form of communication and entertainment, managing a collection of clips from various sources can quickly become overwhelming. Clip-Fusion was designed with the modern user in mind—whether you’re a content creator, educator, or an avid video enthusiast.
+      </p>
+      <p>
+        With Clip-Fusion, you can easily group your favorite videos into distinct categories and set precise start and end timestamps to highlight the moments that matter most. The tool allows you to trim videos on the fly, ensuring that only the most essential parts are played back. This is particularly useful for creating highlights, educational segments, or even assembling a custom playlist that suits your unique preferences.
+      </p>
+      <p>
+        One of the standout features of Clip-Fusion is its intelligent round-robin playback system. Instead of providing a separate navigation control like “next” or “previous,” Clip-Fusion automatically cycles through your curated videos. This approach not only streamlines your viewing experience but also guarantees that every clip in your playlist receives equal playtime. By eliminating the need for constant manual intervention, Clip-Fusion allows you to sit back and enjoy your content with minimal effort.
+      </p>
+      <p>
+        Clip-Fusion supports a wide range of video formats—including standard MP4 files, HLS streams, and even YouTube videos—so you can pull content from nearly any online source and integrate it into your custom playlist. Advanced playback features, such as adaptive streaming through HLS, ensure smooth performance even in challenging network conditions, making Clip-Fusion a reliable tool in any situation.
+      </p>
+      <p>
+        The user interface has been meticulously designed for simplicity and efficiency. Clean lines, modern typography, and a well-organized layout help reduce clutter, allowing you to focus on your content rather than on managing complex controls. The manual timestamp editor, which lets you specify hours, minutes, and seconds for each clip, provides unparalleled precision in determining which segments of a video are most relevant to you.
+      </p>
+      <p>
+        By combining automated round-robin playback with robust manual controls, Clip-Fusion offers a uniquely flexible approach to video curation. Whether you are looking to create a highlight reel for a presentation, compile educational content, or simply enjoy your favorite clips in a continuous loop, Clip-Fusion adapts to your needs. The absence of traditional “next” and “previous” buttons reduces interface clutter and allows for a more immersive viewing experience.
+      </p>
+      <p>
+        Our commitment to constant improvement means that Clip-Fusion is always evolving. We actively seek user feedback and strive to incorporate new features that enhance both functionality and usability. Whether you are a seasoned professional or a casual viewer, our goal is to make Clip-Fusion the most intuitive and powerful tool for video curation available today.
+      </p>
+      <p>
+        In essence, Clip-Fusion is more than just a video player—it’s a comprehensive solution for managing your digital media. Its innovative design and powerful features make it an indispensable tool for anyone who works with video content. We invite you to explore Clip-Fusion, experiment with its many features, and discover how it can transform the way you interact with video.
+      </p>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section id="faq" class="faqContent">
+      <h2>Frequently Asked Questions</h2>
+      <h3>Why is there no loop on and off button?</h3>
+      <p>
+        Clip-Fusion is designed to automatically cycle through your video playlist using a round-robin approach. This design choice streamlines the interface by eliminating unnecessary buttons, ensuring that every video receives equal playtime without manual intervention.
+      </p>
+      <h3>Where are the next and previous videos buttons?</h3>
+      <p>
+        To maintain a clean and intuitive interface, Clip-Fusion does not include dedicated next or previous buttons. The playlist advances automatically, providing a smooth, uninterrupted playback experience that lets you focus on your content.
+      </p>
+    </section>
+  </main>
+  <script>
+    /***********************
+     * Global Variables
+     ***********************/
+    let categories = []; // Array of category objects: { name, videos }
+    let currentCategoryIndex = 0;
+    let currentCycle = 0; // For round-robin selection
+    let youtubePlayer = null;
+    let hls = null;
+    let minimalMode = false; // Toggle for minimal UI
+    let currentVideoEntry = null; // Currently playing video entry
+    
+    /***********************
+     * Helper Functions
+     ***********************/
+    // Convert a time string (e.g., "00:00:05" or "5") to seconds.
+    function parseTime(timeStr) {
+      if (!timeStr) return 0;
+      const parts = timeStr.split(":").map(Number);
+      if (parts.length === 3) {
+        return parts[0] * 3600 + parts[1] * 60 + parts[2];
+      } else if (parts.length === 2) {
+        return parts[0] * 60 + parts[1];
+      } else {
+        return parseFloat(timeStr) || 0;
+      }
+    }
+    
+    // Calculate seconds from a div holding three number inputs (HH, MM, SS)
+    function calculateSeconds(timeDiv) {
+      const inputs = Array.from(timeDiv.children);
+      const [hh, mm, ss] = inputs.map(input => {
+        const value = parseFloat(input.value);
+        return isNaN(value) ? 0 : value;
+      });
+      return hh * 3600 + mm * 60 + ss;
+    }
+    
+    // Create a div with three number inputs for time (HH, MM, SS)
+    function createTimeDiv(timeStr) {
+      const div = document.createElement('div');
+      const placeholders = ['HH', 'MM', 'SS'];
+      let values = ['', '', ''];
+      if (timeStr && timeStr.includes(':')) {
+        values = timeStr.split(':');
+        while (values.length < 3) { values.push(''); }
+      }
+      placeholders.forEach((placeholder, i) => {
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.placeholder = placeholder;
+        if (placeholder === 'SS') { input.step = "any"; }
+        if (values[i]) { input.value = values[i]; }
+        div.appendChild(input);
+      });
+      return div;
+    }
+    
+    // Parse the textarea content into an array of video entries.
+    // Each line: link, start time, end time (optional)
+    function parseVideoLinks(text) {
+      const lines = text.split("\n")
+        .map(line => line.trim())
+        .filter(line => line !== "");
+      const videos = [];
+      lines.forEach(line => {
+        const parts = line.split(",").map(p => p.trim());
+        if (parts.length >= 1) {
+          videos.push({
+            link: parts[0],
+            startTime: parts.length >= 2 ? parseTime(parts[1]) : 0,
+            endTime: parts.length >= 3 ? parseTime(parts[2]) : null,
+            startTimeStr: parts.length >= 2 ? parts[1] : "",
+            endTimeStr: parts.length >= 3 ? parts[2] : ""
+          });
+        }
+      });
+      return videos;
+    }
+    
+    // Extract YouTube video ID from URL.
+    function extractYouTubeId(url) {
+      const regex = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w-]+)/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
+    }
+    
+    /***********************
+     * Category Management
+     ***********************/
+    function addCategory() {
+      const container = document.getElementById("categoriesContainer");
+      const div = document.createElement("div");
+      div.className = "category";
+      div.innerHTML = `
+        <input type="text" class="categoryName" placeholder="Category Name (e.g., Video Group A)" />
+        <textarea class="videoLinks" rows="5" placeholder="Enter video links here (one per line). Format: link, start time, end time"></textarea>
+        <div class="actionButtons">
+          <button class="removeCategoryButton" onclick="removeCategory(this)">Remove Category</button>
+          <button class="manualTimestampsButton" onclick="toggleManualTimestamps(this)">Manually change timestamps</button>
+        </div>
+        <div class="manualTimestampsContainer" style="display: none;"></div>
+      `;
+      container.appendChild(div);
+    }
+    
+    function removeCategory(button) {
+      const categoryDiv = button.parentNode.parentNode;
+      categoryDiv.remove();
+    }
+    
+    // Toggle the manual timestamps editor for this category.
+    function toggleManualTimestamps(button) {
+      const categoryDiv = button.parentNode.parentNode;
+      const container = categoryDiv.querySelector(".manualTimestampsContainer");
+      const textarea = categoryDiv.querySelector(".videoLinks");
+      if (container.style.display === "none" || container.style.display === "") {
+        container.innerHTML = "";
+        const videoEntries = parseVideoLinks(textarea.value);
+        videoEntries.forEach((videoEntry) => {
+          const itemDiv = document.createElement("div");
+          itemDiv.className = "manualVideoItem";
+          const previewDiv = document.createElement("div");
+          previewDiv.className = "videoPreviewContainer";
+          if (videoEntry.link.includes("youtube.com") || videoEntry.link.includes("youtu.be")) {
+            const videoId = extractYouTubeId(videoEntry.link);
+            if (videoId) {
+              const iframe = document.createElement("iframe");
+              iframe.src = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
+              iframe.frameBorder = "0";
+              previewDiv.appendChild(iframe);
+            }
+          } else {
+            const videoEl = document.createElement("video");
+            videoEl.src = videoEntry.link;
+            videoEl.controls = true;
+            previewDiv.appendChild(videoEl);
+          }
+          itemDiv.appendChild(previewDiv);
+          const timeInputsDiv = document.createElement("div");
+          timeInputsDiv.className = "timeInputs";
+          const startLabel = document.createElement("span");
+          startLabel.textContent = "Start Time:";
+          timeInputsDiv.appendChild(startLabel);
+          const startTimeDiv = createTimeDiv(videoEntry.startTimeStr);
+          startTimeDiv.className = "startTimeDiv";
+          timeInputsDiv.appendChild(startTimeDiv);
+          const endLabel = document.createElement("span");
+          endLabel.textContent = "End Time:";
+          timeInputsDiv.appendChild(endLabel);
+          const endTimeDiv = createTimeDiv(videoEntry.endTimeStr);
+          endTimeDiv.className = "endTimeDiv";
+          timeInputsDiv.appendChild(endTimeDiv);
+          itemDiv.appendChild(timeInputsDiv);
+          container.appendChild(itemDiv);
+        });
+        container.style.display = "block";
+        button.textContent = "Hide Manual Timestamps";
+      } else {
+        container.style.display = "none";
+        button.textContent = "Manually change timestamps";
+      }
+    }
+    
+    /***********************
+     * Playlist Generation & Round Robin
+     ***********************/
+    function generatePlaylist() {
+      categories = [];
+      const categoryDivs = document.getElementsByClassName("category");
+      for (let div of categoryDivs) {
+        const nameInput = div.querySelector(".categoryName");
+        const textarea = div.querySelector(".videoLinks");
+        const catName = nameInput.value || "Unnamed Category";
+        let videos = parseVideoLinks(textarea.value);
+        const manualContainer = div.querySelector(".manualTimestampsContainer");
+        if (manualContainer && manualContainer.children.length > 0) {
+          const videoItems = manualContainer.getElementsByClassName("manualVideoItem");
+          for (let i = 0; i < videoItems.length; i++) {
+            const item = videoItems[i];
+            const startTimeDiv = item.querySelector(".startTimeDiv");
+            const endTimeDiv = item.querySelector(".endTimeDiv");
+            if (videos[i]) {
+              videos[i].startTime = calculateSeconds(startTimeDiv);
+              videos[i].endTime = calculateSeconds(endTimeDiv);
+            }
+          }
+        }
+        if (videos.length > 0) {
+          categories.push({ name: catName, videos: videos });
+        }
+      }
+      if (categories.length === 0) {
+        alert("No valid video links found in any category.");
+        return;
+      }
+      currentCategoryIndex = 0;
+      currentCycle = 0;
+      playNextVideo();
+    }
+    
+    // Automatically play the next video (round-robin across categories)
+    function playNextVideo() {
+      if (categories.length === 0) return;
+      const category = categories[currentCategoryIndex];
+      if (!category || category.videos.length === 0) {
+        nextCycleAndCategory();
+        playNextVideo();
+        return;
+      }
+      const videoIndex = currentCycle % category.videos.length;
+      const videoEntry = category.videos[videoIndex];
+      currentVideoEntry = videoEntry;
+      console.log("Now playing:", category.name, "->", videoEntry);
+      playVideoEntry(videoEntry);
+      nextCycleAndCategory();
+    }
+    
+    function nextCycleAndCategory() {
+      currentCategoryIndex++;
+      if (currentCategoryIndex >= categories.length) {
+        currentCategoryIndex = 0;
+        currentCycle++;
+      }
+    }
+    
+    /***********************
+     * Video Playback Functions
+     ***********************/
+    function clearExistingPlayers() {
+      const videoPlayer = document.getElementById("videoPlayer");
+      videoPlayer.pause();
+      videoPlayer.removeAttribute("src");
+      videoPlayer.style.display = "none";
+      videoPlayer.onended = null;
+      videoPlayer.ontimeupdate = null;
+      if (hls) {
+        hls.destroy();
+        hls = null;
+      }
+      if (youtubePlayer && youtubePlayer.destroy) {
+        youtubePlayer.destroy();
+        youtubePlayer = null;
+      }
+      const ytContainer = document.getElementById("youtubePlayerContainer");
+      ytContainer.innerHTML = "";
+      ytContainer.style.display = "none";
+      document.getElementById("emptyMessage").style.display = "none";
+    }
+    
+    function playVideoEntry(videoEntry) {
+      clearExistingPlayers();
+      const link = videoEntry.link;
+      const startTime = videoEntry.startTime || 0;
+      const endTime = videoEntry.endTime;
+      if (link.includes("youtube.com") || link.includes("youtu.be")) {
+        playYouTubeVideo(link, startTime, endTime);
+      } else if (link.endsWith(".m3u8")) {
+        playHLSVideo(link, startTime, endTime);
+      } else {
+        playHTML5Video(link, startTime, endTime);
+      }
+    }
+    
+    function playHTML5Video(link, startTime, endTime) {
+      const videoPlayer = document.getElementById("videoPlayer");
+      videoPlayer.src = link;
+      videoPlayer.currentTime = startTime;
+      videoPlayer.controls = !minimalMode;
+      videoPlayer.style.display = "block";
+      videoPlayer.play();
+      if (endTime) {
+        videoPlayer.ontimeupdate = function () {
+          if (videoPlayer.currentTime >= endTime) {
+            videoPlayer.pause();
+            videoPlayer.ontimeupdate = null;
+            playNextVideo();
+          }
+        };
+      } else {
+        videoPlayer.onended = function () {
+          videoPlayer.onended = null;
+          playNextVideo();
+        };
+      }
+    }
+    
+    function playHLSVideo(link, startTime, endTime) {
+      const videoPlayer = document.getElementById("videoPlayer");
+      videoPlayer.style.display = "block";
+      videoPlayer.controls = !minimalMode;
+      if (Hls.isSupported()) {
+        hls = new Hls();
+        hls.loadSource(link);
+        hls.attachMedia(videoPlayer);
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+          videoPlayer.currentTime = startTime;
+          videoPlayer.play();
+        });
+      } else if (videoPlayer.canPlayType("application/vnd.apple.mpegurl")) {
+        videoPlayer.src = link;
+        videoPlayer.addEventListener("loadedmetadata", function () {
+          videoPlayer.currentTime = startTime;
+          videoPlayer.play();
+        });
+      }
+      if (endTime) {
+        videoPlayer.ontimeupdate = function () {
+          if (videoPlayer.currentTime >= endTime) {
+            videoPlayer.pause();
+            videoPlayer.ontimeupdate = null;
+            playNextVideo();
+          }
+        };
+      } else {
+        videoPlayer.onended = function () {
+          videoPlayer.onended = null;
+          playNextVideo();
+        };
+      }
+    }
+    
+    function playYouTubeVideo(link, startTime, endTime) {
+      const videoId = extractYouTubeId(link);
+      if (!videoId) {
+        alert("Invalid YouTube link: " + link);
+        playNextVideo();
+        return;
+      }
+      const ytContainer = document.getElementById("youtubePlayerContainer");
+      ytContainer.style.display = "block";
+      ytContainer.innerHTML = '<div id="ytplayer"></div>';
+      youtubePlayer = new YT.Player("ytplayer", {
+        height: "360",
+        width: "640",
+        videoId: videoId,
+        playerVars: {
+          autoplay: 1,
+          start: startTime,
+          controls: minimalMode ? 0 : 1,
+          modestbranding: 1,
+          rel: 0,
+          fs: minimalMode ? 0 : 1,
+          iv_load_policy: minimalMode ? 3 : 1,
+          disablekb: minimalMode ? 1 : 0,
+          playsinline: 1
+        },
+        events: {
+          onReady: function(event) {
+            event.target.playVideo();
+            if (endTime) {
+              let ytInterval = setInterval(function() {
+                const currentTime = youtubePlayer.getCurrentTime();
+                if (currentTime >= endTime) {
+                  clearInterval(ytInterval);
+                  youtubePlayer.pauseVideo();
+                  playNextVideo();
+                }
+              }, 500);
+            }
+          },
+          onStateChange: function(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+              playNextVideo();
+            }
+          }
+        }
+      });
+    }
+    
+    /***********************
+     * Extra Controls: Minimal UI & Full Screen
+     ***********************/
+    function toggleMinimalMode() {
+      minimalMode = !minimalMode;
+      const btn = document.getElementById("minimalUIButton");
+      btn.textContent = minimalMode ? "Normal UI" : "Minimal UI";
+      const videoPlayer = document.getElementById("videoPlayer");
+      if (videoPlayer) {
+        videoPlayer.controls = !minimalMode;
+      }
+      if (youtubePlayer && currentVideoEntry && (currentVideoEntry.link.includes("youtube.com") || currentVideoEntry.link.includes("youtu.be"))) {
+        let currentTime = youtubePlayer.getCurrentTime();
+        const videoId = extractYouTubeId(currentVideoEntry.link);
+        youtubePlayer.destroy();
+        youtubePlayer = null;
+        const ytContainer = document.getElementById("youtubePlayerContainer");
+        ytContainer.innerHTML = '<div id="ytplayer"></div>';
+        youtubePlayer = new YT.Player('ytplayer', {
+          height: '360',
+          width: '640',
+          videoId: videoId,
+          playerVars: {
+            autoplay: 1,
+            controls: minimalMode ? 0 : 1,
+            modestbranding: 1,
+            rel: 0,
+            fs: minimalMode ? 0 : 1,
+            iv_load_policy: minimalMode ? 3 : 1,
+            disablekb: minimalMode ? 1 : 0,
+            playsinline: 1,
+            start: Math.floor(currentTime)
+          },
+          events: {
+            onReady: event => {
+              event.target.seekTo(currentTime, true);
+              event.target.playVideo();
+            },
+            onStateChange: event => {
+              if(event.data === YT.PlayerState.ENDED) {
+                playNextVideo();
+              }
+            }
+          }
+        });
+      }
+    }
+    
+    function toggleFullScreen() {
+      const elem = document.getElementById('videoPlayerContainer');
+      if (!document.fullscreenElement &&
+          !document.webkitFullscreenElement &&
+          !document.mozFullScreenElement &&
+          !document.msFullscreenElement) {
+        if (elem.requestFullscreen) { elem.requestFullscreen(); }
+        else if (elem.mozRequestFullScreen) { elem.mozRequestFullScreen(); }
+        else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
+        else if (elem.msRequestFullscreen) { elem.msRequestFullscreen(); }
+      } else {
+        if (document.exitFullscreen) { document.exitFullscreen(); }
+        else if (document.mozCancelFullScreen) { document.mozCancelFullScreen(); }
+        else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
+        else if (document.msExitFullscreen) { document.msExitFullscreen(); }
+      }
+    }
+    
+    document.addEventListener("fullscreenchange", () => {
+      const container = document.getElementById('videoPlayerContainer');
+      if (document.fullscreenElement === container) {
+        container.classList.add('full');
+      } else {
+        container.classList.remove('full');
+      }
+    });
+    
+    /***********************
+     * Clear Playlist
+     ***********************/
+    function clearPlaylist() {
+      if (hls) {
+        hls.destroy();
+        hls = null;
+      }
+      if (youtubePlayer && youtubePlayer.destroy) {
+        youtubePlayer.destroy();
+        youtubePlayer = null;
+      }
+      const videoPlayer = document.getElementById("videoPlayer");
+      videoPlayer.pause();
+      videoPlayer.removeAttribute("src");
+      videoPlayer.style.display = "none";
+      document.getElementById("youtubePlayerContainer").style.display = "none";
+      document.getElementById("emptyMessage").style.display = "block";
+    }
+    
+    /***********************
+     * YouTube API Ready Callback
+     ***********************/
+    function onYouTubeIframeAPIReady() {
+      console.log("YouTube API Ready");
+    }
+  </script>
+    <footer>
+    <div class="playlistControls" style="display: none; display: flex; justify-content: center; gap: 10px;">
+      <a href="about.html"><button>About</button></a>
+      <a href="terms.html"><button>Terms Of Service</button></a>
+      <a href="privacy.html"><button>Privacy Policy</button></a>
+	  <a href="contact.html"><button>Contact us</button></a>
+    </div>
+  </footer>
+</body>
+</html>
+
