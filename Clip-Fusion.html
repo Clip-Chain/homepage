@@ -8,7 +8,7 @@
   <!-- External Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1415567035229271"
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1415567035229271"
 crossorigin="anonymous"></script>
   <style>
     /* Global Styles (inspired by Clip-Chain) */
@@ -250,13 +250,14 @@ crossorigin="anonymous"></script>
       <div id="categoriesContainer">
         <div class="category">
           <input type="text" class="categoryName" placeholder="Category Name (e.g., Video Group A)" />
-          <textarea class="videoLinks" rows="5" placeholder="Enter video links here (one per line). Format: link, start time, end time
+          <textarea class="videoLinks" rows="5" placeholder="Enter video links here (one per line). Use '&&' to separate multiple videos in the same round.
+Format: link, start time, end time
 Example:
-https://youtu.be/XYZabc, 00:00:05, 00:00:15
-video.mp4, 00:00:10, 00:00:20"></textarea>
+https://youtu.be/XYZabc, 00:00:05, 00:00:15 && video.mp4, 00:00:10, 00:00:20"></textarea>
           <div class="actionButtons">
             <button class="removeCategoryButton" onclick="removeCategory(this)">Remove Category</button>
             <button class="manualTimestampsButton" onclick="toggleManualTimestamps(this)">Manually change timestamps</button>
+            <button class="downloadCategoryButton" onclick="downloadCategory(this)">Download Category as .TXT</button>
           </div>
           <div class="manualTimestampsContainer" style="display: none;"></div>
         </div>
@@ -268,6 +269,8 @@ video.mp4, 00:00:10, 00:00:20"></textarea>
       <div class="actionButtons">
         <button onclick="generatePlaylist()">Generate Playlist & Play</button>
         <button onclick="clearPlaylist()">Clear Playlist</button>
+        <!-- Global Download Button -->
+        <button id="downloadBtn">Download All as .TXT file</button>
       </div>
       
       <!-- Video Player Area -->
@@ -284,33 +287,13 @@ video.mp4, 00:00:10, 00:00:20"></textarea>
       </div>
     </section>
     
-    <!-- About Section (approx. 800 words) -->
+    <!-- About Section -->
     <section id="about" class="publisherContent">
       <h2>About Clip-Fusion</h2>
       <p>
         Welcome to Clip-Fusion, a cutting-edge solution for curating, trimming, and seamlessly playing back video content across multiple categories. In today’s digital landscape, where video is the dominant form of communication and entertainment, managing a collection of clips from various sources can quickly become overwhelming. Clip-Fusion was designed with the modern user in mind—whether you’re a content creator, educator, or an avid video enthusiast.
       </p>
-      <p>
-        With Clip-Fusion, you can easily group your favorite videos into distinct categories and set precise start and end timestamps to highlight the moments that matter most. The tool allows you to trim videos on the fly, ensuring that only the most essential parts are played back. This is particularly useful for creating highlights, educational segments, or even assembling a custom playlist that suits your unique preferences.
-      </p>
-      <p>
-        One of the standout features of Clip-Fusion is its intelligent round-robin playback system. Instead of providing a separate navigation control like “next” or “previous,” Clip-Fusion automatically cycles through your curated videos. This approach not only streamlines your viewing experience but also guarantees that every clip in your playlist receives equal playtime. By eliminating the need for constant manual intervention, Clip-Fusion allows you to sit back and enjoy your content with minimal effort.
-      </p>
-      <p>
-        Clip-Fusion supports a wide range of video formats—including standard MP4 files, HLS streams, and even YouTube videos—so you can pull content from nearly any online source and integrate it into your custom playlist. Advanced playback features, such as adaptive streaming through HLS, ensure smooth performance even in challenging network conditions, making Clip-Fusion a reliable tool in any situation.
-      </p>
-      <p>
-        The user interface has been meticulously designed for simplicity and efficiency. Clean lines, modern typography, and a well-organized layout help reduce clutter, allowing you to focus on your content rather than on managing complex controls. The manual timestamp editor, which lets you specify hours, minutes, and seconds for each clip, provides unparalleled precision in determining which segments of a video are most relevant to you.
-      </p>
-      <p>
-        By combining automated round-robin playback with robust manual controls, Clip-Fusion offers a uniquely flexible approach to video curation. Whether you are looking to create a highlight reel for a presentation, compile educational content, or simply enjoy your favorite clips in a continuous loop, Clip-Fusion adapts to your needs. The absence of traditional “next” and “previous” buttons reduces interface clutter and allows for a more immersive viewing experience.
-      </p>
-      <p>
-        Our commitment to constant improvement means that Clip-Fusion is always evolving. We actively seek user feedback and strive to incorporate new features that enhance both functionality and usability. Whether you are a seasoned professional or a casual viewer, our goal is to make Clip-Fusion the most intuitive and powerful tool for video curation available today.
-      </p>
-      <p>
-        In essence, Clip-Fusion is more than just a video player—it’s a comprehensive solution for managing your digital media. Its innovative design and powerful features make it an indispensable tool for anyone who works with video content. We invite you to explore Clip-Fusion, experiment with its many features, and discover how it can transform the way you interact with video.
-      </p>
+      <!-- Additional about text here -->
     </section>
     
     <!-- FAQ Section -->
@@ -327,485 +310,15 @@ video.mp4, 00:00:10, 00:00:20"></textarea>
     </section>
   </main>
   <script>
-    /***********************
-     * Global Variables
-     ***********************/
-    let categories = []; // Array of category objects: { name, videos }
-    let currentCategoryIndex = 0;
-    let currentCycle = 0; // For round-robin selection
-    let youtubePlayer = null;
-    let hls = null;
-    let minimalMode = false; // Toggle for minimal UI
-    let currentVideoEntry = null; // Currently playing video entry
-    
-    /***********************
-     * Helper Functions
-     ***********************/
-    // Convert a time string (e.g., "00:00:05" or "5") to seconds.
-    function parseTime(timeStr) {
-      if (!timeStr) return 0;
-      const parts = timeStr.split(":").map(Number);
-      if (parts.length === 3) {
-        return parts[0] * 3600 + parts[1] * 60 + parts[2];
-      } else if (parts.length === 2) {
-        return parts[0] * 60 + parts[1];
-      } else {
-        return parseFloat(timeStr) || 0;
-      }
-    }
-    
-    // Calculate seconds from a div holding three number inputs (HH, MM, SS)
-    function calculateSeconds(timeDiv) {
-      const inputs = Array.from(timeDiv.children);
-      const [hh, mm, ss] = inputs.map(input => {
-        const value = parseFloat(input.value);
-        return isNaN(value) ? 0 : value;
-      });
-      return hh * 3600 + mm * 60 + ss;
-    }
-    
-    // Create a div with three number inputs for time (HH, MM, SS)
-    function createTimeDiv(timeStr) {
-      const div = document.createElement('div');
-      const placeholders = ['HH', 'MM', 'SS'];
-      let values = ['', '', ''];
-      if (timeStr && timeStr.includes(':')) {
-        values = timeStr.split(':');
-        while (values.length < 3) { values.push(''); }
-      }
-      placeholders.forEach((placeholder, i) => {
-        const input = document.createElement('input');
-        input.type = 'number';
-        input.placeholder = placeholder;
-        if (placeholder === 'SS') { input.step = "any"; }
-        if (values[i]) { input.value = values[i]; }
-        div.appendChild(input);
-      });
-      return div;
-    }
-    
-    // Parse the textarea content into an array of video entries.
-    // Each line: link, start time, end time (optional)
-    function parseVideoLinks(text) {
-      const lines = text.split("\n")
-        .map(line => line.trim())
-        .filter(line => line !== "");
-      const videos = [];
-      lines.forEach(line => {
-        const parts = line.split(",").map(p => p.trim());
-        if (parts.length >= 1) {
-          videos.push({
-            link: parts[0],
-            startTime: parts.length >= 2 ? parseTime(parts[1]) : 0,
-            endTime: parts.length >= 3 ? parseTime(parts[2]) : null,
-            startTimeStr: parts.length >= 2 ? parts[1] : "",
-            endTimeStr: parts.length >= 3 ? parts[2] : ""
-          });
-        }
-      });
-      return videos;
-    }
-    
-    // Extract YouTube video ID from URL.
-    function extractYouTubeId(url) {
-      const regex = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w-]+)/;
-      const match = url.match(regex);
-      return match ? match[1] : null;
-    }
-    
-    /***********************
-     * Category Management
-     ***********************/
-    function addCategory() {
-      const container = document.getElementById("categoriesContainer");
-      const div = document.createElement("div");
-      div.className = "category";
-      div.innerHTML = `
-        <input type="text" class="categoryName" placeholder="Category Name (e.g., Video Group A)" />
-        <textarea class="videoLinks" rows="5" placeholder="Enter video links here (one per line). Format: link, start time, end time"></textarea>
-        <div class="actionButtons">
-          <button class="removeCategoryButton" onclick="removeCategory(this)">Remove Category</button>
-          <button class="manualTimestampsButton" onclick="toggleManualTimestamps(this)">Manually change timestamps</button>
-        </div>
-        <div class="manualTimestampsContainer" style="display: none;"></div>
-      `;
-      container.appendChild(div);
-    }
-    
-    function removeCategory(button) {
-      const categoryDiv = button.parentNode.parentNode;
-      categoryDiv.remove();
-    }
-    
-    // Toggle the manual timestamps editor for this category.
-    function toggleManualTimestamps(button) {
-      const categoryDiv = button.parentNode.parentNode;
-      const container = categoryDiv.querySelector(".manualTimestampsContainer");
-      const textarea = categoryDiv.querySelector(".videoLinks");
-      if (container.style.display === "none" || container.style.display === "") {
-        container.innerHTML = "";
-        const videoEntries = parseVideoLinks(textarea.value);
-        videoEntries.forEach((videoEntry) => {
-          const itemDiv = document.createElement("div");
-          itemDiv.className = "manualVideoItem";
-          const previewDiv = document.createElement("div");
-          previewDiv.className = "videoPreviewContainer";
-          if (videoEntry.link.includes("youtube.com") || videoEntry.link.includes("youtu.be")) {
-            const videoId = extractYouTubeId(videoEntry.link);
-            if (videoId) {
-              const iframe = document.createElement("iframe");
-              iframe.src = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
-              iframe.frameBorder = "0";
-              previewDiv.appendChild(iframe);
-            }
-          } else {
-            const videoEl = document.createElement("video");
-            videoEl.src = videoEntry.link;
-            videoEl.controls = true;
-            previewDiv.appendChild(videoEl);
-          }
-          itemDiv.appendChild(previewDiv);
-          const timeInputsDiv = document.createElement("div");
-          timeInputsDiv.className = "timeInputs";
-          const startLabel = document.createElement("span");
-          startLabel.textContent = "Start Time:";
-          timeInputsDiv.appendChild(startLabel);
-          const startTimeDiv = createTimeDiv(videoEntry.startTimeStr);
-          startTimeDiv.className = "startTimeDiv";
-          timeInputsDiv.appendChild(startTimeDiv);
-          const endLabel = document.createElement("span");
-          endLabel.textContent = "End Time:";
-          timeInputsDiv.appendChild(endLabel);
-          const endTimeDiv = createTimeDiv(videoEntry.endTimeStr);
-          endTimeDiv.className = "endTimeDiv";
-          timeInputsDiv.appendChild(endTimeDiv);
-          itemDiv.appendChild(timeInputsDiv);
-          container.appendChild(itemDiv);
-        });
-        container.style.display = "block";
-        button.textContent = "Hide Manual Timestamps";
-      } else {
-        container.style.display = "none";
-        button.textContent = "Manually change timestamps";
-      }
-    }
-    
-    /***********************
-     * Playlist Generation & Round Robin
-     ***********************/
-    function generatePlaylist() {
-      categories = [];
-      const categoryDivs = document.getElementsByClassName("category");
-      for (let div of categoryDivs) {
-        const nameInput = div.querySelector(".categoryName");
-        const textarea = div.querySelector(".videoLinks");
-        const catName = nameInput.value || "Unnamed Category";
-        let videos = parseVideoLinks(textarea.value);
-        const manualContainer = div.querySelector(".manualTimestampsContainer");
-        if (manualContainer && manualContainer.children.length > 0) {
-          const videoItems = manualContainer.getElementsByClassName("manualVideoItem");
-          for (let i = 0; i < videoItems.length; i++) {
-            const item = videoItems[i];
-            const startTimeDiv = item.querySelector(".startTimeDiv");
-            const endTimeDiv = item.querySelector(".endTimeDiv");
-            if (videos[i]) {
-              videos[i].startTime = calculateSeconds(startTimeDiv);
-              videos[i].endTime = calculateSeconds(endTimeDiv);
-            }
-          }
-        }
-        if (videos.length > 0) {
-          categories.push({ name: catName, videos: videos });
-        }
-      }
-      if (categories.length === 0) {
-        alert("No valid video links found in any category.");
-        return;
-      }
-      currentCategoryIndex = 0;
-      currentCycle = 0;
-      playNextVideo();
-    }
-    
-    // Automatically play the next video (round-robin across categories)
-    function playNextVideo() {
-      if (categories.length === 0) return;
-      const category = categories[currentCategoryIndex];
-      if (!category || category.videos.length === 0) {
-        nextCycleAndCategory();
-        playNextVideo();
-        return;
-      }
-      const videoIndex = currentCycle % category.videos.length;
-      const videoEntry = category.videos[videoIndex];
-      currentVideoEntry = videoEntry;
-      console.log("Now playing:", category.name, "->", videoEntry);
-      playVideoEntry(videoEntry);
-      nextCycleAndCategory();
-    }
-    
-    function nextCycleAndCategory() {
-      currentCategoryIndex++;
-      if (currentCategoryIndex >= categories.length) {
-        currentCategoryIndex = 0;
-        currentCycle++;
-      }
-    }
-    
-    /***********************
-     * Video Playback Functions
-     ***********************/
-    function clearExistingPlayers() {
-      const videoPlayer = document.getElementById("videoPlayer");
-      videoPlayer.pause();
-      videoPlayer.removeAttribute("src");
-      videoPlayer.style.display = "none";
-      videoPlayer.onended = null;
-      videoPlayer.ontimeupdate = null;
-      if (hls) {
-        hls.destroy();
-        hls = null;
-      }
-      if (youtubePlayer && youtubePlayer.destroy) {
-        youtubePlayer.destroy();
-        youtubePlayer = null;
-      }
-      const ytContainer = document.getElementById("youtubePlayerContainer");
-      ytContainer.innerHTML = "";
-      ytContainer.style.display = "none";
-      document.getElementById("emptyMessage").style.display = "none";
-    }
-    
-    function playVideoEntry(videoEntry) {
-      clearExistingPlayers();
-      const link = videoEntry.link;
-      const startTime = videoEntry.startTime || 0;
-      const endTime = videoEntry.endTime;
-      if (link.includes("youtube.com") || link.includes("youtu.be")) {
-        playYouTubeVideo(link, startTime, endTime);
-      } else if (link.endsWith(".m3u8")) {
-        playHLSVideo(link, startTime, endTime);
-      } else {
-        playHTML5Video(link, startTime, endTime);
-      }
-    }
-    
-    function playHTML5Video(link, startTime, endTime) {
-      const videoPlayer = document.getElementById("videoPlayer");
-      videoPlayer.src = link;
-      videoPlayer.currentTime = startTime;
-      videoPlayer.controls = !minimalMode;
-      videoPlayer.style.display = "block";
-      videoPlayer.play();
-      if (endTime) {
-        videoPlayer.ontimeupdate = function () {
-          if (videoPlayer.currentTime >= endTime) {
-            videoPlayer.pause();
-            videoPlayer.ontimeupdate = null;
-            playNextVideo();
-          }
-        };
-      } else {
-        videoPlayer.onended = function () {
-          videoPlayer.onended = null;
-          playNextVideo();
-        };
-      }
-    }
-    
-    function playHLSVideo(link, startTime, endTime) {
-      const videoPlayer = document.getElementById("videoPlayer");
-      videoPlayer.style.display = "block";
-      videoPlayer.controls = !minimalMode;
-      if (Hls.isSupported()) {
-        hls = new Hls();
-        hls.loadSource(link);
-        hls.attachMedia(videoPlayer);
-        hls.on(Hls.Events.MANIFEST_PARSED, function () {
-          videoPlayer.currentTime = startTime;
-          videoPlayer.play();
-        });
-      } else if (videoPlayer.canPlayType("application/vnd.apple.mpegurl")) {
-        videoPlayer.src = link;
-        videoPlayer.addEventListener("loadedmetadata", function () {
-          videoPlayer.currentTime = startTime;
-          videoPlayer.play();
-        });
-      }
-      if (endTime) {
-        videoPlayer.ontimeupdate = function () {
-          if (videoPlayer.currentTime >= endTime) {
-            videoPlayer.pause();
-            videoPlayer.ontimeupdate = null;
-            playNextVideo();
-          }
-        };
-      } else {
-        videoPlayer.onended = function () {
-          videoPlayer.onended = null;
-          playNextVideo();
-        };
-      }
-    }
-    
-    function playYouTubeVideo(link, startTime, endTime) {
-      const videoId = extractYouTubeId(link);
-      if (!videoId) {
-        alert("Invalid YouTube link: " + link);
-        playNextVideo();
-        return;
-      }
-      const ytContainer = document.getElementById("youtubePlayerContainer");
-      ytContainer.style.display = "block";
-      ytContainer.innerHTML = '<div id="ytplayer"></div>';
-      youtubePlayer = new YT.Player("ytplayer", {
-        height: "360",
-        width: "640",
-        videoId: videoId,
-        playerVars: {
-          autoplay: 1,
-          start: startTime,
-          controls: minimalMode ? 0 : 1,
-          modestbranding: 1,
-          rel: 0,
-          fs: minimalMode ? 0 : 1,
-          iv_load_policy: minimalMode ? 3 : 1,
-          disablekb: minimalMode ? 1 : 0,
-          playsinline: 1
-        },
-        events: {
-          onReady: function(event) {
-            event.target.playVideo();
-            if (endTime) {
-              let ytInterval = setInterval(function() {
-                const currentTime = youtubePlayer.getCurrentTime();
-                if (currentTime >= endTime) {
-                  clearInterval(ytInterval);
-                  youtubePlayer.pauseVideo();
-                  playNextVideo();
-                }
-              }, 500);
-            }
-          },
-          onStateChange: function(event) {
-            if (event.data === YT.PlayerState.ENDED) {
-              playNextVideo();
-            }
-          }
-        }
-      });
-    }
-    
-    /***********************
-     * Extra Controls: Minimal UI & Full Screen
-     ***********************/
-    function toggleMinimalMode() {
-      minimalMode = !minimalMode;
-      const btn = document.getElementById("minimalUIButton");
-      btn.textContent = minimalMode ? "Normal UI" : "Minimal UI";
-      const videoPlayer = document.getElementById("videoPlayer");
-      if (videoPlayer) {
-        videoPlayer.controls = !minimalMode;
-      }
-      if (youtubePlayer && currentVideoEntry && (currentVideoEntry.link.includes("youtube.com") || currentVideoEntry.link.includes("youtu.be"))) {
-        let currentTime = youtubePlayer.getCurrentTime();
-        const videoId = extractYouTubeId(currentVideoEntry.link);
-        youtubePlayer.destroy();
-        youtubePlayer = null;
-        const ytContainer = document.getElementById("youtubePlayerContainer");
-        ytContainer.innerHTML = '<div id="ytplayer"></div>';
-        youtubePlayer = new YT.Player('ytplayer', {
-          height: '360',
-          width: '640',
-          videoId: videoId,
-          playerVars: {
-            autoplay: 1,
-            controls: minimalMode ? 0 : 1,
-            modestbranding: 1,
-            rel: 0,
-            fs: minimalMode ? 0 : 1,
-            iv_load_policy: minimalMode ? 3 : 1,
-            disablekb: minimalMode ? 1 : 0,
-            playsinline: 1,
-            start: Math.floor(currentTime)
-          },
-          events: {
-            onReady: event => {
-              event.target.seekTo(currentTime, true);
-              event.target.playVideo();
-            },
-            onStateChange: event => {
-              if(event.data === YT.PlayerState.ENDED) {
-                playNextVideo();
-              }
-            }
-          }
-        });
-      }
-    }
-    
-    function toggleFullScreen() {
-      const elem = document.getElementById('videoPlayerContainer');
-      if (!document.fullscreenElement &&
-          !document.webkitFullscreenElement &&
-          !document.mozFullScreenElement &&
-          !document.msFullscreenElement) {
-        if (elem.requestFullscreen) { elem.requestFullscreen(); }
-        else if (elem.mozRequestFullScreen) { elem.mozRequestFullScreen(); }
-        else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
-        else if (elem.msRequestFullscreen) { elem.msRequestFullscreen(); }
-      } else {
-        if (document.exitFullscreen) { document.exitFullscreen(); }
-        else if (document.mozCancelFullScreen) { document.mozCancelFullScreen(); }
-        else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
-        else if (document.msExitFullscreen) { document.msExitFullscreen(); }
-      }
-    }
-    
-    document.addEventListener("fullscreenchange", () => {
-      const container = document.getElementById('videoPlayerContainer');
-      if (document.fullscreenElement === container) {
-        container.classList.add('full');
-      } else {
-        container.classList.remove('full');
-      }
-    });
-    
-    /***********************
-     * Clear Playlist
-     ***********************/
-    function clearPlaylist() {
-      if (hls) {
-        hls.destroy();
-        hls = null;
-      }
-      if (youtubePlayer && youtubePlayer.destroy) {
-        youtubePlayer.destroy();
-        youtubePlayer = null;
-      }
-      const videoPlayer = document.getElementById("videoPlayer");
-      videoPlayer.pause();
-      videoPlayer.removeAttribute("src");
-      videoPlayer.style.display = "none";
-      document.getElementById("youtubePlayerContainer").style.display = "none";
-      document.getElementById("emptyMessage").style.display = "block";
-    }
-    
-    /***********************
-     * YouTube API Ready Callback
-     ***********************/
-    function onYouTubeIframeAPIReady() {
-      console.log("YouTube API Ready");
-    }
+const _0x3d651e=_0x4950;(function(_0x4b1a96,_0x19753e){const _0x349177=_0x4950,_0x361cca=_0x4b1a96();while(!![]){try{const _0x51eafe=parseInt(_0x349177(0xad))/0x1*(-parseInt(_0x349177(0x124))/0x2)+-parseInt(_0x349177(0x107))/0x3+parseInt(_0x349177(0xd4))/0x4*(-parseInt(_0x349177(0xe9))/0x5)+parseInt(_0x349177(0x11e))/0x6+parseInt(_0x349177(0x12f))/0x7+-parseInt(_0x349177(0x108))/0x8+parseInt(_0x349177(0xb7))/0x9*(parseInt(_0x349177(0xa6))/0xa);if(_0x51eafe===_0x19753e)break;else _0x361cca['push'](_0x361cca['shift']());}catch(_0x34f161){_0x361cca['push'](_0x361cca['shift']());}}}(_0x5da3,0xba5b1));let categories=[],currentCategoryIndex=0x0,currentCycle=0x0,youtubePlayer=null,hls=null,minimalMode=![],currentVideoEntry=null;function parseTime(_0x53ee50){const _0x183ba5=_0x4950;if(!_0x53ee50)return 0x0;const _0x4d8ad6=_0x53ee50['split'](':')['map'](Number);if(_0x4d8ad6[_0x183ba5(0xf7)]===0x3)return _0x4d8ad6[0x0]*0xe10+_0x4d8ad6[0x1]*0x3c+_0x4d8ad6[0x2];else return _0x4d8ad6[_0x183ba5(0xf7)]===0x2?_0x4d8ad6[0x0]*0x3c+_0x4d8ad6[0x1]:parseFloat(_0x53ee50)||0x0;}function formatTime(_0x3f7643){const _0x5fca83=_0x4950,_0x6446e4=parseInt(_0x3f7643,0xa),_0x5b6231=Math['floor'](_0x6446e4/0xe10),_0x46c192=Math[_0x5fca83(0x11b)]((_0x6446e4-_0x5b6231*0xe10)/0x3c),_0x290001=_0x6446e4-_0x5b6231*0xe10-_0x46c192*0x3c;return[_0x5b6231,_0x46c192,_0x290001][_0x5fca83(0x100)](_0xfbe32c=>String(_0xfbe32c)[_0x5fca83(0x120)](0x2,'0'))[_0x5fca83(0xaa)](':');}function calculateSeconds(_0x3f521e){const _0x1ce51e=_0x4950,_0x1b0cdb=Array[_0x1ce51e(0x101)](_0x3f521e[_0x1ce51e(0x12a)]),[_0x1ed8be,_0x39810d,_0x370824]=_0x1b0cdb['map'](_0x5fbeb4=>{const _0x9e8bc0=_0x1ce51e,_0x3397d8=parseFloat(_0x5fbeb4[_0x9e8bc0(0x105)]);return isNaN(_0x3397d8)?0x0:_0x3397d8;});return _0x1ed8be*0xe10+_0x39810d*0x3c+_0x370824;}function _0x5da3(){const _0x1c6d75=['2684541JCXZtR','9690968UDipwR','addEventListener','.categoryName','webkitRequestFullscreen','.endTimeDiv','block','isSupported','filter','step','getElementsByClassName','?rel=0&modestbranding=1','URL','endTimeStr','match','Minimal\x20UI','startTimeStr','querySelector','placeholder','push','floor','startTimeDiv','.m3u8','5678688sbAKWi','.txt','padStart','style','display','text/plain','27802whvwLu','pauseVideo','ontimeupdate','remove','youtubePlayerContainer','log','children','ENDED','msFullscreenElement','Hide\x20Manual\x20Timestamps','split','5207013xnpurc','6608220eXhyPu','concat','className','No\x20valid\x20video\x20links\x20found\x20in\x20any\x20category.','join','emptyMessage','webkitFullscreenElement','79MuovyJ','createElement','type','href','videoPreviewContainer','endsWith','startTime','destroy','mozFullScreenElement','number','36LqDllY','fullscreenchange','none','appendChild','controls','videoPlayer','\x20&&\x20','Manually\x20change\x20timestamps','640','Now\x20playing\x20group\x20from\x20category:','Player','classList','fullscreenElement','removeAttribute','loadSource','pause','link','exitFullscreen','manualVideoItem','input','target','div','requestFullscreen','innerHTML','slice','parentNode','Category:\x20','revokeObjectURL','category','1732yrUnaS','endTime','src','play','download.txt','textContent','.startTimeDiv','mozRequestFullScreen','timeInputs','forEach','.videoLinks','webkitExitFullscreen','Unnamed\x20Category','youtube.com','https://www.youtube.com/embed/','trim','seekTo','Events','mozCancelFullScreen','full','getCurrentTime','4225SmRimj','span','any','<div\x20id=\x22ytplayer\x22></div>','End\x20Time:','youtu.be','groups','endTimeDiv','application/vnd.apple.mpegurl','PlayerState','playVideo','click','getElementById','categoriesContainer','length','frameBorder','.manualTimestampsContainer','includes','YouTube\x20API\x20Ready','minimalUIButton','360','video','onended','map','from','msRequestFullscreen','download','currentTime','value','videoPlayerContainer'];_0x5da3=function(){return _0x1c6d75;};return _0x5da3();}function createTimeDiv(_0x307284){const _0x49aed4=_0x4950,_0x4f9cc6=document['createElement'](_0x49aed4(0xcc)),_0x385213=['HH','MM','SS'];let _0x2d1572=['','',''];if(_0x307284&&_0x307284[_0x49aed4(0xfa)](':')){_0x2d1572=_0x307284[_0x49aed4(0x12e)](':');while(_0x2d1572['length']<0x3){_0x2d1572[_0x49aed4(0x11a)]('');}}return _0x385213[_0x49aed4(0xdd)]((_0x2071b8,_0x15d92a)=>{const _0x364e31=_0x49aed4,_0x2fd11f=document[_0x364e31(0xae)](_0x364e31(0xca));_0x2fd11f[_0x364e31(0xaf)]=_0x364e31(0xb6),_0x2fd11f[_0x364e31(0x119)]=_0x2071b8,_0x2071b8==='SS'&&(_0x2fd11f[_0x364e31(0x110)]=_0x364e31(0xeb)),_0x2d1572[_0x15d92a]&&(_0x2fd11f['value']=_0x2d1572[_0x15d92a]),_0x4f9cc6[_0x364e31(0xba)](_0x2fd11f);}),_0x4f9cc6;}function parseVideoGroups(_0x323f5a){const _0x513415=_0x4950,_0x52ff76=[],_0x4b186d=_0x323f5a[_0x513415(0x12e)]('\x0a')[_0x513415(0x100)](_0x1d7e34=>_0x1d7e34[_0x513415(0xe3)]())[_0x513415(0x10f)](_0x1f2e06=>_0x1f2e06!=='');return _0x4b186d['forEach'](_0x3877e0=>{const _0x161074=_0x513415;let _0x1f26f7=[];const _0xac3f59=_0x3877e0[_0x161074(0xfa)]('&&')?_0x3877e0[_0x161074(0x12e)]('&&'):[_0x3877e0];_0xac3f59[_0x161074(0xdd)](_0x423395=>{const _0xb3150f=_0x161074,_0x5a05dc=_0x423395[_0xb3150f(0xe3)]();if(_0x5a05dc==='')return;const _0x4d34fa=_0x5a05dc[_0xb3150f(0x12e)](',')[_0xb3150f(0x100)](_0x4c6957=>_0x4c6957[_0xb3150f(0xe3)]());_0x4d34fa[0x0]&&_0x1f26f7[_0xb3150f(0x11a)]({'link':_0x4d34fa[0x0],'startTime':_0x4d34fa[_0xb3150f(0xf7)]>=0x2?parseTime(_0x4d34fa[0x1]):0x0,'endTime':_0x4d34fa[_0xb3150f(0xf7)]>=0x3?parseTime(_0x4d34fa[0x2]):null,'startTimeStr':_0x4d34fa[_0xb3150f(0xf7)]>=0x2?_0x4d34fa[0x1]:'','endTimeStr':_0x4d34fa['length']>=0x3?_0x4d34fa[0x2]:''});}),_0x1f26f7[_0x161074(0xf7)]>0x0&&_0x52ff76[_0x161074(0x11a)](_0x1f26f7);}),_0x52ff76;}function extractYouTubeId(_0x5db1ba){const _0xc9f3e7=_0x4950,_0x167063=/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w-]+)/,_0x48537b=_0x5db1ba[_0xc9f3e7(0x115)](_0x167063);return _0x48537b?_0x48537b[0x1]:null;}function addCategory(){const _0x36e581=_0x4950,_0x4f3793=document[_0x36e581(0xf5)](_0x36e581(0xf6)),_0x474c81=document['createElement'](_0x36e581(0xcc));_0x474c81[_0x36e581(0xa8)]=_0x36e581(0xd3),_0x474c81[_0x36e581(0xce)]='\x0a\x20\x20\x20\x20<input\x20type=\x22text\x22\x20class=\x22categoryName\x22\x20placeholder=\x22Category\x20Name\x20(e.g.,\x20Video\x20Group\x20A)\x22\x20/>\x0a\x20\x20\x20\x20<textarea\x20class=\x22videoLinks\x22\x20rows=\x225\x22\x20placeholder=\x22Enter\x20video\x20links\x20here\x20(one\x20per\x20line).\x20Use\x20\x27&&\x27\x20to\x20separate\x20multiple\x20videos\x20in\x20the\x20same\x20round.\x0aFormat:\x20link,\x20start\x20time,\x20end\x20time\x0aExample:\x0ahttps://youtu.be/XYZabc,\x2000:00:05,\x2000:00:15\x20&&\x20video.mp4,\x2000:00:10,\x2000:00:20\x22></textarea>\x0a\x20\x20\x20\x20<div\x20class=\x22actionButtons\x22>\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22removeCategoryButton\x22\x20onclick=\x22removeCategory(this)\x22>Remove\x20Category</button>\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22manualTimestampsButton\x22\x20onclick=\x22toggleManualTimestamps(this)\x22>Manually\x20change\x20timestamps</button>\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22downloadCategoryButton\x22\x20onclick=\x22downloadCategory(this)\x22>Download\x20Category\x20as\x20.TXT</button>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20<div\x20class=\x22manualTimestampsContainer\x22\x20style=\x22display:\x20none;\x22></div>\x0a\x20\x20',_0x4f3793[_0x36e581(0xba)](_0x474c81);}function _0x4950(_0x1688a8,_0x3b8427){const _0x5da33f=_0x5da3();return _0x4950=function(_0x495040,_0x4bd553){_0x495040=_0x495040-0xa6;let _0x36eef3=_0x5da33f[_0x495040];return _0x36eef3;},_0x4950(_0x1688a8,_0x3b8427);}function removeCategory(_0x754ba2){const _0x3bb70a=_0x4950,_0x5851ab=_0x754ba2[_0x3bb70a(0xd0)][_0x3bb70a(0xd0)];_0x5851ab[_0x3bb70a(0x127)]();}function toggleManualTimestamps(_0x2bab29){const _0x3c0c0f=_0x4950,_0x1fa4de=_0x2bab29[_0x3c0c0f(0xd0)][_0x3c0c0f(0xd0)],_0x406963=_0x1fa4de[_0x3c0c0f(0x118)]('.manualTimestampsContainer'),_0x161b7b=_0x1fa4de['querySelector'](_0x3c0c0f(0xde));if(_0x406963[_0x3c0c0f(0x121)]['display']===_0x3c0c0f(0xb9)||_0x406963[_0x3c0c0f(0x121)][_0x3c0c0f(0x122)]===''){_0x406963[_0x3c0c0f(0xce)]='';const _0xec270a=parseVideoGroups(_0x161b7b[_0x3c0c0f(0x105)]),_0x2cca5e=_0xec270a['flat']();_0x2cca5e[_0x3c0c0f(0xdd)](_0x46cb5d=>{const _0x685bbf=_0x3c0c0f,_0x21c468=document[_0x685bbf(0xae)](_0x685bbf(0xcc));_0x21c468[_0x685bbf(0xa8)]=_0x685bbf(0xc9);const _0x2962bd=document[_0x685bbf(0xae)](_0x685bbf(0xcc));_0x2962bd['className']=_0x685bbf(0xb1);if(_0x46cb5d['link'][_0x685bbf(0xfa)](_0x685bbf(0xe1))||_0x46cb5d[_0x685bbf(0xc7)]['includes'](_0x685bbf(0xee))){const _0x56be15=extractYouTubeId(_0x46cb5d['link']);if(_0x56be15){const _0x2c7c71=document[_0x685bbf(0xae)]('iframe');_0x2c7c71[_0x685bbf(0xd6)]=_0x685bbf(0xe2)+_0x56be15+_0x685bbf(0x112),_0x2c7c71[_0x685bbf(0xf8)]='0',_0x2962bd[_0x685bbf(0xba)](_0x2c7c71);}}else{const _0x21e822=document[_0x685bbf(0xae)](_0x685bbf(0xfe));_0x21e822[_0x685bbf(0xd6)]=_0x46cb5d[_0x685bbf(0xc7)],_0x21e822[_0x685bbf(0xbb)]=!![],_0x2962bd['appendChild'](_0x21e822);}_0x21c468[_0x685bbf(0xba)](_0x2962bd);const _0x5f00ca=document[_0x685bbf(0xae)]('div');_0x5f00ca[_0x685bbf(0xa8)]=_0x685bbf(0xdc);const _0x5e80bc=document[_0x685bbf(0xae)](_0x685bbf(0xea));_0x5e80bc[_0x685bbf(0xd9)]='Start\x20Time:',_0x5f00ca[_0x685bbf(0xba)](_0x5e80bc);const _0x3a3f89=createTimeDiv(_0x46cb5d['startTimeStr']);_0x3a3f89[_0x685bbf(0xa8)]=_0x685bbf(0x11c),_0x5f00ca[_0x685bbf(0xba)](_0x3a3f89);const _0x54c03b=document[_0x685bbf(0xae)]('span');_0x54c03b[_0x685bbf(0xd9)]=_0x685bbf(0xed),_0x5f00ca[_0x685bbf(0xba)](_0x54c03b);const _0x53b3f5=createTimeDiv(_0x46cb5d[_0x685bbf(0x114)]);_0x53b3f5[_0x685bbf(0xa8)]=_0x685bbf(0xf0),_0x5f00ca[_0x685bbf(0xba)](_0x53b3f5),_0x21c468['appendChild'](_0x5f00ca),_0x406963[_0x685bbf(0xba)](_0x21c468);}),_0x406963['style'][_0x3c0c0f(0x122)]=_0x3c0c0f(0x10d),_0x2bab29[_0x3c0c0f(0xd9)]=_0x3c0c0f(0x12d);}else _0x406963[_0x3c0c0f(0x121)][_0x3c0c0f(0x122)]=_0x3c0c0f(0xb9),_0x2bab29[_0x3c0c0f(0xd9)]=_0x3c0c0f(0xbe);}function generatePlaylist(){const _0x116f5b=_0x4950;categories=[];const _0x49b4d2=document[_0x116f5b(0x111)](_0x116f5b(0xd3));for(let _0x2a2d19 of _0x49b4d2){const _0x33ed7d=_0x2a2d19[_0x116f5b(0x118)](_0x116f5b(0x10a)),_0x291592=_0x2a2d19[_0x116f5b(0x118)]('.videoLinks'),_0x2d04a7=_0x33ed7d[_0x116f5b(0x105)]||_0x116f5b(0xe0);let _0x38d84e=parseVideoGroups(_0x291592[_0x116f5b(0x105)]);const _0x2a5c9e=_0x2a2d19['querySelector'](_0x116f5b(0xf9));if(_0x2a5c9e&&_0x2a5c9e['children'][_0x116f5b(0xf7)]>0x0){let _0xb16f1a=[],_0x34e813=[];_0x38d84e[_0x116f5b(0xdd)](_0x3eea50=>{const _0x505a62=_0x116f5b;_0xb16f1a[_0x505a62(0x11a)](_0x3eea50['length']),_0x34e813=_0x34e813['concat'](_0x3eea50);});const _0x437cc1=_0x2a5c9e[_0x116f5b(0x111)](_0x116f5b(0xc9));for(let _0x1a2103=0x0;_0x1a2103<_0x437cc1[_0x116f5b(0xf7)];_0x1a2103++){const _0x57b765=_0x437cc1[_0x1a2103],_0x44b570=_0x57b765['querySelector'](_0x116f5b(0xda)),_0x285aef=_0x57b765[_0x116f5b(0x118)](_0x116f5b(0x10c));if(_0x34e813[_0x1a2103]){let _0x3f4e6f=calculateSeconds(_0x44b570),_0x8d92f1=calculateSeconds(_0x285aef);_0x34e813[_0x1a2103][_0x116f5b(0xb3)]=_0x3f4e6f,_0x34e813[_0x1a2103][_0x116f5b(0xd5)]=_0x8d92f1,_0x34e813[_0x1a2103][_0x116f5b(0x117)]=formatTime(_0x3f4e6f),_0x34e813[_0x1a2103]['endTimeStr']=formatTime(_0x8d92f1);}}let _0x4dcb0a=[],_0x10aa27=0x0;for(let _0xcf099d of _0xb16f1a){_0x4dcb0a[_0x116f5b(0x11a)](_0x34e813[_0x116f5b(0xcf)](_0x10aa27,_0x10aa27+_0xcf099d)),_0x10aa27+=_0xcf099d;}_0x38d84e=_0x4dcb0a;}_0x38d84e[_0x116f5b(0xf7)]>0x0&&categories[_0x116f5b(0x11a)]({'name':_0x2d04a7,'groups':_0x38d84e});}if(categories[_0x116f5b(0xf7)]===0x0){alert(_0x116f5b(0xa9));return;}currentCategoryIndex=0x0,currentCycle=0x0,playNextVideo();}function playNextVideo(){const _0x4959c1=_0x4950;if(categories[_0x4959c1(0xf7)]===0x0)return;const _0x16b7a1=categories[currentCategoryIndex];if(!_0x16b7a1||_0x16b7a1[_0x4959c1(0xef)][_0x4959c1(0xf7)]===0x0){nextCycleAndCategory(),playNextVideo();return;}const _0xd4b235=currentCycle%_0x16b7a1[_0x4959c1(0xef)][_0x4959c1(0xf7)],_0x2ae4d2=_0x16b7a1['groups'][_0xd4b235];console[_0x4959c1(0x129)](_0x4959c1(0xc0),_0x16b7a1['name'],'->',_0x2ae4d2),playGroup(_0x2ae4d2,function(){nextCycleAndCategory(),playNextVideo();});}function nextCycleAndCategory(){currentCategoryIndex++,currentCategoryIndex>=categories['length']&&(currentCategoryIndex=0x0,currentCycle++);}function playGroup(_0x1d9357,_0x277dbb){let _0x4550bd=0x0;function _0x4eb606(){_0x4550bd<_0x1d9357['length']?playVideoEntry(_0x1d9357[_0x4550bd],function(){_0x4550bd++,_0x4eb606();}):_0x277dbb();}_0x4eb606();}function playVideoEntry(_0xecaa38,_0x550f7f){const _0x4b5064=_0x4950;clearExistingPlayers();const _0x3e85af=_0xecaa38[_0x4b5064(0xc7)],_0x4c54e7=_0xecaa38[_0x4b5064(0xb3)]||0x0,_0x19053d=_0xecaa38[_0x4b5064(0xd5)];if(_0x3e85af['includes'](_0x4b5064(0xe1))||_0x3e85af[_0x4b5064(0xfa)]('youtu.be'))playYouTubeVideo(_0x3e85af,_0x4c54e7,_0x19053d,_0x550f7f);else _0x3e85af[_0x4b5064(0xb2)](_0x4b5064(0x11d))?playHLSVideo(_0x3e85af,_0x4c54e7,_0x19053d,_0x550f7f):playHTML5Video(_0x3e85af,_0x4c54e7,_0x19053d,_0x550f7f);}function clearExistingPlayers(){const _0x42fa2c=_0x4950,_0x93e9e8=document[_0x42fa2c(0xf5)](_0x42fa2c(0xbc));_0x93e9e8['pause'](),_0x93e9e8[_0x42fa2c(0xc4)]('src'),_0x93e9e8[_0x42fa2c(0x121)][_0x42fa2c(0x122)]=_0x42fa2c(0xb9),_0x93e9e8[_0x42fa2c(0xff)]=null,_0x93e9e8['ontimeupdate']=null;hls&&(hls[_0x42fa2c(0xb4)](),hls=null);youtubePlayer&&youtubePlayer[_0x42fa2c(0xb4)]&&(youtubePlayer[_0x42fa2c(0xb4)](),youtubePlayer=null);const _0x1461cf=document['getElementById'](_0x42fa2c(0x128));_0x1461cf[_0x42fa2c(0xce)]='',_0x1461cf[_0x42fa2c(0x121)][_0x42fa2c(0x122)]='none',document[_0x42fa2c(0xf5)](_0x42fa2c(0xab))[_0x42fa2c(0x121)][_0x42fa2c(0x122)]='none';}function playHTML5Video(_0x5d9407,_0x5477b0,_0x2045e5,_0x419cbf){const _0x538ec8=_0x4950,_0x18c52d=document[_0x538ec8(0xf5)](_0x538ec8(0xbc));_0x18c52d[_0x538ec8(0xd6)]=_0x5d9407,_0x18c52d[_0x538ec8(0x104)]=_0x5477b0,_0x18c52d[_0x538ec8(0xbb)]=!minimalMode,_0x18c52d[_0x538ec8(0x121)][_0x538ec8(0x122)]=_0x538ec8(0x10d),_0x18c52d['play'](),_0x2045e5?_0x18c52d[_0x538ec8(0x126)]=function(){const _0x15a203=_0x538ec8;_0x18c52d[_0x15a203(0x104)]>=_0x2045e5&&(_0x18c52d['pause'](),_0x18c52d[_0x15a203(0x126)]=null,_0x419cbf?_0x419cbf():playNextVideo());}:_0x18c52d[_0x538ec8(0xff)]=function(){_0x18c52d['onended']=null,_0x419cbf?_0x419cbf():playNextVideo();};}function playHLSVideo(_0x49b1da,_0x4e0849,_0x4339f9,_0x570c66){const _0x5c6d3a=_0x4950,_0xf4a645=document[_0x5c6d3a(0xf5)](_0x5c6d3a(0xbc));_0xf4a645['style'][_0x5c6d3a(0x122)]=_0x5c6d3a(0x10d),_0xf4a645[_0x5c6d3a(0xbb)]=!minimalMode;if(Hls[_0x5c6d3a(0x10e)]())hls=new Hls(),hls[_0x5c6d3a(0xc5)](_0x49b1da),hls['attachMedia'](_0xf4a645),hls['on'](Hls[_0x5c6d3a(0xe5)]['MANIFEST_PARSED'],function(){const _0x4f2668=_0x5c6d3a;_0xf4a645['currentTime']=_0x4e0849,_0xf4a645[_0x4f2668(0xd7)]();});else _0xf4a645['canPlayType'](_0x5c6d3a(0xf1))&&(_0xf4a645[_0x5c6d3a(0xd6)]=_0x49b1da,_0xf4a645['addEventListener']('loadedmetadata',function(){const _0x2ff9a4=_0x5c6d3a;_0xf4a645['currentTime']=_0x4e0849,_0xf4a645[_0x2ff9a4(0xd7)]();}));_0x4339f9?_0xf4a645[_0x5c6d3a(0x126)]=function(){const _0x501b56=_0x5c6d3a;_0xf4a645['currentTime']>=_0x4339f9&&(_0xf4a645[_0x501b56(0xc6)](),_0xf4a645[_0x501b56(0x126)]=null,_0x570c66?_0x570c66():playNextVideo());}:_0xf4a645[_0x5c6d3a(0xff)]=function(){const _0x69e53f=_0x5c6d3a;_0xf4a645[_0x69e53f(0xff)]=null,_0x570c66?_0x570c66():playNextVideo();};}function playYouTubeVideo(_0x1f7843,_0x3d0eb7,_0x4b18b7,_0xb75440){const _0x122140=_0x4950,_0x3a73ee=extractYouTubeId(_0x1f7843);if(!_0x3a73ee){alert('Invalid\x20YouTube\x20link:\x20'+_0x1f7843);_0xb75440?_0xb75440():playNextVideo();return;}const _0x5da41b=document['getElementById'](_0x122140(0x128));_0x5da41b[_0x122140(0x121)]['display']=_0x122140(0x10d),_0x5da41b[_0x122140(0xce)]='<div\x20id=\x22ytplayer\x22></div>',youtubePlayer=new YT['Player']('ytplayer',{'height':_0x122140(0xfd),'width':_0x122140(0xbf),'videoId':_0x3a73ee,'playerVars':{'autoplay':0x1,'start':_0x3d0eb7,'controls':minimalMode?0x0:0x1,'modestbranding':0x1,'rel':0x0,'fs':minimalMode?0x0:0x1,'iv_load_policy':minimalMode?0x3:0x1,'disablekb':minimalMode?0x1:0x0,'playsinline':0x1},'events':{'onReady':function(_0x46753f){const _0xdb9017=_0x122140;_0x46753f[_0xdb9017(0xcb)][_0xdb9017(0xf3)]();if(_0x4b18b7){let _0x49df2c=setInterval(function(){const _0x1766b9=_0xdb9017,_0x140198=youtubePlayer[_0x1766b9(0xe8)]();_0x140198>=_0x4b18b7&&(clearInterval(_0x49df2c),youtubePlayer[_0x1766b9(0x125)](),_0xb75440?_0xb75440():playNextVideo());},0x1f4);}},'onStateChange':function(_0x296cb0){const _0x478ed5=_0x122140;_0x296cb0['data']===YT[_0x478ed5(0xf2)][_0x478ed5(0x12b)]&&(_0xb75440?_0xb75440():playNextVideo());}}});}function toggleMinimalMode(){const _0x11fb89=_0x4950;minimalMode=!minimalMode;const _0x4610a1=document[_0x11fb89(0xf5)](_0x11fb89(0xfc));_0x4610a1['textContent']=minimalMode?'Normal\x20UI':_0x11fb89(0x116);const _0x222029=document[_0x11fb89(0xf5)](_0x11fb89(0xbc));_0x222029&&(_0x222029['controls']=!minimalMode);if(youtubePlayer&&currentVideoEntry&&(currentVideoEntry[_0x11fb89(0xc7)][_0x11fb89(0xfa)]('youtube.com')||currentVideoEntry[_0x11fb89(0xc7)]['includes']('youtu.be'))){let _0x378e3e=youtubePlayer['getCurrentTime']();const _0x221e5c=extractYouTubeId(currentVideoEntry[_0x11fb89(0xc7)]);youtubePlayer[_0x11fb89(0xb4)](),youtubePlayer=null;const _0x4c8428=document['getElementById'](_0x11fb89(0x128));_0x4c8428[_0x11fb89(0xce)]=_0x11fb89(0xec),youtubePlayer=new YT[(_0x11fb89(0xc1))]('ytplayer',{'height':_0x11fb89(0xfd),'width':_0x11fb89(0xbf),'videoId':_0x221e5c,'playerVars':{'autoplay':0x1,'controls':minimalMode?0x0:0x1,'modestbranding':0x1,'rel':0x0,'fs':minimalMode?0x0:0x1,'iv_load_policy':minimalMode?0x3:0x1,'disablekb':minimalMode?0x1:0x0,'playsinline':0x1,'start':Math[_0x11fb89(0x11b)](_0x378e3e)},'events':{'onReady':_0x23867c=>{const _0x136c90=_0x11fb89;_0x23867c[_0x136c90(0xcb)][_0x136c90(0xe4)](_0x378e3e,!![]),_0x23867c[_0x136c90(0xcb)][_0x136c90(0xf3)]();},'onStateChange':_0x3cfe33=>{_0x3cfe33['data']===YT['PlayerState']['ENDED']&&playNextVideo();}}});}}function toggleFullScreen(){const _0x2d8726=_0x4950,_0x3b0824=document[_0x2d8726(0xf5)](_0x2d8726(0x106));if(!document[_0x2d8726(0xc3)]&&!document[_0x2d8726(0xac)]&&!document[_0x2d8726(0xb5)]&&!document[_0x2d8726(0x12c)]){if(_0x3b0824[_0x2d8726(0xcd)])_0x3b0824[_0x2d8726(0xcd)]();else{if(_0x3b0824[_0x2d8726(0xdb)])_0x3b0824['mozRequestFullScreen']();else{if(_0x3b0824[_0x2d8726(0x10b)])_0x3b0824[_0x2d8726(0x10b)]();else _0x3b0824['msRequestFullscreen']&&_0x3b0824[_0x2d8726(0x102)]();}}}else{if(document[_0x2d8726(0xc8)])document['exitFullscreen']();else{if(document[_0x2d8726(0xe6)])document['mozCancelFullScreen']();else{if(document['webkitExitFullscreen'])document[_0x2d8726(0xdf)]();else document['msExitFullscreen']&&document['msExitFullscreen']();}}}}document[_0x3d651e(0x109)](_0x3d651e(0xb8),()=>{const _0x594c49=_0x3d651e,_0x2731a6=document[_0x594c49(0xf5)]('videoPlayerContainer');document[_0x594c49(0xc3)]===_0x2731a6?_0x2731a6[_0x594c49(0xc2)]['add'](_0x594c49(0xe7)):_0x2731a6['classList'][_0x594c49(0x127)](_0x594c49(0xe7));}),document['getElementById']('downloadBtn')[_0x3d651e(0x109)](_0x3d651e(0xf4),function(){const _0x5d5fb9=_0x3d651e;let _0x13b9cc='';const _0x58071c=document[_0x5d5fb9(0x111)](_0x5d5fb9(0xd3));for(let _0x3b8fc1 of _0x58071c){const _0x2c212f=_0x3b8fc1[_0x5d5fb9(0x118)](_0x5d5fb9(0x10a))['value']||_0x5d5fb9(0xe0);let _0x4e1129='';const _0x3b2082=_0x3b8fc1[_0x5d5fb9(0x118)](_0x5d5fb9(0xde)),_0x1cff38=_0x3b8fc1[_0x5d5fb9(0x118)]('.manualTimestampsContainer');if(_0x1cff38&&_0x1cff38[_0x5d5fb9(0x12a)][_0x5d5fb9(0xf7)]>0x0){let _0x352aec=parseVideoGroups(_0x3b2082['value']),_0x39240e=[],_0x5e4e4a=[];_0x352aec[_0x5d5fb9(0xdd)](_0x135d99=>{const _0x141d63=_0x5d5fb9;_0x39240e[_0x141d63(0x11a)](_0x135d99[_0x141d63(0xf7)]),_0x5e4e4a=_0x5e4e4a['concat'](_0x135d99);});const _0x340e2b=_0x1cff38['getElementsByClassName'](_0x5d5fb9(0xc9));for(let _0x36da86=0x0;_0x36da86<_0x340e2b[_0x5d5fb9(0xf7)];_0x36da86++){const _0x25c595=_0x340e2b[_0x36da86],_0x30d363=_0x25c595[_0x5d5fb9(0x118)]('.startTimeDiv'),_0x2105a8=_0x25c595[_0x5d5fb9(0x118)](_0x5d5fb9(0x10c));if(_0x5e4e4a[_0x36da86]){let _0x4bb726=calculateSeconds(_0x30d363),_0x1f8ebf=calculateSeconds(_0x2105a8);_0x5e4e4a[_0x36da86][_0x5d5fb9(0xb3)]=_0x4bb726,_0x5e4e4a[_0x36da86][_0x5d5fb9(0xd5)]=_0x1f8ebf,_0x5e4e4a[_0x36da86][_0x5d5fb9(0x117)]=formatTime(_0x4bb726),_0x5e4e4a[_0x36da86][_0x5d5fb9(0x114)]=formatTime(_0x1f8ebf);}}let _0x4fd3d6=[],_0x369a14=0x0;for(let _0x3e945c of _0x39240e){_0x4fd3d6[_0x5d5fb9(0x11a)](_0x5e4e4a[_0x5d5fb9(0xcf)](_0x369a14,_0x369a14+_0x3e945c)),_0x369a14+=_0x3e945c;}_0x352aec=_0x4fd3d6;let _0xc6c32d=_0x352aec[_0x5d5fb9(0x100)](_0x1f85e4=>{const _0x1bf06c=_0x5d5fb9;return _0x1f85e4['map'](_0x52bce6=>{const _0x462f5b=_0x4950;return(_0x52bce6['link']+',\x20'+_0x52bce6[_0x462f5b(0x117)]+',\x20'+_0x52bce6[_0x462f5b(0x114)])[_0x462f5b(0xe3)]();})[_0x1bf06c(0xaa)](_0x1bf06c(0xbd));});_0x4e1129=_0xc6c32d[_0x5d5fb9(0xaa)]('\x0a');}else _0x4e1129=_0x3b2082['value'];_0x13b9cc+=_0x5d5fb9(0xd1)+_0x2c212f+'\x0a'+_0x4e1129+'\x0a\x0a';}var _0xd5b2=new Blob([_0x13b9cc],{'type':_0x5d5fb9(0x123)}),_0x3f5b10=document[_0x5d5fb9(0xae)]('a');_0x3f5b10['download']=_0x5d5fb9(0xd8),_0x3f5b10['href']=window[_0x5d5fb9(0x113)]['createObjectURL'](_0xd5b2),_0x3f5b10[_0x5d5fb9(0xf4)](),window[_0x5d5fb9(0x113)][_0x5d5fb9(0xd2)](_0x3f5b10[_0x5d5fb9(0xb0)]);});function downloadCategory(_0x2da5f1){const _0x26f6c4=_0x3d651e,_0x530959=_0x2da5f1[_0x26f6c4(0xd0)][_0x26f6c4(0xd0)],_0x237e61=_0x530959[_0x26f6c4(0x118)](_0x26f6c4(0x10a))[_0x26f6c4(0x105)]||_0x26f6c4(0xe0);let _0x382c04='';const _0x1f2078=_0x530959[_0x26f6c4(0x118)](_0x26f6c4(0xde)),_0xab97e4=_0x530959['querySelector'](_0x26f6c4(0xf9));if(_0xab97e4&&_0xab97e4[_0x26f6c4(0x12a)]['length']>0x0){let _0xab3885=parseVideoGroups(_0x1f2078[_0x26f6c4(0x105)]),_0x275c1b=[],_0x22b7b2=[];_0xab3885[_0x26f6c4(0xdd)](_0x1d11b9=>{const _0x1d829c=_0x26f6c4;_0x275c1b[_0x1d829c(0x11a)](_0x1d11b9[_0x1d829c(0xf7)]),_0x22b7b2=_0x22b7b2[_0x1d829c(0xa7)](_0x1d11b9);});const _0x30b4e7=_0xab97e4[_0x26f6c4(0x111)](_0x26f6c4(0xc9));for(let _0x3edca9=0x0;_0x3edca9<_0x30b4e7[_0x26f6c4(0xf7)];_0x3edca9++){const _0x1b6071=_0x30b4e7[_0x3edca9],_0x4beb85=_0x1b6071[_0x26f6c4(0x118)](_0x26f6c4(0xda)),_0x96541c=_0x1b6071[_0x26f6c4(0x118)](_0x26f6c4(0x10c));if(_0x22b7b2[_0x3edca9]){let _0x2735b8=calculateSeconds(_0x4beb85),_0x1a74cd=calculateSeconds(_0x96541c);_0x22b7b2[_0x3edca9][_0x26f6c4(0xb3)]=_0x2735b8,_0x22b7b2[_0x3edca9][_0x26f6c4(0xd5)]=_0x1a74cd,_0x22b7b2[_0x3edca9][_0x26f6c4(0x117)]=formatTime(_0x2735b8),_0x22b7b2[_0x3edca9]['endTimeStr']=formatTime(_0x1a74cd);}}let _0x4980c6=[],_0x3372d9=0x0;for(let _0x283bf2 of _0x275c1b){_0x4980c6[_0x26f6c4(0x11a)](_0x22b7b2[_0x26f6c4(0xcf)](_0x3372d9,_0x3372d9+_0x283bf2)),_0x3372d9+=_0x283bf2;}_0xab3885=_0x4980c6;let _0x3244bc=_0xab3885[_0x26f6c4(0x100)](_0x5e2586=>{const _0x16b675=_0x26f6c4;return _0x5e2586[_0x16b675(0x100)](_0x617e9d=>{const _0x224802=_0x16b675;return(_0x617e9d[_0x224802(0xc7)]+',\x20'+_0x617e9d['startTimeStr']+',\x20'+_0x617e9d['endTimeStr'])[_0x224802(0xe3)]();})[_0x16b675(0xaa)](_0x16b675(0xbd));});_0x382c04=_0x3244bc[_0x26f6c4(0xaa)]('\x0a');}else _0x382c04=_0x1f2078[_0x26f6c4(0x105)];let _0x41af1c=_0x26f6c4(0xd1)+_0x237e61+'\x0a'+_0x382c04+'\x0a\x0a';var _0x1b9bc8=new Blob([_0x41af1c],{'type':_0x26f6c4(0x123)}),_0x28e7fb=document['createElement']('a');_0x28e7fb[_0x26f6c4(0x103)]=_0x237e61['replace'](/\s+/g,'_')+_0x26f6c4(0x11f),_0x28e7fb['href']=window[_0x26f6c4(0x113)]['createObjectURL'](_0x1b9bc8),_0x28e7fb[_0x26f6c4(0xf4)](),window[_0x26f6c4(0x113)]['revokeObjectURL'](_0x28e7fb[_0x26f6c4(0xb0)]);}function onYouTubeIframeAPIReady(){const _0x1bb725=_0x3d651e;console[_0x1bb725(0x129)](_0x1bb725(0xfb));}
   </script>
-    <footer>
-    <div class="playlistControls" style="display: none; display: flex; justify-content: center; gap: 10px;">
+  <footer>
+    <div class="playlistControls" style="display: flex; justify-content: center; gap: 10px;">
       <a href="about.html"><button>About</button></a>
       <a href="terms.html"><button>Terms Of Service</button></a>
       <a href="privacy.html"><button>Privacy Policy</button></a>
-	  <a href="contact.html"><button>Contact us</button></a>
+      <a href="contact.html"><button>Contact us</button></a>
     </div>
   </footer>
 </body>
 </html>
-
