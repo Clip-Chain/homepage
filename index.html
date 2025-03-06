@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <center><img src="Clip_Chain_Logo_New.png" width="500" height="200"></center>
   <title>Clip-Chain</title>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
@@ -257,9 +256,20 @@ crossorigin="anonymous"></script>
 .nav-bar a.active {
   font-weight: bold;
 }
+
+.logo {
+  display: block;          /* to enable margin auto centering */
+  max-width: 100%;         /* ensures the image scales down on smaller screens */
+  height: auto;            /* maintains aspect ratio */
+  margin: 0 auto;          /* centers the image */
+}
+
   </style>
 </head>
 <body>
+
+<img src="Clip_Chain_Logo_New.png" alt="Clip-Chain Logo" class="logo">
+
   <header>
   <div class="nav-bar">
     <a href="index.html" class="nav-button active">Clip-Chain</a>
