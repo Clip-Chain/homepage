@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <center><img src="Clip_Chain_Logo_New.png" width="500" height="200"></center>
   <title>Clip-Chain</title>
   <link rel="icon" type="image/x-icon" href="favichai.png">
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
@@ -11,6 +10,35 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1415567035229271"
 crossorigin="anonymous"></script>
   <style>
+  @media (max-width: 600px) {
+  header, main, footer {
+    padding: 10px;
+  }
+  h1 {
+    font-size: 2em;
+  }
+  .topButtons button,
+  .actionButtons button,
+  .playlistControls button,
+  .footerButtons button {
+    padding: 8px 16px;
+    font-size: 0.9em;
+  }
+  #videoPlayerContainer {
+    padding: 10px;
+  }
+  #videoPlayer, #youtubePlayerContainer {
+    height: 200px;
+  }
+  textarea {
+    font-size: 0.9em;
+  }
+  .videoPreview, iframe.youtubePreview {
+    width: 100px;
+    height: 70px;
+  }
+}
+
 /* Dark Mode Styles */
 body.dark-mode {
   background-color: #121212; /* Dark background */
@@ -144,7 +172,7 @@ body.dark-mode #faq {
     }
     #videoPlayer, #youtubePlayerContainer {
       width: 100%;
-      height: 360px;
+      height: 200px;
       background-color: #000;
       display: none;
       border-radius: 8px;
@@ -303,6 +331,7 @@ body.dark-mode #faq {
 </head>
 <body>
   <header>
+  <img src="Clip_Chain_Logo_New3.png" alt="Clip-Chain Logo">
   <div class="nav-bar">
     <a href="index.html" class="nav-button active">Clip-Chain</a>
     <a href="Clip-Fusion.html" class="nav-button">Clip-Fusion</a>
