@@ -417,17 +417,31 @@ const _0x14e153=_0x5547;(function(_0x431581,_0x4ca7ab){const _0x4c5f21=_0x5547,_
   </script>
 
 <script>
-  document.getElementById('darkModeToggle').addEventListener('click', function () {
-    document.body.classList.toggle('dark-mode');
-    
-    // Optionally, change button text based on mode:
-    if (document.body.classList.contains('dark-mode')) {
-      this.textContent = 'Light Mode';
-    } else {
-      this.textContent = 'Dark Mode';
+  // Wait for the DOM to load
+  document.addEventListener('DOMContentLoaded', function () {
+    // Check if the user's mode is saved in localStorage
+    const darkModeEnabled = localStorage.getItem('darkMode') === 'true';
+    if (darkModeEnabled) {
+      document.body.classList.add('dark-mode');
+      document.getElementById('darkModeToggle').textContent = 'Light Mode';
     }
+
+    // Toggle dark mode on button click
+    document.getElementById('darkModeToggle').addEventListener('click', function () {
+      document.body.classList.toggle('dark-mode');
+
+      // Determine if dark mode is enabled after toggling
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      
+      // Save the user's preference in localStorage
+      localStorage.setItem('darkMode', isDarkMode);
+
+      // Update the button text accordingly
+      this.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
+    });
   });
 </script>
+
 
 </body>
 </html>
