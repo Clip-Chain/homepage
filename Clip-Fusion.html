@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <center><img src="Clip_Chain_Logo_New.png" width="500" height="200"></center>
   <title>Clip-Fusion</title>
-  <!-- External Libraries -->
+  <link rel="icon" type="image/x-icon" href="favichai.png">
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1415567035229271"
 crossorigin="anonymous"></script>
   <style>
-    /* Global Styles (inspired by Clip-Chain) */
     body {
       font-family: Arial, sans-serif;
       background-color: #f9f9f9;
@@ -29,7 +28,6 @@ crossorigin="anonymous"></script>
       padding: 20px;
       box-sizing: border-box;
     }
-    /* Navigation Bar */
     .nav-bar {
       border-top: 2px solid #007bff;
       margin-bottom: 20px;
@@ -92,7 +90,6 @@ crossorigin="anonymous"></script>
     .playlistControls button:hover {
       background-color: #0056b3;
     }
-    /* Extra controls buttons override to use #17a2b8 */
     #extraControls button {
       background-color: #17a2b;
     }
@@ -110,7 +107,6 @@ crossorigin="anonymous"></script>
       background-color: #c9302c;
     }
     
-    /* Category Input Styles */
     .category {
       background: #ffr;
       border: 1px solid #ccc;
@@ -129,7 +125,7 @@ crossorigin="anonymous"></script>
       border-radius: 4px;
       display: block;
     }
-    /* Manual Timestamps Editor Styles */
+    
     .manualTimestampsContainer {
       margin-top: 15px;
       padding-top: 10px;
@@ -175,7 +171,7 @@ crossorigin="anonymous"></script>
       border: 1px solid #ccc;
       border-radius: 4px;
     }
-    /* Video Player Container */
+    
     #videoPlayerContainer {
       width: 100%;
       max-width: 640px;
@@ -218,7 +214,7 @@ crossorigin="anonymous"></script>
       padding: 20px;
       text-align: center;
     }
-    /* About & FAQ Sections */
+    
     .publisherContent, .faqContent {
       max-width: 800px;
       margin: 30px auto;
@@ -236,32 +232,32 @@ crossorigin="anonymous"></script>
       margin-top: 0;
     }
     
-    /* Dark Mode Styles */
+    
 body.dark-mode {
   background-color: #121212;
   color: #e0e0e0;
 }
 
-/* Adjust backgrounds for major sections */
+
 body.dark-mode header,
 body.dark-mode main,
 body.dark-mode footer {
   background-color: #1e1e1e;
 }
 
-/* Change nav-bar link colors */
+
 body.dark-mode .nav-bar a {
   color: #e0e0e0;
 }
 
-/* Dark mode for textareas */
+
 body.dark-mode textarea {
   background-color: #333;
   color: #fff;
   border: 1px solid #555;
 }
 
-/* Dark mode for buttons */
+
 body.dark-mode button {
   background-color: #444;
   color: #fff;
