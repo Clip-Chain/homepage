@@ -3,55 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <center><img src="Clip_Chain_Logo_New.png" width="500" height="200"></center>
-  <title>Clip-Chain</title>
+  
+  <center><img src="Clip_Chain_Logo_New.png" width="500" height="200" alt="Clip Fusion Logo"></center>
+  <title>Clip‑Fusion</title>
   <link rel="icon" type="image/x-icon" href="favichai.png">
+  
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1415567035229271"
-crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1415567035229271" crossorigin="anonymous"></script>
   <style>
-/* Dark Mode Styles */
-body.dark-mode {
-  background-color: #121212; /* Dark background */
-  color: #e0e0e0;            /* Light text */
-}
-
-/* Adjust header, main, and footer backgrounds */
-body.dark-mode header,
-body.dark-mode main,
-body.dark-mode footer {
-  background-color: #1e1e1e;
-}
-
-/* Dark mode for video items and other sections */
-body.dark-mode .videoItem {
-  background-color: #2e2e2e;
-  border-color: #444;
-}
-
-/* Dark mode for textareas */
-body.dark-mode textarea {
-  background-color: #333;
-  color: #fff;
-  border: 1px solid #555;
-}
-
-/* Dark mode for buttons */
-body.dark-mode button {
-  background-color: #444;
-  color: #fff;
-  border: 1px solid #555;
-}
-
-/* If you have specific elements with white backgrounds (like your publisherContent, faq, etc.) */
-body.dark-mode #publisherContent,
-body.dark-mode #faq {
-  background-color: #1e1e1e;
-  border-color: #444;
-}
-
-
+    
+    body.dark-mode {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+    body.dark-mode header,
+    body.dark-mode main,
+    body.dark-mode footer {
+      background-color: #1e1e1e;
+    }
+    body.dark-mode .videoItem,
+    body.dark-mode .categoryContainer {
+      background-color: #2e2e2e;
+      border-color: #444;
+    }
+    body.dark-mode textarea {
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+    }
+    body.dark-mode button {
+      background-color: #444;
+      color: #fff;
+      border: 1px solid #555;
+    }
+    body.dark-mode #publisherContent,
+    body.dark-mode #faq {
+      background-color: #1e1e1e;
+      border-color: #444;
+    }
+    
     body {
       font-family: Arial, sans-serif;
       background-color: #f9f9f9;
@@ -91,13 +82,15 @@ body.dark-mode #faq {
       resize: vertical;
       display: block;
     }
-    .topButtons, .actionButtons, .playlistControls {
+    
+    .topButtons, .actionButtons, .playlistControls, .footerButtons {
       text-align: center;
       margin: 15px auto;
     }
     .topButtons button,
     .actionButtons button,
-    .playlistControls button {
+    .playlistControls button,
+    .footerButtons button {
       padding: 10px 20px;
       background-color: #007bff;
       color: #fff;
@@ -110,9 +103,32 @@ body.dark-mode #faq {
     }
     .topButtons button:hover,
     .actionButtons button:hover,
-    .playlistControls button:hover {
+    .playlistControls button:hover,
+    .footerButtons button:hover {
       background-color: #0056b3;
     }
+    
+    .nav-bar {
+      border-top: 2px solid #007bff;
+      margin-bottom: 20px;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 1.2em;
+    }
+    .nav-bar a {
+      color: #007bff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    .nav-bar a:not(:last-child)::after {
+      content: " |";
+      margin-left: 10px;
+      color: #007bff;
+    }
+    .nav-bar a.active {
+      font-weight: bold;
+    }
+    
     #videoPlayerContainer {
       width: 100%;
       max-width: 640px;
@@ -150,28 +166,51 @@ body.dark-mode #faq {
       border-radius: 8px;
     }
     #emptyMessage {
+      display: none;
       color: #ccc;
       font-size: 16px;
       padding: 20px;
       text-align: center;
     }
-    #playlistContainer {
+    
+    .categoryContainer {
       width: 100%;
       max-width: 800px;
-      margin: 20px auto;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px auto;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+    .categoryHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .categoryHeader input.categoryTitle {
+      font-size: 1.2em;
+      font-weight: bold;
+      padding: 5px;
+      width: 70%;
+    }
+    .categoryHeader .categoryControls button {
+      margin-left: 5px;
+    }
+    
     .videoItem {
       position: relative;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       border: 1px solid #ddd;
-      padding: 15px;
+      padding: 10px;
       display: flex;
       align-items: center;
       border-radius: 8px;
       background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
-    .orderLabel {
+    .videoItem .orderLabel {
       position: absolute;
       top: 5px;
       left: 5px;
@@ -179,12 +218,12 @@ body.dark-mode #faq {
       color: #fff;
       padding: 2px 6px;
       border-radius: 3px;
-      font-size: 0.9em;
+      font-size: 0.8em;
     }
     .videoPreview, iframe.youtubePreview {
       width: 150px;
       height: 100px;
-      margin-right: 15px;
+      margin-right: 10px;
       background-color: #000;
       border-radius: 8px;
       object-fit: cover;
@@ -192,7 +231,7 @@ body.dark-mode #faq {
     .controls {
       display: flex;
       flex-direction: column;
-      margin-left: 15px;
+      margin-left: 10px;
     }
     .timeInputs {
       display: flex;
@@ -263,6 +302,12 @@ body.dark-mode #faq {
       text-align: center;
       margin-top: 30px;
       padding: 20px;
+      border: none;
+    }
+    .footerButtons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
     }
     .footerButtons button {
       padding: 10px 20px;
@@ -278,187 +323,981 @@ body.dark-mode #faq {
     .footerButtons button:hover {
       background-color: #0056b3;
     }
-    /* Navigation Bar */
-.nav-bar {
-  border-top: 2px solid #007bff;
-  margin-bottom: 20px;
-  padding: 10px 0;
-  text-align: center;
-  font-size: 1.2em;
-}
-.nav-bar a {
-  color: #007bff;
-  text-decoration: none;
-  margin: 0 10px;
-}
-.nav-bar a:not(:last-child)::after {
-  content: " |";
-  margin-left: 10px;
-  color: #007bff;
-}
-.nav-bar a.active {
-  font-weight: bold;
-}
   </style>
 </head>
 <body>
   <header>
-  <div class="nav-bar">
-    <a href="index.html" class="nav-button active">Clip-Chain</a>
-    <a href="Clip-Fusion.html" class="nav-button">Clip-Fusion</a>
-  </div>
-<button id="darkModeToggle" style="position: fixed; top: 10px; right: 10px;">Dark Mode</button>
-  <h1>Clip-Chain - The Best Video Playlist Generator and Trimmer</h1>
+    <div class="nav-bar">
+      <a href="index.html" class="nav-button">Clip‑Chain</a>
+      <a href="Clip-Fusion.html" class="nav-button active">Clip‑Fusion</a>
+    </div>
+    <button id="darkModeToggle" style="position: fixed; top: 10px; right: 10px;">Dark Mode</button>
+    <h1>Clip‑Fusion - Multi‑Category Video Playlist Generator</h1>
   </header>
 
   <main>
     
-    <section id="videoTool">
-      <textarea
-        id="videoLinks"
-        rows="6"
-        placeholder="Paste video links here (one per line). Format: [link], [start time], [end time]
-Example:
-https://youtu.be/..., 00:00:05, 00:00:10.5
-video.mp4, 00:00:05, 00:00:10.5
-video.m3u8, 00:00:05, 00:00:10.5"
-      ></textarea>
+    <div id="categoriesContainer"></div>
 
-    <div class="topButtons" style="text-align: center; margin-top: 10px;">
-  <button id="downloadTxtButton">Download as .TXT file</button>
-</div>
-
-
-
-      <div class="topButtons">
-        <button id="addVideosButton">Add Videos</button>
-        <button id="clearPlaylistButton">Clear Playlist</button>
-      </div>
-
-      <center><h2>Video Playlist</h2></center>
-
+    
+    <div class="topButtons">
+      <button id="addCategoryButton">Add Category</button>
+      <button id="shuffleCategoriesButton">Shuffle Categories</button>
+      <button id="downloadAllButton">Download All Categories as TXT</button>
+      <button id="importAllTxtButton">Import TXT files</button>
+      <button id="globalFolderImportBtn">Upload Local Folder (TXT+Videos)</button>
       
-      <div id="videoPlayerContainer">
-        <video id="videoPlayer" controls autoplay></video>
-        
-        <div id="youtubePlayerContainer"></div>
-        <div id="emptyMessage">No videos in the playlist. Add videos to start playing!</div>
-      </div>
+      <input type="file" id="globalTxtInput" accept=".txt" style="display:none;" multiple>
+      <input type="file" id="globalFolderInput" webkitdirectory style="display:none;">
+    </div>
 
-      
-      <div class="playlistControls" style="display: none; display: flex; justify-content: center; gap: 10px;">
-        <button id="prevButton"><< Previous Video</button>
-        <button id="loopButton">Loop: Off</button>
-        <button id="restartButton">Restart Playlist</button>
-        <button id="nextButton">Next Video >></button>
-      </div>
+    
+    <div class="topButtons">
+      <button id="generatePlaylistButton">Play Playlist</button>
+      <button id="shuffleVideosButton">Shuffle Videos in Categories</button>
+    </div>
 
-      
-      <div class="actionButtons">
-        <button id="generatePlaylistButton">Play Playlist</button>
-        <button id="shuffleButton" style="display: none;">Shuffle Playlist</button>
-        <button id="defaultOrderButton" style="display: none;">Return to Default Order</button>
-        <button id="fullscreenButton">Full Screen</button>
-        <button id="hideUIButton">Minimal UI</button>
-      </div>
+    
+    <div id="videoPlayerContainer">
+      <video id="videoPlayer" controls autoplay></video>
+      <div id="youtubePlayerContainer"></div>
+      <div id="emptyMessage">No videos in the playlist. Please add videos and press "Play Playlist"!</div>
+    </div>
 
-      
-      <div id="playlistContainer"></div>
-    </section>
+    
+    <div class="playlistControls" style="display: none; justify-content: center; gap: 10px;">
+      <button id="prevButton"><< Previous Video</button>
+      <button id="restartButton">Restart Playlist</button>
+      <button id="nextButton">Next Video >></button>
+      <button id="fullscreenButton">Full Screen</button>
+      <button id="hideUIButton">Minimal UI</button>
+    </div>
 
     
     <section id="publisherContent">
-    <center><h1><b>How to Use Clip-Chain</b></h1></center>
-
-<p><b>Step 1:</b> Copy and paste the URLs of the video files you want to add, separating each URL by a new line. The site currently supports .MP4, .M3U8, and YouTube video links. Please note that YouTube videos will be embedded.</p>
-
-<p><b>Step 2:</b> Click the "Add Videos" button.</p>
-
-<p><b>Step 3:</b> If you'd like to trim your videos, set the start and end timestamps for each video. The timestamps are formatted in hours, minutes, and seconds.</p>
-
-<p><b>Step 4:</b> Click "Play Playlist" to start enjoying your playlist!  
-You can restart the playlist anytime by clicking the "Restart Playlist" button. Use the "Loop" button to repeat your videos, and navigate through the videos with the "Next" and "Previous" buttons. If you'd like to shuffle the order of the videos, simply click the "Shuffle" button. To clear your playlist, click "Clear Playlist."</p>
-
-<p><b>Tip:</b>
-You can also manually type timestamps directly in the text box by adding a comma after your video URL, followed by the start timestamp, another comma, and the end timestamp. For example:  
-`video.mp4, 01:20:00, 02:20:00`  
-This will trim your video accordingly.</p>
-
-<p>Additionally, you can download the text you entered for the playlist you've created, including any timestamps you've manually added through our trimming tool by clicking "Download as .TXT file.</p>
-      <center><h2>Welcome to Clip-Chain</h2></center>
-      <p>Clip-Chain is an innovative and comprehensive platform designed to revolutionize the way you create and enjoy video playlists. At Clip-Chain, we believe that every video tells a story, and sometimes that story is best experienced in fragments – a series of carefully curated clips that capture the essence of the content. With Clip-Chain, you have the power to seamlessly chain together video clips from multiple sources, including local files in MP4 format, streaming playlists like M3U8, and even videos hosted on YouTube.</p>
-      <p>Our tool is built around a simple yet powerful concept: precision editing for video content. Whether you are an educator preparing engaging lesson materials, a content creator compiling highlights for social media, or a casual viewer who wants to relive memorable moments from your favorite shows, Clip-Chain offers an intuitive interface that puts you in control. By simply entering the URL of a video and specifying the start and end times, you can extract exactly the portion you need. This means no more unnecessary content – just the precise clip that fits your narrative.</p>
-      <p>At the heart of Clip-Chain is a robust playlist engine that allows you to arrange your video segments in any order you desire. Our system not only supports standard playback but also offers features such as shuffling, looping, and full-screen viewing modes. The integration with advanced libraries like HLS.js and the YouTube Iframe API ensures that your videos play smoothly, regardless of the format. The player intelligently detects whether a video link is a local file, a streaming resource, or a YouTube video, and adjusts its playback method accordingly. This adaptability makes Clip-Chain a versatile tool for a wide range of applications.</p>
-      <p>One of the standout aspects of Clip-Chain is its user-centric design. We understand that not every user wants to deal with a cluttered interface. That’s why we offer a minimal UI mode, which strips away extraneous controls to provide a clean, focused viewing experience. For those who prefer a richer set of options, our default interface includes full controls, complete with video titles, logos, and additional playback settings. This dual-mode functionality ensures that Clip-Chain can cater to both beginners and advanced users alike.</p>
-      <p>Our commitment to quality extends beyond just functionality. We have designed Clip-Chain to be responsive and lightweight, ensuring fast load times and smooth operation even on older devices. The platform leverages modern web technologies such as HTML5, JavaScript, and CSS3, guaranteeing compatibility across a diverse range of browsers and operating systems. Whether you are accessing Clip-Chain on a desktop, tablet, or smartphone, you can expect a consistent and enjoyable experience.</p>
-      <p>Moreover, Clip-Chain is continuously evolving. Our development team is always working on incorporating new features and improvements based on user feedback and emerging trends in video technology. Future updates may include support for additional video formats, enhanced editing tools, and even collaborative playlist creation for group projects. We believe that the best tools are those that grow with their users, and at Clip-Chain, we are dedicated to making your video editing and viewing experience as dynamic as possible.</p>
-      <p>In addition to its technical prowess, Clip-Chain is also a platform for creativity and expression. It empowers you to take full control of your media consumption by allowing you to craft playlists that reflect your personal style and preferences. Every clip you select, every transition you fine-tune, is a step towards creating a unique narrative that can be shared with friends, colleagues, or a global audience. With Clip-Chain, the possibilities are endless, and the only limit is your imagination.</p>
-      <p>We invite you to explore Clip-Chain and discover a new way to experience video content. Dive into our feature-rich interface, experiment with various editing tools, and see firsthand how easily you can transform ordinary video clips into a compelling story. Whether you are looking to educate, entertain, or inspire, Clip-Chain is the ultimate tool to help you achieve your vision. Thank you for choosing Clip-Chain – where every clip counts, and every chain is a journey.</p>
+      <center><h1><b>How to Use Clip‑Fusion</b></h1></center>
+      <p><b>Step 1:</b> For each category, enter a title and paste the video URLs (one per line). To group multiple videos for one round, separate the URLs with “&&”. Use the format: [link], [start time], [end time]. If only one timestamp is given, it is treated as the start time (end defaults to “00:00:00”).</p>
+      <p><b>Step 2:</b> Videos are automatically parsed and previewed as you type. You can adjust timestamps, reorder, or remove videos using the buttons beside each preview.</p>
+      <p><b>Step 3:</b> When you press “Play Playlist,” Clip‑Fusion plays one group (round) from each category in a round‑robin fashion. If a category’s list ends, it loops back to the beginning.</p>
+      <p><b>Tip:</b> Download each category’s text (including the title and current timestamps) individually or all categories at once using the download buttons.</p>
+      <center><h2>Welcome to Clip‑Fusion</h2></center>
+      <p>Clip‑Fusion lets you organize videos into categories with grouped rounds and automatic round‑robin playback. Enjoy features like shuffling categories and videos, local file uploads, and full control over timestamps.</p>
     </section>
 
-    
     <section id="faq">
       <h2>Frequently Asked Questions</h2>
       <div class="faq-item">
-        <h3>Why aren't YouTube Shorts working?</h3>
-        <p>YouTube Shorts are fully supported in Clip-Chain. If you encounter any issues, simply adjust the URL format: replace the “shorts” segment with “watch.” For instance, if your original URL is:  ”https://www.youtube.com/shorts/...” change it to:  ”https://www.youtube.com/watch/...” Then, click on the “share” button on YouTube and copy the URL from the share dialog. This conversion ensures that the video is correctly recognized and will play seamlessly in Clip-Chain.</p>
+        <h3>How do I group multiple videos for one round?</h3>
+        <p>Type the video URLs on a single line and separate them with “&&”. They will play together in the same round in the order listed.</p>
       </div>
       <div class="faq-item">
-        <h3>Why can't I send a whole YouTube Playlist link?</h3>
-        <p>Clip-Chain is designed to work with individual video links. Handling an entire playlist link involves complex parsing that is not currently supported. We recommend adding individual videos from a playlist to ensure proper playback and precise control.</p>
+        <h3>How are timestamps handled?</h3>
+        <p>If you change a timestamp manually (or provide only an end timestamp), the download will include them. A lone end timestamp is output as “00:00:00, [end]”.</p>
       </div>
       <div class="faq-item">
-        <h3>Why do I still see the YouTube video title and logo even in minimal UI mode?</h3>
-        <p>This behavior is due to restrictions enforced by the YouTube API. Certain branding elements are mandatory and cannot be completely removed even when minimal UI mode is activated, ensuring compliance with YouTube’s branding guidelines.</p>
+        <h3>How do next/previous controls work with grouped videos?</h3>
+        <p>Next/Previous buttons navigate within the current group. Pressing Previous on the first video goes to the last video of the previous group; pressing Next on the last video goes to the first video of the next group. At the very beginning or end, it wraps around.</p>
       </div>
     </section>
   </main>
 
-  
   <footer>
-    <div class="playlistControls" style="display: none; display: flex; justify-content: center; gap: 10px;">
+    <div class="footerButtons">
       <a href="about.html"><button>About</button></a>
       <a href="terms.html"><button>Terms Of Service</button></a>
       <a href="privacy.html"><button>Privacy Policy</button></a>
-	  <a href="contact.html"><button>Contact us</button></a>
+      <a href="contact.html"><button>Contact us</button></a>
     </div>
   </footer>
 
-    <script>
-function _0x1b91(_0x308cee,_0x2298f4){var _0x112462=_0x1124();return _0x1b91=function(_0x1b914a,_0xf08422){_0x1b914a=_0x1b914a-0x1e6;var _0x3f5142=_0x112462[_0x1b914a];return _0x3f5142;},_0x1b91(_0x308cee,_0x2298f4);}var _0x4b75eb=_0x1b91;(function(_0x513623,_0x281c7e){var _0x22e57f=_0x1b91,_0x5a1182=_0x513623();while(!![]){try{var _0x171274=-parseInt(_0x22e57f(0x1ed))/0x1*(-parseInt(_0x22e57f(0x1f5))/0x2)+-parseInt(_0x22e57f(0x203))/0x3*(-parseInt(_0x22e57f(0x204))/0x4)+parseInt(_0x22e57f(0x200))/0x5*(-parseInt(_0x22e57f(0x1f1))/0x6)+-parseInt(_0x22e57f(0x1fe))/0x7+-parseInt(_0x22e57f(0x1fa))/0x8+-parseInt(_0x22e57f(0x1e6))/0x9*(parseInt(_0x22e57f(0x1fd))/0xa)+parseInt(_0x22e57f(0x201))/0xb;if(_0x171274===_0x281c7e)break;else _0x5a1182['push'](_0x5a1182['shift']());}catch(_0x51e62d){_0x5a1182['push'](_0x5a1182['shift']());}}}(_0x1124,0x82103));function getTimeString(_0x3207f8){var _0x372493=_0x1b91,_0xa39e19=_0x3207f8[_0x372493(0x206)]('input'),_0x3e686c=[];for(var _0x2cef23=0x0;_0x2cef23<_0xa39e19[_0x372493(0x1eb)];_0x2cef23++){var _0x5cfb20=_0xa39e19[_0x2cef23][_0x372493(0x1ff)][_0x372493(0x1e9)]();_0x5cfb20===''&&(_0x5cfb20='00'),_0x5cfb20[_0x372493(0x1eb)]<0x2&&(_0x5cfb20='0'+_0x5cfb20),_0x3e686c[_0x372493(0x1fb)](_0x5cfb20);}return _0x3e686c['join'](':');}document[_0x4b75eb(0x1f3)](_0x4b75eb(0x1ee))[_0x4b75eb(0x1e8)](_0x4b75eb(0x1e7),function(){var _0x3117c4=_0x4b75eb,_0x14689a='';typeof playlist!==_0x3117c4(0x1f6)&&playlist[_0x3117c4(0x1eb)]>0x0?_0x14689a=playlist['map'](function(_0xe2147d){var _0x1e4b40=_0x3117c4,_0x53829e=_0xe2147d[_0x1e4b40(0x1f0)],_0x13407b=getTimeString(_0xe2147d[_0x1e4b40(0x1f9)]),_0x32d525=getTimeString(_0xe2147d[_0x1e4b40(0x1fc)]);return _0x53829e+',\x20'+_0x13407b+',\x20'+_0x32d525;})[_0x3117c4(0x1f2)]('\x0a'):_0x14689a=document[_0x3117c4(0x1f3)](_0x3117c4(0x1f4))[_0x3117c4(0x1ff)];var _0xa6bf63=new Blob([_0x14689a],{'type':_0x3117c4(0x205)}),_0x5dc4c5=document[_0x3117c4(0x202)]('a');_0x5dc4c5[_0x3117c4(0x1f7)]='video_links.txt',_0x5dc4c5[_0x3117c4(0x1ec)]=window[_0x3117c4(0x1ef)][_0x3117c4(0x1ea)](_0xa6bf63),_0x5dc4c5[_0x3117c4(0x1e7)](),window['URL'][_0x3117c4(0x1f8)](_0x5dc4c5['href']);});function _0x1124(){var _0x3f5f11=['14754CEmPZy','join','getElementById','videoLinks','79346EauNKz','undefined','download','revokeObjectURL','startTimeDiv','3500056cXnSRY','push','endTimeDiv','2080570HYNhSL','6325242IKyunE','value','1395JWaDUD','24560844laQqCk','createElement','3mlwMdU','2655508EJgdNE','text/plain','getElementsByTagName','18LvHCXW','click','addEventListener','trim','createObjectURL','length','href','2ebUafV','downloadTxtButton','URL','link'];_0x1124=function(){return _0x3f5f11;};return _0x1124();}
-</script>
-
 
   <script>
-const _0x14e153=_0x5547;(function(_0x431581,_0x4ca7ab){const _0x4c5f21=_0x5547,_0x1de265=_0x431581();while(!![]){try{const _0x1a68a9=-parseInt(_0x4c5f21(0x188))/0x1+-parseInt(_0x4c5f21(0x17b))/0x2*(-parseInt(_0x4c5f21(0x178))/0x3)+parseInt(_0x4c5f21(0x194))/0x4*(-parseInt(_0x4c5f21(0x1af))/0x5)+parseInt(_0x4c5f21(0x15a))/0x6+parseInt(_0x4c5f21(0x1bb))/0x7+-parseInt(_0x4c5f21(0x1ad))/0x8+parseInt(_0x4c5f21(0x18a))/0x9;if(_0x1a68a9===_0x4ca7ab)break;else _0x1de265['push'](_0x1de265['shift']());}catch(_0x22f10c){_0x1de265['push'](_0x1de265['shift']());}}}(_0x45ed,0x39496));let playlist=[],originalPlaylist=[],currentVideoIndex=0x0,hls=null,isLooping=![],youtubePlayer=null,minimalMode=![];function createTimeDiv(_0x43b64f){const _0x195a6f=_0x5547,_0x50fe3c=document[_0x195a6f(0x171)]('div'),_0x1bc34b=['HH','MM','SS'];let _0x7a65c3=['','',''];if(_0x43b64f&&_0x43b64f[_0x195a6f(0x198)](':')){_0x7a65c3=_0x43b64f['split'](':');while(_0x7a65c3[_0x195a6f(0x17e)]<0x3){_0x7a65c3[_0x195a6f(0x15e)]('');}}return _0x1bc34b[_0x195a6f(0x16d)]((_0x3d8c3b,_0xa70f52)=>{const _0x3d2e4d=_0x195a6f,_0x34fa2b=document[_0x3d2e4d(0x171)](_0x3d2e4d(0x19f));_0x34fa2b[_0x3d2e4d(0x1c3)]=_0x3d2e4d(0x186),_0x34fa2b[_0x3d2e4d(0x162)]=_0x3d8c3b,_0x3d8c3b==='SS'&&(_0x34fa2b[_0x3d2e4d(0x1ac)]=_0x3d2e4d(0x192)),_0x7a65c3[_0xa70f52]&&(_0x34fa2b[_0x3d2e4d(0x1ba)]=_0x7a65c3[_0xa70f52]),_0x50fe3c[_0x3d2e4d(0x1c4)](_0x34fa2b);}),_0x50fe3c;}function _0x5547(_0x2c3dc4,_0x53efcf){const _0x45edb8=_0x45ed();return _0x5547=function(_0x5547da,_0x590c27){_0x5547da=_0x5547da-0x156;let _0x3f0f3d=_0x45edb8[_0x5547da];return _0x3f0f3d;},_0x5547(_0x2c3dc4,_0x53efcf);}document[_0x14e153(0x1ab)](_0x14e153(0x1a1),()=>{const _0x1d090e=_0x14e153;document[_0x1d090e(0x163)](_0x1d090e(0x196))[_0x1d090e(0x1ab)](_0x1d090e(0x164),addVideos),document[_0x1d090e(0x163)]('clearPlaylistButton')[_0x1d090e(0x1ab)](_0x1d090e(0x164),clearPlaylist),document['getElementById']('generatePlaylistButton')['addEventListener'](_0x1d090e(0x164),generatePlaylist),document[_0x1d090e(0x163)](_0x1d090e(0x167))[_0x1d090e(0x1ab)]('click',playPreviousVideo),document[_0x1d090e(0x163)](_0x1d090e(0x15f))['addEventListener'](_0x1d090e(0x164),playNextVideo),document[_0x1d090e(0x163)]('restartButton')[_0x1d090e(0x1ab)](_0x1d090e(0x164),restartPlaylist),document[_0x1d090e(0x163)]('loopButton')[_0x1d090e(0x1ab)](_0x1d090e(0x164),toggleLoop),document[_0x1d090e(0x163)](_0x1d090e(0x1b1))[_0x1d090e(0x1ab)]('click',shufflePlaylist),document[_0x1d090e(0x163)](_0x1d090e(0x15d))[_0x1d090e(0x1ab)](_0x1d090e(0x164),returnToDefaultOrder),document[_0x1d090e(0x163)](_0x1d090e(0x1bf))[_0x1d090e(0x1ab)](_0x1d090e(0x164),toggleFullScreen),document[_0x1d090e(0x163)](_0x1d090e(0x1b8))['addEventListener'](_0x1d090e(0x164),toggleMinimalMode),document['addEventListener']('fullscreenchange',()=>{const _0x3423c4=_0x1d090e,_0x4c3f80=document['getElementById'](_0x3423c4(0x184));document['fullscreenElement']===_0x4c3f80?_0x4c3f80[_0x3423c4(0x168)][_0x3423c4(0x199)](_0x3423c4(0x174)):_0x4c3f80[_0x3423c4(0x168)][_0x3423c4(0x1a9)](_0x3423c4(0x174));});});function toggleMinimalMode(){const _0x203e4b=_0x14e153;minimalMode=!minimalMode;const _0x147463=document[_0x203e4b(0x163)](_0x203e4b(0x1b8));_0x147463['textContent']=minimalMode?_0x203e4b(0x1b5):'Minimal\x20UI';const _0x5d523a=document['getElementById'](_0x203e4b(0x16a));_0x5d523a&&(_0x5d523a[_0x203e4b(0x1c0)]=!minimalMode);if(youtubePlayer){let _0x453c1c=youtubePlayer['getCurrentTime']();const _0x3ade5d=playlist[currentVideoIndex],_0x20db22=extractYouTubeId(_0x3ade5d[_0x203e4b(0x176)]);youtubePlayer['destroy'](),youtubePlayer=null;const _0x54071d=document[_0x203e4b(0x163)](_0x203e4b(0x156));_0x54071d[_0x203e4b(0x1a0)]='';const _0xd0db2e=document['createElement'](_0x203e4b(0x1b6));_0xd0db2e['id']=_0x203e4b(0x1c6),_0x54071d[_0x203e4b(0x1c4)](_0xd0db2e),youtubePlayer=new YT[(_0x203e4b(0x1ca))](_0x203e4b(0x1c6),{'height':'360','width':'100%','videoId':_0x20db22,'playerVars':{'autoplay':0x1,'controls':minimalMode?0x0:0x1,'modestbranding':0x1,'rel':0x0,'fs':minimalMode?0x0:0x1,'iv_load_policy':minimalMode?0x3:0x1,'disablekb':minimalMode?0x1:0x0,'playsinline':0x1,'showinfo':minimalMode?0x0:0x1},'events':{'onReady':_0x9c99a1=>{const _0x599fcc=_0x203e4b,_0x2bebfc={'videoId':_0x20db22,'startSeconds':_0x453c1c};if(_0x3ade5d[_0x599fcc(0x1a4)])_0x2bebfc['endSeconds']=_0x3ade5d[_0x599fcc(0x1a4)];_0x9c99a1[_0x599fcc(0x1b7)][_0x599fcc(0x1a5)](_0x2bebfc);},'onStateChange':_0x8a2c57=>{const _0x49e07e=_0x203e4b;_0x8a2c57[_0x49e07e(0x195)]===YT[_0x49e07e(0x16e)][_0x49e07e(0x165)]&&(document[_0x49e07e(0x163)](_0x49e07e(0x156))[_0x49e07e(0x19b)]['display']=_0x49e07e(0x177),currentVideoIndex++,playVideo());}}});}}const renderPlaylist=()=>{const _0x228612=_0x14e153,_0x2fb127=document[_0x228612(0x163)](_0x228612(0x179));_0x2fb127[_0x228612(0x1a0)]='',playlist[_0x228612(0x16d)]((_0x356eea,_0x37c40a)=>{const _0x4e954c=_0x228612,_0x12ba8d=document[_0x4e954c(0x171)]('div');_0x12ba8d[_0x4e954c(0x168)]['add'](_0x4e954c(0x15b));const _0x109cdb=document[_0x4e954c(0x171)]('div');_0x109cdb['classList'][_0x4e954c(0x199)]('orderLabel'),_0x109cdb['textContent']='#'+(_0x37c40a+0x1),_0x12ba8d['appendChild'](_0x109cdb);const _0x3f8ca7=document[_0x4e954c(0x171)](_0x4e954c(0x1b6));if(_0x356eea[_0x4e954c(0x176)]['includes']('youtube.com')||_0x356eea[_0x4e954c(0x176)]['includes'](_0x4e954c(0x19c))){const _0x297fb2=extractYouTubeId(_0x356eea[_0x4e954c(0x176)]);if(_0x297fb2){const _0x55a3eb=document[_0x4e954c(0x171)](_0x4e954c(0x157));_0x55a3eb['classList'][_0x4e954c(0x199)]('youtubePreview'),_0x55a3eb['src']='https://www.youtube.com/embed/'+_0x297fb2+_0x4e954c(0x187),_0x55a3eb[_0x4e954c(0x1c7)]=0x0,_0x3f8ca7[_0x4e954c(0x1c4)](_0x55a3eb);}}else{const _0x25c907=document[_0x4e954c(0x171)](_0x4e954c(0x158));_0x25c907[_0x4e954c(0x168)][_0x4e954c(0x199)](_0x4e954c(0x1c5)),_0x25c907[_0x4e954c(0x1bc)]=_0x356eea[_0x4e954c(0x176)],_0x25c907[_0x4e954c(0x1c0)]=!![],_0x3f8ca7[_0x4e954c(0x1c4)](_0x25c907);}_0x12ba8d[_0x4e954c(0x1c4)](_0x3f8ca7);const _0x16a10b=document['createElement'](_0x4e954c(0x1b6));_0x16a10b['classList'][_0x4e954c(0x199)](_0x4e954c(0x1c0));const _0x47a422=document[_0x4e954c(0x171)]('div');_0x47a422[_0x4e954c(0x168)]['add'](_0x4e954c(0x17a));const _0x1798c8=document[_0x4e954c(0x171)]('span');_0x1798c8['textContent']=_0x4e954c(0x166),_0x47a422[_0x4e954c(0x1c4)](_0x1798c8),_0x47a422['appendChild'](_0x356eea[_0x4e954c(0x18f)]);const _0x3e3e0d=document['createElement'](_0x4e954c(0x181));_0x3e3e0d[_0x4e954c(0x172)]=_0x4e954c(0x1a3),_0x47a422[_0x4e954c(0x1c4)](_0x3e3e0d),_0x47a422[_0x4e954c(0x1c4)](_0x356eea['endTimeDiv']),_0x16a10b['appendChild'](_0x47a422),_0x12ba8d[_0x4e954c(0x1c4)](_0x16a10b),_0x2fb127[_0x4e954c(0x1c4)](_0x12ba8d);});},addVideos=()=>{const _0x207ca7=_0x14e153,_0x2e8f97=document[_0x207ca7(0x163)]('videoLinks')[_0x207ca7(0x1ba)][_0x207ca7(0x183)]()[_0x207ca7(0x19e)]('\x0a')[_0x207ca7(0x1a7)](_0x511945=>_0x511945[_0x207ca7(0x183)]()!==''),_0x3a4357=document[_0x207ca7(0x163)]('emptyMessage');playlist=[],_0x2e8f97[_0x207ca7(0x16d)](_0x18068d=>{const _0x2de8b4=_0x207ca7,_0x52906f=_0x18068d[_0x2de8b4(0x19e)](','),_0x267445=_0x52906f[_0x2de8b4(0x190)](_0x204eaf=>_0x204eaf[_0x2de8b4(0x183)]()),_0x43bac9=_0x267445[0x0];let _0x390b67,_0x2872a3;_0x267445[_0x2de8b4(0x17e)]>=0x3?(_0x390b67=createTimeDiv(_0x267445[0x1]),_0x2872a3=createTimeDiv(_0x267445[0x2])):(_0x390b67=createTimeDiv(''),_0x2872a3=createTimeDiv(''));const _0x22cfaf={'link':_0x43bac9,'startTimeDiv':_0x390b67,'endTimeDiv':_0x2872a3,'startTime':0x0,'endTime':null};playlist[_0x2de8b4(0x15e)](_0x22cfaf);}),originalPlaylist=playlist[_0x207ca7(0x175)](),renderPlaylist(),_0x3a4357[_0x207ca7(0x19b)]['display']=playlist[_0x207ca7(0x17e)]>0x0?_0x207ca7(0x177):_0x207ca7(0x1c1),document[_0x207ca7(0x163)](_0x207ca7(0x1b1))[_0x207ca7(0x19b)][_0x207ca7(0x18b)]=playlist[_0x207ca7(0x17e)]>0x0?_0x207ca7(0x1b0):_0x207ca7(0x177);},clearPlaylist=()=>{const _0x69f773=_0x14e153;playlist=[],originalPlaylist=[],document['getElementById'](_0x69f773(0x179))['innerHTML']='',document[_0x69f773(0x163)](_0x69f773(0x1bd))['style'][_0x69f773(0x18b)]=_0x69f773(0x1c1);const _0xeb01ca=document['getElementById'](_0x69f773(0x16a));_0xeb01ca&&(_0xeb01ca['pause'](),_0xeb01ca[_0x69f773(0x1aa)](_0x69f773(0x1bc)),_0xeb01ca['load']()),youtubePlayer&&youtubePlayer[_0x69f773(0x16c)]&&(youtubePlayer[_0x69f773(0x16c)](),youtubePlayer=null),document[_0x69f773(0x163)]('videoPlayer')[_0x69f773(0x19b)][_0x69f773(0x18b)]=_0x69f773(0x177),document[_0x69f773(0x163)]('youtubePlayerContainer')['style'][_0x69f773(0x18b)]='none',document[_0x69f773(0x163)](_0x69f773(0x1b1))[_0x69f773(0x19b)]['display']=_0x69f773(0x177),document['getElementById'](_0x69f773(0x15d))[_0x69f773(0x19b)][_0x69f773(0x18b)]=_0x69f773(0x177);},generatePlaylist=()=>{const _0xd2ff40=_0x14e153;if(playlist[_0xd2ff40(0x17e)]===0x0){alert(_0xd2ff40(0x197));return;}playlist[_0xd2ff40(0x16d)](_0x238e17=>{const _0x574f45=_0xd2ff40;_0x238e17['startTime']=calculateSeconds(_0x238e17[_0x574f45(0x18f)]),_0x238e17[_0x574f45(0x1a4)]=calculateSeconds(_0x238e17[_0x574f45(0x1a8)]);}),currentVideoIndex=0x0,playVideo(),document[_0xd2ff40(0x17d)](_0xd2ff40(0x173))[_0xd2ff40(0x19b)][_0xd2ff40(0x18b)]=_0xd2ff40(0x159);},restartPlaylist=()=>{const _0x2cac3d=_0x14e153;if(playlist[_0x2cac3d(0x17e)]===0x0){alert(_0x2cac3d(0x1b4));return;}currentVideoIndex=0x0,playVideo();},playVideo=()=>{const _0xe5cd45=_0x14e153,_0x1b9387=document[_0xe5cd45(0x163)]('emptyMessage');if(currentVideoIndex>=playlist[_0xe5cd45(0x17e)]){if(isLooping)currentVideoIndex=0x0;else return;}_0x1b9387[_0xe5cd45(0x19b)]['display']=_0xe5cd45(0x177);const _0x27eacb=playlist[currentVideoIndex],_0x1cb872=_0x27eacb['startTime'],_0x5564ff=_0x27eacb[_0xe5cd45(0x1a4)];hls&&(hls[_0xe5cd45(0x16c)](),hls=null);youtubePlayer&&youtubePlayer[_0xe5cd45(0x16c)]&&(youtubePlayer[_0xe5cd45(0x16c)](),youtubePlayer=null);const _0xe0d7fd=document[_0xe5cd45(0x163)](_0xe5cd45(0x16a)),_0x483fbc=document[_0xe5cd45(0x163)](_0xe5cd45(0x156));_0xe0d7fd[_0xe5cd45(0x160)](),_0xe0d7fd[_0xe5cd45(0x19b)][_0xe5cd45(0x18b)]='none';if(_0x27eacb[_0xe5cd45(0x176)][_0xe5cd45(0x198)](_0xe5cd45(0x169))||_0x27eacb[_0xe5cd45(0x176)][_0xe5cd45(0x198)]('youtu.be')){const _0x32e02c=extractYouTubeId(_0x27eacb[_0xe5cd45(0x176)]);_0x483fbc[_0xe5cd45(0x19b)]['display']=_0xe5cd45(0x1c1),_0x483fbc[_0xe5cd45(0x1a0)]='';const _0x507104=document['createElement'](_0xe5cd45(0x1b6));_0x507104['id']=_0xe5cd45(0x1c6),_0x483fbc[_0xe5cd45(0x1c4)](_0x507104),youtubePlayer=new YT[(_0xe5cd45(0x1ca))](_0xe5cd45(0x1c6),{'height':_0xe5cd45(0x17c),'width':'100%','videoId':_0x32e02c,'playerVars':{'autoplay':0x1,'controls':minimalMode?0x0:0x1,'modestbranding':0x1,'rel':0x0,'fs':minimalMode?0x0:0x1,'iv_load_policy':minimalMode?0x3:0x1,'disablekb':minimalMode?0x1:0x0,'playsinline':0x1,'showinfo':minimalMode?0x0:0x1},'events':{'onReady':_0x5c6c0e=>{const _0x1d96b8=_0xe5cd45,_0xa03f64={'videoId':_0x32e02c,'startSeconds':_0x1cb872};if(_0x5564ff)_0xa03f64[_0x1d96b8(0x19a)]=_0x5564ff;_0x5c6c0e[_0x1d96b8(0x1b7)][_0x1d96b8(0x1a5)](_0xa03f64);},'onStateChange':_0x4513ac=>{const _0x490dae=_0xe5cd45;_0x4513ac[_0x490dae(0x195)]===YT[_0x490dae(0x16e)][_0x490dae(0x165)]&&(_0x483fbc[_0x490dae(0x19b)][_0x490dae(0x18b)]=_0x490dae(0x177),currentVideoIndex++,playVideo());}}});}else _0x483fbc[_0xe5cd45(0x19b)][_0xe5cd45(0x18b)]=_0xe5cd45(0x177),_0xe0d7fd[_0xe5cd45(0x19b)]['display']=_0xe5cd45(0x1c1),_0xe0d7fd[_0xe5cd45(0x1c0)]=!minimalMode,_0x27eacb[_0xe5cd45(0x176)][_0xe5cd45(0x1a6)]('.m3u8')?(hls=new Hls(),hls['loadSource'](_0x27eacb[_0xe5cd45(0x176)]),hls[_0xe5cd45(0x1a2)](_0xe0d7fd),hls['on'](Hls[_0xe5cd45(0x17f)]['MANIFEST_PARSED'],()=>{const _0x4359dd=_0xe5cd45;_0xe0d7fd[_0x4359dd(0x18c)]=_0x1cb872||0x0,_0xe0d7fd[_0x4359dd(0x191)]();})):(_0xe0d7fd[_0xe5cd45(0x1bc)]=_0x27eacb[_0xe5cd45(0x176)],_0xe0d7fd[_0xe5cd45(0x18c)]=_0x1cb872||0x0,_0xe0d7fd[_0xe5cd45(0x191)]()),_0x5564ff?(_0xe0d7fd[_0xe5cd45(0x18e)]=()=>{const _0x308a1d=_0xe5cd45;_0xe0d7fd[_0x308a1d(0x18c)]>=_0x5564ff&&(_0xe0d7fd['pause'](),_0xe0d7fd[_0x308a1d(0x18e)]=null,currentVideoIndex++,playVideo());},_0xe0d7fd[_0xe5cd45(0x18d)]=null):_0xe0d7fd[_0xe5cd45(0x18d)]=()=>{currentVideoIndex++,playVideo();};},shufflePlaylist=()=>{const _0x32d985=_0x14e153;if(playlist[_0x32d985(0x17e)]<=0x1)return;const _0x322f95=document[_0x32d985(0x17d)](_0x32d985(0x173))[_0x32d985(0x19b)][_0x32d985(0x18b)];if(_0x322f95===_0x32d985(0x159)){const _0x145b31=playlist[currentVideoIndex],_0x6bb2ff=playlist[_0x32d985(0x1a7)]((_0x40b6c2,_0x283fce)=>_0x283fce!==currentVideoIndex);for(let _0x3e9322=_0x6bb2ff[_0x32d985(0x17e)]-0x1;_0x3e9322>0x0;_0x3e9322--){const _0x1f0b84=Math[_0x32d985(0x1b9)](Math[_0x32d985(0x193)]()*(_0x3e9322+0x1));[_0x6bb2ff[_0x3e9322],_0x6bb2ff[_0x1f0b84]]=[_0x6bb2ff[_0x1f0b84],_0x6bb2ff[_0x3e9322]];}playlist=[_0x145b31,..._0x6bb2ff],currentVideoIndex=0x0,renderPlaylist();}else{for(let _0x41f6ae=playlist[_0x32d985(0x17e)]-0x1;_0x41f6ae>0x0;_0x41f6ae--){const _0x49c47d=Math[_0x32d985(0x1b9)](Math[_0x32d985(0x193)]()*(_0x41f6ae+0x1));[playlist[_0x41f6ae],playlist[_0x49c47d]]=[playlist[_0x49c47d],playlist[_0x41f6ae]];}renderPlaylist();}document[_0x32d985(0x163)](_0x32d985(0x1b1))['style'][_0x32d985(0x18b)]=_0x32d985(0x177),document[_0x32d985(0x163)](_0x32d985(0x15d))[_0x32d985(0x19b)][_0x32d985(0x18b)]=_0x32d985(0x1b0);},returnToDefaultOrder=()=>{const _0xdba485=_0x14e153;if(originalPlaylist['length']===0x0)return;const _0x2d3351=playlist[currentVideoIndex]['link'];playlist=originalPlaylist['slice']();const _0x45a58f=playlist[_0xdba485(0x1b2)](_0x13a404=>_0x13a404['link']===_0x2d3351);currentVideoIndex=_0x45a58f===-0x1?0x0:_0x45a58f,renderPlaylist(),document['getElementById']('defaultOrderButton')['style'][_0xdba485(0x18b)]='none',document[_0xdba485(0x163)](_0xdba485(0x1b1))[_0xdba485(0x19b)][_0xdba485(0x18b)]=_0xdba485(0x1b0);},toggleLoop=()=>{const _0xcc36b3=_0x14e153;isLooping=!isLooping,document[_0xcc36b3(0x163)](_0xcc36b3(0x170))[_0xcc36b3(0x172)]=_0xcc36b3(0x1be)+(isLooping?'On':_0xcc36b3(0x15c));},playNextVideo=()=>{const _0x7c9984=_0x14e153;currentVideoIndex=(currentVideoIndex+0x1)%playlist[_0x7c9984(0x17e)],playVideo();},playPreviousVideo=()=>{const _0x48c613=_0x14e153;currentVideoIndex=currentVideoIndex===0x0?playlist[_0x48c613(0x17e)]-0x1:currentVideoIndex-0x1,playVideo();},calculateSeconds=_0x58f02e=>{const _0x52ec7c=_0x14e153,[_0x98b64b,_0x25ec6b,_0x5717c9]=[..._0x58f02e[_0x52ec7c(0x16f)]][_0x52ec7c(0x190)](_0x5c5278=>{const _0x372918=_0x52ec7c,_0x49f14e=parseFloat(_0x5c5278[_0x372918(0x1ba)]);return isNaN(_0x49f14e)?0x0:_0x49f14e;});return _0x98b64b*0xe10+_0x25ec6b*0x3c+_0x5717c9;},extractYouTubeId=_0x310780=>{const _0x2eab5f=_0x14e153,_0x439ad3=_0x310780[_0x2eab5f(0x182)](/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w-]+)/);return _0x439ad3?_0x439ad3[0x1]:null;},toggleFullScreen=()=>{const _0x308a4b=_0x14e153,_0x3e2925=document['getElementById']('videoPlayerContainer');if(!document[_0x308a4b(0x185)]&&!document['webkitFullscreenElement']&&!document[_0x308a4b(0x161)]&&!document[_0x308a4b(0x1c2)]){if(_0x3e2925[_0x308a4b(0x1ae)])_0x3e2925[_0x308a4b(0x1ae)]();else{if(_0x3e2925[_0x308a4b(0x180)])_0x3e2925[_0x308a4b(0x180)]();else{if(_0x3e2925['webkitRequestFullscreen'])_0x3e2925[_0x308a4b(0x189)]();else _0x3e2925[_0x308a4b(0x19d)]&&_0x3e2925[_0x308a4b(0x19d)]();}}}else{if(document[_0x308a4b(0x1c8)])document['exitFullscreen']();else{if(document[_0x308a4b(0x1c9)])document['mozCancelFullScreen']();else{if(document['webkitExitFullscreen'])document[_0x308a4b(0x16b)]();else document[_0x308a4b(0x1b3)]&&document['msExitFullscreen']();}}}};function _0x45ed(){const _0xc23ae0=['DOMContentLoaded','attachMedia','End\x20Time:','endTime','loadVideoById','endsWith','filter','endTimeDiv','remove','removeAttribute','addEventListener','step','431168nvqURa','requestFullscreen','5RGZIIE','inline-block','shuffleButton','findIndex','msExitFullscreen','No\x20videos\x20in\x20the\x20playlist\x20to\x20restart.\x20Please\x20add\x20videos\x20first.','Normal\x20UI','div','target','hideUIButton','floor','value','2365447eEnknl','src','emptyMessage','Loop:\x20','fullscreenButton','controls','block','msFullscreenElement','type','appendChild','videoPreview','ytPlayer','frameBorder','exitFullscreen','mozCancelFullScreen','Player','youtubePlayerContainer','iframe','video','flex','426060JIVgDg','videoItem','Off','defaultOrderButton','push','nextButton','pause','mozFullScreenElement','placeholder','getElementById','click','ENDED','Start\x20Time:','prevButton','classList','youtube.com','videoPlayer','webkitExitFullscreen','destroy','forEach','PlayerState','children','loopButton','createElement','textContent','.playlistControls','full','slice','link','none','273489juJRgN','playlistContainer','timeInputs','4URWHox','360','querySelector','length','Events','mozRequestFullScreen','span','match','trim','videoPlayerContainer','fullscreenElement','number','?rel=0&modestbranding=1','43556jzkDWF','webkitRequestFullscreen','1449756jbeiUf','display','currentTime','onended','ontimeupdate','startTimeDiv','map','play','any','random','1680972TdBZJf','data','addVideosButton','No\x20videos\x20in\x20the\x20playlist.\x20Please\x20add\x20videos\x20first.','includes','add','endSeconds','style','youtu.be','msRequestFullscreen','split','input','innerHTML'];_0x45ed=function(){return _0xc23ae0;};return _0x45ed();}
-  </script>
+    
+    let categories = [];
+    let globalPlaylist = [];  
+    let currentGlobalIndex = 0;
+    let currentGroupVideoIndex = 0;
+    let hls = null;
+    
+    let youtubePlayer = null;
+    let minimalMode = false;
+    let ytPollInterval = null;
+    
+    let importCatCounter = 0;
 
-<script>
-  // Wait for the DOM to load
-  document.addEventListener('DOMContentLoaded', function () {
-    // Check if the user's mode is saved in localStorage
-    const darkModeEnabled = localStorage.getItem('darkMode') === 'true';
-    if (darkModeEnabled) {
-      document.body.classList.add('dark-mode');
-      document.getElementById('darkModeToggle').textContent = 'Light Mode';
+    
+    function createTimeDiv(timeStr, onChangeCallback) {
+      const div = document.createElement('div');
+      const placeholders = ['HH', 'MM', 'SS'];
+      let values = ['', '', ''];
+      if (timeStr && timeStr.includes(':')) {
+        values = timeStr.split(':');
+        while (values.length < 3) { values.push(''); }
+      }
+      placeholders.forEach((placeholder, i) => {
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.placeholder = placeholder;
+        if (placeholder === 'SS') { input.step = "any"; }
+        if (values[i]) { input.value = values[i]; }
+        if(onChangeCallback) {
+          input.addEventListener('change', onChangeCallback);
+        }
+        div.appendChild(input);
+      });
+      return div;
+    }
+    function getTimeString(container) {
+      const inputs = container.getElementsByTagName('input');
+      const parts = [];
+      for (let i = 0; i < inputs.length; i++) {
+        let val = inputs[i].value.trim();
+        if (val === '') { val = '00'; }
+        if (val.length < 2) { val = '0' + val; }
+        parts.push(val);
+      }
+      return parts.join(':');
+    }
+    function calculateSeconds(timeDiv) {
+      const [hh, mm, ss] = [...timeDiv.children].map(input => {
+        const value = parseFloat(input.value);
+        return isNaN(value) ? 0 : value;
+      });
+      return hh * 3600 + mm * 60 + ss;
+    }
+    function extractYouTubeId(url) {
+      const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w-]+)/);
+      return match ? match[1] : null;
     }
 
-    // Toggle dark mode on button click
-    document.getElementById('darkModeToggle').addEventListener('click', function () {
-      document.body.classList.toggle('dark-mode');
+    
+    function updateCategoryRawText(cat) {
+      let lines = [];
+      cat.groups.forEach(group => {
+        let parts = group.map(video => {
+          let start = getTimeString(video.startTimeDiv);
+          let end = getTimeString(video.endTimeDiv);
+          if(start !== "00:00:00" || end !== "00:00:00"){
+            return video.link + ", " + start + ", " + end;
+          } else {
+            return video.link;
+          }
+        });
+        lines.push(parts.join(" && "));
+      });
+      cat.rawText = lines.join("\n");
+      const textarea = document.getElementById("textarea_" + cat.id);
+      if(textarea) { 
+        textarea.value = cat.rawText; 
+      }
+    }
 
-      // Determine if dark mode is enabled after toggling
-      const isDarkMode = document.body.classList.contains('dark-mode');
-      
-      // Save the user's preference in localStorage
-      localStorage.setItem('darkMode', isDarkMode);
+    
+    function parseCategory(cat) {
+      cat.groups = [];
+      const lines = (cat.rawText || "").trim().split('\n').filter(l => l.trim() !== "");
+      lines.forEach(line => {
+        const tokens = line.split("&&").map(t => t.trim());
+        const group = [];
+        tokens.forEach(token => {
+          const parts = token.split(',');
+          const link = parts[0].trim();
+          let start = parts.length === 2 ? parts[1].trim() : (parts.length >=3 ? parts[1].trim() : "00:00:00");
+          let end = parts.length >= 3 ? parts[2].trim() : "00:00:00";
+          const video = {
+            link: link,
+            startTimeDiv: createTimeDiv(start, () => { updateCategoryRawText(cat); }),
+            endTimeDiv: createTimeDiv(end, () => { updateCategoryRawText(cat); }),
+            startTime: 0,
+            endTime: 0
+          };
+          group.push(video);
+        });
+        if(group.length > 0) cat.groups.push(group);
+      });
+    }
+    function renderCategories() {
+      const container = document.getElementById('categoriesContainer');
+      container.innerHTML = "";
+      categories.forEach((cat, index) => {
+        const catDiv = document.createElement('div');
+        catDiv.classList.add('categoryContainer');
+        catDiv.setAttribute('data-id', cat.id);
+        const headerDiv = document.createElement('div');
+        headerDiv.classList.add('categoryHeader');
+        const titleInput = document.createElement('input');
+        titleInput.type = 'text';
+        titleInput.classList.add('categoryTitle');
+        titleInput.value = cat.title;
+        titleInput.addEventListener('input', function () {
+          cat.title = this.value;
+        });
+        headerDiv.appendChild(titleInput);
+        const controlsDiv = document.createElement('div');
+        controlsDiv.classList.add('categoryControls');
+        const upBtn = document.createElement('button');
+        upBtn.textContent = "▲";
+        upBtn.title = "Move Category Up";
+        upBtn.disabled = index === 0;
+        upBtn.addEventListener('click', () => {
+          if(index > 0) {
+            [categories[index-1], categories[index]] = [categories[index], categories[index-1]];
+            renderCategories();
+          }
+        });
+        controlsDiv.appendChild(upBtn);
+        const downBtn = document.createElement('button');
+        downBtn.textContent = "▼";
+        downBtn.title = "Move Category Down";
+        downBtn.disabled = index === categories.length - 1;
+        downBtn.addEventListener('click', () => {
+          if(index < categories.length - 1) {
+            [categories[index], categories[index+1]] = [categories[index+1], categories[index]];
+            renderCategories();
+          }
+        });
+        controlsDiv.appendChild(downBtn);
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = "Remove Category";
+        removeBtn.addEventListener('click', () => {
+          categories.splice(index, 1);
+          renderCategories();
+        });
+        controlsDiv.appendChild(removeBtn);
+        const downloadBtn = document.createElement('button');
+        downloadBtn.textContent = "Download Category TXT";
+        downloadBtn.addEventListener('click', () => {
+          downloadCategory(cat);
+        });
+        controlsDiv.appendChild(downloadBtn);
+        
+        const importTxtBtn = document.createElement('button');
+        importTxtBtn.textContent = "Import TXT file";
+        importTxtBtn.addEventListener('click', () => {
+          cat.txtFileInput.click();
+        });
+        controlsDiv.appendChild(importTxtBtn);
+        
+        const uploadFolderBtn = document.createElement('button');
+        uploadFolderBtn.textContent = "Upload local folder (TXT+Videos)";
+        uploadFolderBtn.addEventListener('click', () => {
+          cat.folderInput.click();
+        });
+        controlsDiv.appendChild(uploadFolderBtn);
+        const shuffleCatBtn = document.createElement('button');
+        shuffleCatBtn.textContent = "Shuffle Videos";
+        shuffleCatBtn.addEventListener('click', () => {
+          if(cat.groups && cat.groups.length > 1) {
+            for(let i = cat.groups.length - 1; i > 0; i--){
+              const j = Math.floor(Math.random() * (i + 1));
+              [cat.groups[i], cat.groups[j]] = [cat.groups[j], cat.groups[i]];
+            }
+            renderCategoryVideos(cat.id);
+          }
+        });
+        controlsDiv.appendChild(shuffleCatBtn);
+        headerDiv.appendChild(controlsDiv);
+        catDiv.appendChild(headerDiv);
+        const textarea = document.createElement('textarea');
+        textarea.id = "textarea_" + cat.id;
+        textarea.placeholder = "Paste video links here. To group videos for one round, separate URLs with '&&'. Format: [link], [start time], [end time].";
+        textarea.value = cat.rawText || "";
+        textarea.addEventListener('input', function () {
+          cat.rawText = this.value;
+          parseCategory(cat);
+          renderCategoryVideos(cat.id);
+        });
+        catDiv.appendChild(textarea);
+        const btnDiv = document.createElement('div');
+        btnDiv.classList.add('topButtons');
+        const uploadBtn = document.createElement('button');
+        uploadBtn.textContent = "Upload Local Video";
+        uploadBtn.addEventListener('click', () => {
+          cat.fileInput.click();
+        });
+        btnDiv.appendChild(uploadBtn);
+        catDiv.appendChild(btnDiv);
+        const videoListContainer = document.createElement('div');
+        videoListContainer.classList.add('videoListContainer');
+        videoListContainer.id = "videoList_" + cat.id;
+        catDiv.appendChild(videoListContainer);
+        const fileInput = document.createElement('input');
+        fileInput.type = "file";
+        fileInput.accept = "video/mp4, video/webm, video/avi, video/mpeg, video/mkv, video/flv, video/ogg, video/mov, video/m4v, video/wmv, video/asf, video/3gp";
+        fileInput.multiple = true;
+        fileInput.style.display = "none";
+        fileInput.addEventListener('change', function(event) {
+          const files = event.target.files;
+          let currentText = textarea.value.trim();
+          for(let i = 0; i < files.length; i++){
+            const file = files[i];
+            const fileURL = URL.createObjectURL(file);
+            currentText += (currentText ? "\n" : "") + fileURL;
+          }
+          textarea.value = currentText;
+          cat.rawText = currentText;
+          parseCategory(cat);
+          renderCategoryVideos(cat.id);
+        });
+        cat.fileInput = fileInput;
+        catDiv.appendChild(fileInput);
+        
+        const txtInput = document.createElement('input');
+        txtInput.type = "file";
+        txtInput.accept = ".txt";
+        txtInput.style.display = "none";
+        txtInput.addEventListener('change', function(event) {
+          const file = event.target.files[0];
+          if(file){
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              const content = e.target.result;
+              const lines = content.split("\n");
+              if(lines[0].startsWith("Title:")){
+                cat.title = lines[0].substring(6).trim();
+                const titleInput = catDiv.querySelector("input.categoryTitle");
+                if(titleInput) titleInput.value = cat.title;
+                lines.shift();
+              }
+              cat.rawText = lines.join("\n");
+              textarea.value = cat.rawText;
+              parseCategory(cat);
+              renderCategoryVideos(cat.id);
+            };
+            reader.readAsText(file);
+          }
+        });
+        cat.txtFileInput = txtInput;
+        catDiv.appendChild(txtInput);
+        
+        const folderInput = document.createElement('input');
+        folderInput.type = "file";
+        folderInput.setAttribute("webkitdirectory", "");
+        folderInput.style.display = "none";
+        folderInput.addEventListener('change', function(event) {
+          const files = Array.from(event.target.files);
+          
+          const txtFiles = files.filter(f => f.name.toLowerCase().endsWith('.txt'));
+          if(txtFiles.length === 0){
+            alert("No TXT file found in folder.");
+            return;
+          }
+          
+          const txtFile = txtFiles[0];
+          
+          const videoMapping = {};
+          files.forEach(f => {
+            if(!f.name.toLowerCase().endsWith('.txt')){
+              videoMapping[f.name] = URL.createObjectURL(f);
+            }
+          });
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            let content = e.target.result;
+            
+            const lines = content.split("\n").map(line => {
+              const tokens = line.split(",");
+              const newTokens = tokens.map(tok => {
+                const ttrim = tok.trim();
+                return videoMapping[ttrim] ? videoMapping[ttrim] : ttrim;
+              });
+              return newTokens.join(", ");
+            });
+            content = lines.join("\n");
+            if(content.startsWith("Title:")){
+              
+              const contentLines = content.split("\n");
+              cat.title = contentLines[0].substring(6).trim();
+              const titleInput = catDiv.querySelector("input.categoryTitle");
+              if(titleInput) titleInput.value = cat.title;
+              contentLines.shift();
+              content = contentLines.join("\n");
+            }
+            cat.rawText = content;
+            textarea.value = cat.rawText;
+            parseCategory(cat);
+            renderCategoryVideos(cat.id);
+          };
+          reader.readAsText(txtFile);
+        });
+        cat.folderInput = folderInput;
+        catDiv.appendChild(folderInput);
+        container.appendChild(catDiv);
+        parseCategory(cat);
+        renderCategoryVideos(cat.id);
+      });
+    }
+    function renderCategoryVideos(catId) {
+      const cat = categories.find(c => c.id === catId);
+      if(!cat) return;
+      const container = document.getElementById("videoList_" + catId);
+      container.innerHTML = "";
+      if(!cat.groups || cat.groups.length === 0) {
+        container.textContent = "No videos added yet.";
+        return;
+      }
+      cat.groups.forEach((group, gIndex) => {
+        const groupDiv = document.createElement('div');
+        groupDiv.classList.add('videoItem');
+        const controlDiv = document.createElement('div');
+        controlDiv.classList.add('reorderButtons');
+        const upButton = document.createElement('button');
+        upButton.innerHTML = "▲";
+        upButton.title = "Move Group Up";
+        upButton.disabled = gIndex === 0;
+        upButton.addEventListener('click', () => {
+          if(gIndex > 0) {
+            [cat.groups[gIndex - 1], cat.groups[gIndex]] = [cat.groups[gIndex], cat.groups[gIndex - 1]];
+            renderCategoryVideos(cat.id);
+          }
+        });
+        controlDiv.appendChild(upButton);
+        const downButton = document.createElement('button');
+        downButton.innerHTML = "▼";
+        downButton.title = "Move Group Down";
+        downButton.disabled = gIndex === cat.groups.length - 1;
+        downButton.addEventListener('click', () => {
+          if(gIndex < cat.groups.length - 1) {
+            [cat.groups[gIndex], cat.groups[gIndex + 1]] = [cat.groups[gIndex + 1], cat.groups[gIndex]];
+            renderCategoryVideos(cat.id);
+          }
+        });
+        controlDiv.appendChild(downButton);
+        const removeButton = document.createElement('button');
+        removeButton.innerHTML = "✖";
+        removeButton.title = "Remove Group";
+        removeButton.addEventListener('click', () => {
+          cat.groups.splice(gIndex, 1);
+          renderCategoryVideos(cat.id);
+        });
+        controlDiv.appendChild(removeButton);
+        groupDiv.appendChild(controlDiv);
+        const orderLabel = document.createElement('div');
+        orderLabel.classList.add('orderLabel');
+        orderLabel.textContent = `Group #${gIndex + 1}`;
+        groupDiv.appendChild(orderLabel);
+        group.forEach(video => {
+          const videoPreview = document.createElement('div');
+          if(video.link.includes('youtube.com') || video.link.includes('youtu.be')){
+            const vidId = extractYouTubeId(video.link);
+            if(vidId){
+              const iframe = document.createElement('iframe');
+              iframe.classList.add('youtubePreview');
+              iframe.src = `https://www.youtube.com/embed/${vidId}?rel=0&modestbranding=1`;
+              iframe.frameBorder = 0;
+              videoPreview.appendChild(iframe);
+            }
+          } else {
+            const preview = document.createElement('video');
+            preview.classList.add('videoPreview');
+            preview.src = video.link;
+            preview.controls = true;
+            videoPreview.appendChild(preview);
+          }
+          groupDiv.appendChild(videoPreview);
+          const controls = document.createElement('div');
+          controls.classList.add('controls');
+          const timeInputs = document.createElement('div');
+          timeInputs.classList.add('timeInputs');
+          const startLabel = document.createElement('span');
+          startLabel.textContent = 'Start Time:';
+          timeInputs.appendChild(startLabel);
+          const startDiv = createTimeDiv(getTimeString(video.startTimeDiv), () => { updateCategoryRawText(cat); });
+          video.startTimeDiv = startDiv;
+          timeInputs.appendChild(startDiv);
+          const endLabel = document.createElement('span');
+          endLabel.textContent = 'End Time:';
+          timeInputs.appendChild(endLabel);
+          const endDiv = createTimeDiv(getTimeString(video.endTimeDiv), () => { updateCategoryRawText(cat); });
+          video.endTimeDiv = endDiv;
+          timeInputs.appendChild(endDiv);
+          controls.appendChild(timeInputs);
+          groupDiv.appendChild(controls);
+        });
+        container.appendChild(groupDiv);
+      });
+    }
 
-      // Update the button text accordingly
-      this.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
+    
+    function addCategory() {
+      const newCat = {
+        id: "cat_" + Date.now(),
+        title: "New Category",
+        rawText: "",
+        groups: [],
+        fileInput: null,
+        txtFileInput: null,
+        folderInput: null
+      };
+      categories.push(newCat);
+      renderCategories();
+    }
+    function downloadCategory(cat) {
+      let content = "Title: " + cat.title + "\n";
+      if(cat.groups && cat.groups.length > 0){
+        cat.groups.forEach(group => {
+          const groupText = group.map(video => {
+            const start = getTimeString(video.startTimeDiv);
+            const end = getTimeString(video.endTimeDiv);
+            if(start !== "00:00:00" || end !== "00:00:00"){
+              return video.link + ", " + start + ", " + end;
+            } else {
+              return video.link;
+            }
+          }).join(" && ");
+          content += groupText + "\n";
+        });
+      }
+      const blob = new Blob([content], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.download = cat.title + ".txt";
+      a.href = window.URL.createObjectURL(blob);
+      a.click();
+      window.URL.revokeObjectURL(a.href);
+    }
+    function downloadAllCategories() {
+      let content = "";
+      categories.forEach(cat => {
+        content += "Title: " + cat.title + "\n";
+        if(cat.groups && cat.groups.length > 0){
+          cat.groups.forEach(group => {
+            const groupText = group.map(video => {
+              const start = getTimeString(video.startTimeDiv);
+              const end = getTimeString(video.endTimeDiv);
+              if(start !== "00:00:00" || end !== "00:00:00"){
+                return video.link + ", " + start + ", " + end;
+              } else {
+                return video.link;
+              }
+            }).join(" && ");
+            content += groupText + "\n";
+          });
+        }
+        content += "\n";
+      });
+      const blob = new Blob([content], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.download = "all_categories.txt";
+      a.href = window.URL.createObjectURL(blob);
+      a.click();
+      window.URL.revokeObjectURL(a.href);
+    }
+    function shuffleCategories() {
+      for(let i = categories.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [categories[i], categories[j]] = [categories[j], categories[i]];
+      }
+      renderCategories();
+    }
+    function shuffleVideosInCategories() {
+      categories.forEach(cat => {
+        if(cat.groups && cat.groups.length > 1){
+          for(let i = cat.groups.length - 1; i > 0; i--){
+            const j = Math.floor(Math.random() * (i + 1));
+            [cat.groups[i], cat.groups[j]] = [cat.groups[j], cat.groups[i]];
+          }
+          renderCategoryVideos(cat.id);
+        }
+      });
+    }
+
+    
+    function buildGlobalPlaylist() {
+      globalPlaylist = [];
+      let maxGroups = 0;
+      categories.forEach(cat => {
+        if(cat.groups) {
+          maxGroups = Math.max(maxGroups, cat.groups.length);
+        }
+      });
+      for(let round = 0; round < maxGroups; round++){
+        categories.forEach(cat => {
+          if(cat.groups && cat.groups.length > 0){
+            const group = cat.groups[round % cat.groups.length];
+            globalPlaylist.push({ catId: cat.id, group: group });
+          }
+        });
+      }
+    }
+    function playGlobalGroup(item, resetGroupIndex = true) {
+      if(resetGroupIndex) { currentGroupVideoIndex = 0; }
+      playVideoInGroup(item);
+    }
+    function playVideoInGroup(item) {
+      const videoData = item.group[currentGroupVideoIndex];
+      videoData.startTime = calculateSeconds(videoData.startTimeDiv);
+      videoData.endTime = calculateSeconds(videoData.endTimeDiv);
+      if(hls){ hls.destroy(); hls = null; }
+      if(youtubePlayer && youtubePlayer.destroy){ youtubePlayer.destroy(); youtubePlayer = null; }
+      const videoPlayer = document.getElementById('videoPlayer');
+      const ytContainer = document.getElementById('youtubePlayerContainer');
+      videoPlayer.pause();
+      videoPlayer.style.display = 'none';
+      if(videoData.link.includes('youtube.com') || videoData.link.includes('youtu.be')){
+        const vidId = extractYouTubeId(videoData.link);
+        ytContainer.style.display = 'block';
+        ytContainer.innerHTML = "";
+        const newDiv = document.createElement('div');
+        newDiv.id = "ytPlayer";
+        ytContainer.appendChild(newDiv);
+        youtubePlayer = new YT.Player('ytPlayer', {
+          height: '360',
+          width: '100%',
+          videoId: vidId,
+          playerVars: {
+            autoplay: 1,
+            controls: minimalMode ? 0 : 1,
+            modestbranding: 1,
+            rel: 0,
+            fs: minimalMode ? 0 : 1,
+            iv_load_policy: minimalMode ? 3 : 1,
+            disablekb: minimalMode ? 1 : 0,
+            playsinline: 1,
+            showinfo: minimalMode ? 0 : 1
+          },
+          events: {
+            onReady: event => {
+              const options = { videoId: vidId, startSeconds: videoData.startTime };
+              if(videoData.endTime && videoData.endTime > 0){
+                options.endSeconds = videoData.endTime;
+              }
+              event.target.loadVideoById(options);
+              if(minimalMode){
+                if(ytPollInterval) clearInterval(ytPollInterval);
+                ytPollInterval = setInterval(() => {
+                  const dur = event.target.getDuration();
+                  const curr = event.target.getCurrentTime();
+                  if(dur && (dur - curr < 0.5)){
+                    clearInterval(ytPollInterval);
+                    advanceAfterVideo(item);
+                  }
+                }, 500);
+              }
+            },
+            onStateChange: event => {
+              if(event.data === YT.PlayerState.ENDED){
+                if(ytPollInterval) clearInterval(ytPollInterval);
+                advanceAfterVideo(item);
+              }
+            }
+          }
+        });
+      } else {
+        ytContainer.style.display = 'none';
+        videoPlayer.style.display = 'block';
+        videoPlayer.controls = !minimalMode;
+        if(videoData.link.endsWith('.m3u8')){
+          hls = new Hls();
+          hls.loadSource(videoData.link);
+          hls.attachMedia(videoPlayer);
+          hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            videoPlayer.currentTime = videoData.startTime || 0;
+            videoPlayer.play();
+          });
+        } else {
+          videoPlayer.src = videoData.link;
+          videoPlayer.currentTime = videoData.startTime || 0;
+          videoPlayer.play();
+        }
+        if(videoData.endTime && videoData.endTime > 0){
+          videoPlayer.ontimeupdate = () => {
+            if(videoPlayer.currentTime >= videoData.endTime){
+              videoPlayer.pause();
+              videoPlayer.ontimeupdate = null;
+              advanceAfterVideo(item);
+            }
+          };
+          videoPlayer.onended = null;
+        } else {
+          videoPlayer.onended = () => {
+            advanceAfterVideo(item);
+          };
+        }
+      }
+    }
+    function advanceAfterVideo(item) {
+      if(currentGroupVideoIndex < item.group.length - 1){
+        currentGroupVideoIndex++;
+        playVideoInGroup(item);
+      } else {
+        currentGlobalIndex = (currentGlobalIndex + 1) % globalPlaylist.length;
+        currentGroupVideoIndex = 0;
+        playGlobalVideo();
+      }
+    }
+    function playGlobalVideo() {
+      if(globalPlaylist.length === 0) return;
+      if(currentGlobalIndex >= globalPlaylist.length){
+        currentGlobalIndex = 0;
+      }
+      playGlobalGroup(globalPlaylist[currentGlobalIndex], true);
+    }
+    function playNextGlobal() {
+      const currentItem = globalPlaylist[currentGlobalIndex];
+      if(currentGroupVideoIndex < currentItem.group.length - 1){
+        currentGroupVideoIndex++;
+        playVideoInGroup(currentItem);
+      } else {
+        currentGlobalIndex = (currentGlobalIndex + 1) % globalPlaylist.length;
+        currentGroupVideoIndex = 0;
+        playGlobalVideo();
+      }
+    }
+    function playPreviousGlobal() {
+      const currentItem = globalPlaylist[currentGlobalIndex];
+      if(currentGroupVideoIndex > 0){
+        currentGroupVideoIndex--;
+        playVideoInGroup(currentItem);
+      } else {
+        currentGlobalIndex = currentGlobalIndex === 0 ? globalPlaylist.length - 1 : currentGlobalIndex - 1;
+        const prevItem = globalPlaylist[currentGlobalIndex];
+        currentGroupVideoIndex = prevItem.group.length - 1;
+        playGlobalGroup(prevItem, false);
+      }
+    }
+    function restartGlobalPlaylist() {
+      currentGlobalIndex = 0;
+      currentGroupVideoIndex = 0;
+      playGlobalVideo();
+    }
+
+    
+    document.getElementById('generatePlaylistButton').addEventListener('click', () => {
+      buildGlobalPlaylist();
+      currentGlobalIndex = 0;
+      currentGroupVideoIndex = 0;
+      playGlobalVideo();
+      document.querySelector('.playlistControls').style.display = 'flex';
+      document.getElementById('emptyMessage').style.display = 'none';
     });
-  });
-</script>
+    document.getElementById('nextButton').addEventListener('click', playNextGlobal);
+    document.getElementById('prevButton').addEventListener('click', playPreviousGlobal);
+    document.getElementById('restartButton').addEventListener('click', restartGlobalPlaylist);
+    document.getElementById('fullscreenButton').addEventListener('click', () => {
+      const elem = document.getElementById('videoPlayerContainer');
+      if(!document.fullscreenElement){
+        elem.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    });
+    
+    document.getElementById('hideUIButton').addEventListener('click', () => {
+      minimalMode = !minimalMode;
+      const btn = document.getElementById('hideUIButton');
+      btn.textContent = minimalMode ? "Normal UI" : "Minimal UI";
+      const videoPlayer = document.getElementById('videoPlayer');
+      if(videoPlayer) videoPlayer.controls = !minimalMode;
+      if(youtubePlayer){
+        let currentTime = youtubePlayer.getCurrentTime();
+        const currentItem = globalPlaylist[currentGlobalIndex];
+        const vidId = extractYouTubeId(currentItem.group[currentGroupVideoIndex].link);
+        youtubePlayer.destroy();
+        youtubePlayer = null;
+        const ytContainer = document.getElementById('youtubePlayerContainer');
+        ytContainer.innerHTML = "";
+        const newDiv = document.createElement('div');
+        newDiv.id = "ytPlayer";
+        ytContainer.appendChild(newDiv);
+        youtubePlayer = new YT.Player('ytPlayer', {
+          height: '360',
+          width: '100%',
+          videoId: vidId,
+          playerVars: {
+            autoplay: 1,
+            controls: minimalMode ? 0 : 1,
+            modestbranding: 1,
+            rel: 0,
+            fs: minimalMode ? 0 : 1,
+            iv_load_policy: minimalMode ? 3 : 1,
+            disablekb: minimalMode ? 1 : 0,
+            playsinline: 1,
+            showinfo: minimalMode ? 0 : 1
+          },
+          events: {
+            onReady: event => {
+              const options = { videoId: vidId, startSeconds: currentTime };
+              if(currentItem.group[currentGroupVideoIndex].endTime && currentItem.group[currentGroupVideoIndex].endTime > 0){
+                options.endSeconds = currentItem.group[currentGroupVideoIndex].endTime;
+              }
+              event.target.loadVideoById(options);
+            },
+            onStateChange: event => {
+              if(event.data === YT.PlayerState.ENDED){
+                advanceAfterVideo(currentItem);
+              }
+            }
+          }
+        });
+      }
+    });
 
+    
+    document.getElementById('addCategoryButton').addEventListener('click', addCategory);
+    document.getElementById('shuffleCategoriesButton').addEventListener('click', () => {
+      for(let i = categories.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [categories[i], categories[j]] = [categories[j], categories[i]];
+      }
+      renderCategories();
+    });
+    document.getElementById('downloadAllButton').addEventListener('click', downloadAllCategories);
+    
+    document.getElementById('importAllTxtButton').addEventListener('click', () => {
+      document.getElementById('globalTxtInput').click();
+    });
+    document.getElementById('shuffleVideosButton').addEventListener('click', shuffleVideosInCategories);
+    
+    document.getElementById('globalFolderImportBtn').addEventListener('click', () => {
+      document.getElementById('globalFolderInput').click();
+    });
 
+    
+    document.getElementById('globalTxtInput').addEventListener('change', function(event) {
+      const files = event.target.files;
+      for(let i = 0; i < files.length; i++){
+        const file = files[i];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const content = e.target.result;
+          
+          const lines = content.split("\n");
+          let categoriesFromFile = [];
+          let currentCategoryLines = [];
+          let currentTitle = "";
+          lines.forEach(line => {
+            if(line.trim().startsWith("Title:")){
+              if(currentCategoryLines.length > 0){
+                categoriesFromFile.push({ title: currentTitle || "Imported Category", rawText: currentCategoryLines.join("\n") });
+                currentCategoryLines = [];
+              }
+              currentTitle = line.trim().substring(6).trim();
+            } else {
+              if(line.trim() !== ""){
+                currentCategoryLines.push(line);
+              }
+            }
+          });
+          if(currentCategoryLines.length > 0){
+            categoriesFromFile.push({ title: currentTitle || "Imported Category", rawText: currentCategoryLines.join("\n") });
+          }
+          categoriesFromFile.forEach(catData => {
+            const newCat = {
+              id: "cat_import_" + (importCatCounter++),
+              title: catData.title,
+              rawText: catData.rawText,
+              groups: [],
+              fileInput: null,
+              txtFileInput: null,
+              folderInput: null
+            };
+            parseCategory(newCat);
+            categories.push(newCat);
+          });
+          renderCategories();
+        };
+        reader.readAsText(file);
+      }
+    });
+
+    
+    document.getElementById('globalFolderInput').addEventListener('change', function(event) {
+      const files = Array.from(event.target.files);
+      
+      let videoMapping = {};
+      files.forEach(f => {
+        if(!f.name.toLowerCase().endsWith('.txt')){
+          videoMapping[f.name] = URL.createObjectURL(f);
+        }
+      });
+      
+      let txtFiles = files.filter(f => f.name.toLowerCase().endsWith('.txt'));
+      txtFiles.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          let content = e.target.result;
+          
+          const lines = content.split("\n").map(line => {
+            const tokens = line.split(",");
+            const newTokens = tokens.map(tok => {
+              const ttrim = tok.trim();
+              return videoMapping[ttrim] ? videoMapping[ttrim] : ttrim;
+            });
+            return newTokens.join(", ");
+          });
+          content = lines.join("\n");
+          
+          const allLines = content.split("\n");
+          let categoriesFromFolder = [];
+          let currentCatLines = [];
+          let currentCatTitle = "";
+          allLines.forEach(line => {
+            if(line.trim().startsWith("Title:")){
+              if(currentCatLines.length > 0){
+                categoriesFromFolder.push({ title: currentCatTitle || "Imported Category", rawText: currentCatLines.join("\n") });
+                currentCatLines = [];
+              }
+              currentCatTitle = line.trim().substring(6).trim();
+            } else {
+              if(line.trim() !== ""){
+                currentCatLines.push(line);
+              }
+            }
+          });
+          if(currentCatLines.length > 0){
+            categoriesFromFolder.push({ title: currentCatTitle || "Imported Category", rawText: currentCatLines.join("\n") });
+          }
+          categoriesFromFolder.forEach(catData => {
+            const newCat = {
+              id: "cat_import_" + (importCatCounter++),
+              title: catData.title,
+              rawText: catData.rawText,
+              groups: [],
+              fileInput: null,
+              txtFileInput: null,
+              folderInput: null
+            };
+            parseCategory(newCat);
+            categories.push(newCat);
+          });
+          renderCategories();
+        };
+        reader.readAsText(file);
+      });
+    });
+
+    
+    document.addEventListener("fullscreenchange", () => {
+      const container = document.getElementById('videoPlayerContainer');
+      if(document.fullscreenElement === container)
+        container.classList.add('full');
+      else
+        container.classList.remove('full');
+    });
+
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      const darkModeEnabled = localStorage.getItem('darkMode') === 'true';
+      if(darkModeEnabled){
+        document.body.classList.add('dark-mode');
+        document.getElementById('darkModeToggle').textContent = 'Light Mode';
+      }
+      document.getElementById('darkModeToggle').addEventListener('click', function () {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDark);
+        this.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+      });
+    });
+
+    
+    if(categories.length === 0) {
+      addCategory();
+    }
+    function renderCategoriesAndVideos() {
+      renderCategories();
+    }
+    renderCategoriesAndVideos();
+  </script>
 </body>
 </html>
