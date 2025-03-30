@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <center><img src="Clip_Chain_Logo_New.png" width="500" height="200" alt="Clip Fusion Logo"></center>
-  <title>Clip‑Fusion</title>
+  <center><img src="Clip_Chain_Logo_New.png" width="500" height="200" alt="Clip Chain Logo"></center>
+  <title>Clip-Chain</title>
   <link rel="icon" type="image/x-icon" href="favichai.png">
-  
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1415567035229271" crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1415567035229271"
+    crossorigin="anonymous"></script>
   <style>
     
     body.dark-mode {
@@ -22,8 +21,7 @@
     body.dark-mode footer {
       background-color: #1e1e1e;
     }
-    body.dark-mode .videoItem,
-    body.dark-mode .categoryContainer {
+    body.dark-mode .videoItem {
       background-color: #2e2e2e;
       border-color: #444;
     }
@@ -42,6 +40,7 @@
       background-color: #1e1e1e;
       border-color: #444;
     }
+    
     
     body {
       font-family: Arial, sans-serif;
@@ -82,15 +81,13 @@
       resize: vertical;
       display: block;
     }
-    
-    .topButtons, .actionButtons, .playlistControls, .footerButtons {
+    .topButtons, .actionButtons, .playlistControls {
       text-align: center;
       margin: 15px auto;
     }
     .topButtons button,
     .actionButtons button,
-    .playlistControls button,
-    .footerButtons button {
+    .playlistControls button {
       padding: 10px 20px;
       background-color: #007bff;
       color: #fff;
@@ -103,32 +100,9 @@
     }
     .topButtons button:hover,
     .actionButtons button:hover,
-    .playlistControls button:hover,
-    .footerButtons button:hover {
+    .playlistControls button:hover {
       background-color: #0056b3;
     }
-    
-    .nav-bar {
-      border-top: 2px solid #007bff;
-      margin-bottom: 20px;
-      padding: 10px 0;
-      text-align: center;
-      font-size: 1.2em;
-    }
-    .nav-bar a {
-      color: #007bff;
-      text-decoration: none;
-      margin: 0 10px;
-    }
-    .nav-bar a:not(:last-child)::after {
-      content: " |";
-      margin-left: 10px;
-      color: #007bff;
-    }
-    .nav-bar a.active {
-      font-weight: bold;
-    }
-    
     #videoPlayerContainer {
       width: 100%;
       max-width: 640px;
@@ -166,51 +140,28 @@
       border-radius: 8px;
     }
     #emptyMessage {
-      display: none;
       color: #ccc;
       font-size: 16px;
       padding: 20px;
       text-align: center;
     }
-    
-    .categoryContainer {
+    #playlistContainer {
       width: 100%;
       max-width: 800px;
+      margin: 20px auto;
+    }
+    .videoItem {
+      position: relative;
+      margin-bottom: 15px;
       border: 1px solid #ddd;
-      border-radius: 8px;
       padding: 15px;
-      margin: 15px auto;
+      display: flex;
+      align-items: center;
+      border-radius: 8px;
       background-color: #fff;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    .categoryHeader {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    .categoryHeader input.categoryTitle {
-      font-size: 1.2em;
-      font-weight: bold;
-      padding: 5px;
-      width: 70%;
-    }
-    .categoryHeader .categoryControls button {
-      margin-left: 5px;
-    }
-    
-    .videoItem {
-      position: relative;
-      margin-bottom: 10px;
-      border: 1px solid #ddd;
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      border-radius: 8px;
-      background-color: #fff;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-    .videoItem .orderLabel {
+    .orderLabel {
       position: absolute;
       top: 5px;
       left: 5px;
@@ -218,12 +169,12 @@
       color: #fff;
       padding: 2px 6px;
       border-radius: 3px;
-      font-size: 0.8em;
+      font-size: 0.9em;
     }
     .videoPreview, iframe.youtubePreview {
       width: 150px;
       height: 100px;
-      margin-right: 10px;
+      margin-right: 15px;
       background-color: #000;
       border-radius: 8px;
       object-fit: cover;
@@ -231,7 +182,7 @@
     .controls {
       display: flex;
       flex-direction: column;
-      margin-left: 10px;
+      margin-left: 15px;
     }
     .timeInputs {
       display: flex;
@@ -323,86 +274,127 @@
     .footerButtons button:hover {
       background-color: #0056b3;
     }
+    
+    .nav-bar {
+      border-top: 2px solid #007bff;
+      margin-bottom: 20px;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 1.2em;
+    }
+    .nav-bar a {
+      color: #007bff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    .nav-bar a:not(:last-child)::after {
+      content: " |";
+      margin-left: 10px;
+      color: #007bff;
+    }
+    .nav-bar a.active {
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="nav-bar">
-      <a href="index.html" class="nav-button">Clip‑Chain</a>
-      <a href="Clip-Fusion.html" class="nav-button active">Clip‑Fusion</a>
+      <a href="index.html" class="nav-button active">Clip-Chain</a>
+      <a href="Clip-Fusion.html" class="nav-button">Clip-Fusion</a>
     </div>
     <button id="darkModeToggle" style="position: fixed; top: 10px; right: 10px;">Dark Mode</button>
-    <h1>Clip‑Fusion - Multi‑Category Video Playlist Generator</h1>
+    <h1>Clip-Chain - The Best Video Playlist Generator and Trimmer</h1>
   </header>
 
   <main>
-    
-    <div id="categoriesContainer"></div>
+    <section id="videoTool">
+      <textarea
+        id="videoLinks"
+        rows="6"
+        placeholder="Paste video links here (one per line). Format: [link], [start time], [end time]
+Example:
+https://youtu.be/..., 00:00:05, 00:00:10.5
+video.mp4, 00:00:05, 00:00:10.5
+video.m3u8, 00:00:05, 00:00:10.5"
+      ></textarea>
 
-    
-    <div class="topButtons">
-      <button id="addCategoryButton">Add Category</button>
-      <button id="shuffleCategoriesButton">Shuffle Categories</button>
-      <button id="downloadAllButton">Download All Categories as TXT</button>
-      <button id="importAllTxtButton">Import TXT files</button>
-      <button id="globalFolderImportBtn">Upload Local Folder (TXT+Videos)</button>
-      
-      <input type="file" id="globalTxtInput" accept=".txt" style="display:none;" multiple>
-      <input type="file" id="globalFolderInput" webkitdirectory style="display:none;">
-    </div>
+      <div class="topButtons" style="text-align: center; margin-top: 10px;">
+        <button id="downloadTxtButton">Download as .TXT file</button>
+      </div>
 
-    
-    <div class="topButtons">
-      <button id="generatePlaylistButton">Play Playlist</button>
-      <button id="shuffleVideosButton">Shuffle Videos in Categories</button>
-    </div>
+      <div class="topButtons">
+        <button id="addVideosButton">Add Videos</button>
+        <button id="clearPlaylistButton">Clear Playlist</button>
+        <button id="uploadLocalVideoButton">Upload Local Video</button>
+        <button id="uploadFolderButton">Upload local folder (TXT+Videos)</button>
+        <button id="importTxtButton">Import TXT file</button>
+      </div>
 
-    
-    <div id="videoPlayerContainer">
-      <video id="videoPlayer" controls autoplay></video>
-      <div id="youtubePlayerContainer"></div>
-      <div id="emptyMessage">No videos in the playlist. Please add videos and press "Play Playlist"!</div>
-    </div>
+      <center><h2>Video Playlist</h2></center>
 
-    
-    <div class="playlistControls" style="display: none; justify-content: center; gap: 10px;">
-      <button id="prevButton"><< Previous Video</button>
-      <button id="restartButton">Restart Playlist</button>
-      <button id="nextButton">Next Video >></button>
-      <button id="fullscreenButton">Full Screen</button>
-      <button id="hideUIButton">Minimal UI</button>
-    </div>
+      <div id="videoPlayerContainer">
+        <video id="videoPlayer" controls autoplay></video>
+        <div id="youtubePlayerContainer"></div>
+        <div id="emptyMessage">No videos in the playlist. Add videos to start playing!</div>
+      </div>
 
-    
+      <div class="playlistControls" style="display: none; justify-content: center; gap: 10px;">
+        <button id="prevButton"><< Previous Video</button>
+        <button id="loopButton">Loop: Off</button>
+        <button id="restartButton">Restart Playlist</button>
+        <button id="nextButton">Next Video >></button>
+      </div>
+
+      <div class="actionButtons">
+        <button id="generatePlaylistButton">Play Playlist</button>
+        <button id="shuffleButton" style="display: none;">Shuffle Playlist</button>
+        <button id="defaultOrderButton" style="display: none;">Return to Default Order</button>
+        <button id="fullscreenButton">Full Screen</button>
+        <button id="hideUIButton">Minimal UI</button>
+      </div>
+
+      <div id="playlistContainer"></div>
+    </section>
+
     <section id="publisherContent">
-      <center><h1><b>How to Use Clip‑Fusion</b></h1></center>
-      <p><b>Step 1:</b> For each category, enter a title and paste the video URLs (one per line). To group multiple videos for one round, separate the URLs with “&&”. Use the format: [link], [start time], [end time]. If only one timestamp is given, it is treated as the start time (end defaults to “00:00:00”).</p>
-      <p><b>Step 2:</b> Videos are automatically parsed and previewed as you type. You can adjust timestamps, reorder, or remove videos using the buttons beside each preview.</p>
-      <p><b>Step 3:</b> When you press “Play Playlist,” Clip‑Fusion plays one group (round) from each category in a round‑robin fashion. If a category’s list ends, it loops back to the beginning.</p>
-      <p><b>Tip:</b> Download each category’s text (including the title and current timestamps) individually or all categories at once using the download buttons.</p>
-      <center><h2>Welcome to Clip‑Fusion</h2></center>
-      <p>Clip‑Fusion lets you organize videos into categories with grouped rounds and automatic round‑robin playback. Enjoy features like shuffling categories and videos, local file uploads, and full control over timestamps.</p>
+      <center><h1><b>How to Use Clip-Chain</b></h1></center>
+      <p><b>Step 1:</b> Copy and paste the URLs of the video files you want to add, separating each URL by a new line. The site currently supports .MP4, .M3U8, and YouTube video links. Please note that YouTube videos will be embedded.</p>
+      <p><b>Step 2:</b> Click the "Add Videos" button.</p>
+      <p><b>Step 3:</b> If you'd like to trim your videos, set the start and end timestamps for each video. The timestamps are formatted in hours, minutes, and seconds.</p>
+      <p><b>Step 4:</b> Click "Play Playlist" to start enjoying your playlist! You can restart the playlist anytime by clicking the "Restart Playlist" button. Use the "Loop" button to repeat your videos, and navigate through the videos with the "Next" and "Previous" buttons. If you'd like to shuffle the order of the videos, simply click the "Shuffle" button. To clear your playlist, click "Clear Playlist."</p>
+      <p><b>Tip:</b> You can also manually type timestamps directly in the text box by adding a comma after your video URL, followed by the start timestamp, another comma, and the end timestamp. For example: <code>video.mp4, 01:20:00, 02:20:00</code> This will trim your video accordingly.</p>
+      <p>Additionally, you can download the text you entered for the playlist you've created, including any timestamps you've manually added through our trimming tool by clicking "Download as .TXT file."</p>
+      <center><h2>Welcome to Clip-Chain</h2></center>
+      <p>Clip-Chain is an innovative and comprehensive platform designed to revolutionize the way you create and enjoy video playlists. At Clip-Chain, we believe that every video tells a story, and sometimes that story is best experienced in fragments – a series of carefully curated clips that capture the essence of the content. With Clip-Chain, you have the power to seamlessly chain together video clips from multiple sources, including local files in MP4 format, streaming playlists like M3U8, and even videos hosted on YouTube.</p>
+      <p>Our tool is built around a simple yet powerful concept: precision editing for video content. Whether you are an educator preparing engaging lesson materials, a content creator compiling highlights for social media, or a casual viewer who wants to relive memorable moments from your favorite shows, Clip-Chain offers an intuitive interface that puts you in control. By simply entering the URL of a video and specifying the start and end times, you can extract exactly the portion you need. This means no more unnecessary content – just the precise clip that fits your narrative.</p>
+      <p>At the heart of Clip-Chain is a robust playlist engine that allows you to arrange your video segments in any order you desire. Our system not only supports standard playback but also offers features such as shuffling, looping, and full-screen viewing modes. The integration with advanced libraries like HLS.js and the YouTube Iframe API ensures that your videos play smoothly, regardless of the format. The player intelligently detects whether a video link is a local file, a streaming resource, or a YouTube video, and adjusts its playback method accordingly. This adaptability makes Clip-Chain a versatile tool for a wide range of applications.</p>
+      <p>One of the standout aspects of Clip-Chain is its user-centric design. We understand that not every user wants to deal with a cluttered interface. That’s why we offer a minimal UI mode, which strips away extraneous controls to provide a clean, focused viewing experience. For those who prefer a richer set of options, our default interface includes full controls, complete with video titles, logos, and additional playback settings. This dual-mode functionality ensures that Clip-Chain can cater to both beginners and advanced users alike.</p>
+      <p>Our commitment to quality extends beyond just functionality. We have designed Clip-Chain to be responsive and lightweight, ensuring fast load times and smooth operation even on older devices. The platform leverages modern web technologies such as HTML5, JavaScript, and CSS3, guaranteeing compatibility across a diverse range of browsers and operating systems. Whether you are accessing Clip-Chain on a desktop, tablet, or smartphone, you can expect a consistent and enjoyable experience.</p>
+      <p>Moreover, Clip-Chain is continuously evolving. Our development team is always working on incorporating new features and improvements based on user feedback and emerging trends in video technology. Future updates may include support for additional video formats, enhanced editing tools, and even collaborative playlist creation for group projects. We believe that the best tools are those that grow with their users, and at Clip-Chain, we are dedicated to making your video editing and viewing experience as dynamic as possible.</p>
+      <p>In addition to its technical prowess, Clip-Chain is also a platform for creativity and expression. It empowers you to take full control of your media consumption by allowing you to craft playlists that reflect your personal style and preferences. Every clip you select, every transition you fine-tune, is a step towards creating a unique narrative that can be shared with friends, colleagues, or a global audience. With Clip-Chain, the possibilities are endless, and the only limit is your imagination.</p>
+      <p>We invite you to explore Clip-Chain and discover a new way to experience video content. Dive into our feature-rich interface, experiment with various editing tools, and see firsthand how easily you can transform ordinary video clips into a compelling story. Whether you are looking to educate, entertain, or inspire, Clip-Chain is the ultimate tool to help you achieve your vision. Thank you for choosing Clip-Chain – where every clip counts, and every chain is a journey.</p>
     </section>
 
     <section id="faq">
       <h2>Frequently Asked Questions</h2>
       <div class="faq-item">
-        <h3>How do I group multiple videos for one round?</h3>
-        <p>Type the video URLs on a single line and separate them with “&&”. They will play together in the same round in the order listed.</p>
+        <h3>Why aren't YouTube Shorts working?</h3>
+        <p>YouTube Shorts are fully supported in Clip-Chain. If you encounter any issues, simply adjust the URL format: replace the “shorts” segment with “watch.” For instance, if your original URL is: “https://www.youtube.com/shorts/...” change it to: “https://www.youtube.com/watch/...” Then, click on the “share” button on YouTube and copy the URL from the share dialog. This conversion ensures that the video is correctly recognized and will play seamlessly in Clip-Chain.</p>
       </div>
       <div class="faq-item">
-        <h3>How are timestamps handled?</h3>
-        <p>If you change a timestamp manually (or provide only an end timestamp), the download will include them. A lone end timestamp is output as “00:00:00, [end]”.</p>
+        <h3>Why can't I send a whole YouTube Playlist link?</h3>
+        <p>Clip-Chain is designed to work with individual video links. Handling an entire playlist link involves complex parsing that is not currently supported. We recommend adding individual videos from a playlist to ensure proper playback and precise control.</p>
       </div>
       <div class="faq-item">
-        <h3>How do next/previous controls work with grouped videos?</h3>
-        <p>Next/Previous buttons navigate within the current group. Pressing Previous on the first video goes to the last video of the previous group; pressing Next on the last video goes to the first video of the next group. At the very beginning or end, it wraps around.</p>
+        <h3>Why do I still see the YouTube video title and logo even in minimal UI mode?</h3>
+        <p>This behavior is due to restrictions enforced by the YouTube API. Certain branding elements are mandatory and cannot be completely removed even when minimal UI mode is activated, ensuring compliance with YouTube’s branding guidelines.</p>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="footerButtons">
+    <div class="footerButtons" style="display: flex; justify-content: center; gap: 10px;">
       <a href="about.html"><button>About</button></a>
       <a href="terms.html"><button>Terms Of Service</button></a>
       <a href="privacy.html"><button>Privacy Policy</button></a>
@@ -410,894 +402,36 @@
     </div>
   </footer>
 
+<script>
+var _0x27932a=_0x1e6e;function _0x1e6e(_0x162186,_0x20b2b7){var _0x3dbde6=_0x3dbd();return _0x1e6e=function(_0x1e6e5f,_0x10896e){_0x1e6e5f=_0x1e6e5f-0x79;var _0x47640d=_0x3dbde6[_0x1e6e5f];return _0x47640d;},_0x1e6e(_0x162186,_0x20b2b7);}function _0x3dbd(){var _0x26a629=['5319800YqSDHm','length','join','href','map','text/plain','link','endTimeDiv','startTimeDiv','undefined','762JtZIgR','download','70gwLAxn','video_links.txt','createElement','push','4kCfqfn','1792290mMObmV','videoLinks','getElementsByTagName','19999xHhAse','4890184pNnWvb','createObjectURL','679005aaSNtt','value','getElementById','357353xorMgl','addEventListener','144330WwKDrH'];_0x3dbd=function(){return _0x26a629;};return _0x3dbd();}(function(_0x11486f,_0x11f6c8){var _0x509209=_0x1e6e,_0x3f696e=_0x11486f();while(!![]){try{var _0x493126=parseInt(_0x509209(0x8a))/0x1*(parseInt(_0x509209(0x80))/0x2)+-parseInt(_0x509209(0x8c))/0x3+parseInt(_0x509209(0x85))/0x4+parseInt(_0x509209(0x81))/0x5+-parseInt(_0x509209(0x7a))/0x6*(parseInt(_0x509209(0x84))/0x7)+-parseInt(_0x509209(0x8d))/0x8+-parseInt(_0x509209(0x87))/0x9*(parseInt(_0x509209(0x7c))/0xa);if(_0x493126===_0x11f6c8)break;else _0x3f696e['push'](_0x3f696e['shift']());}catch(_0x397cf1){_0x3f696e['push'](_0x3f696e['shift']());}}}(_0x3dbd,0xa8dd7));function updateMainTextBox(){var _0x8da2c7=_0x1e6e;const _0xda8144=document['getElementById'](_0x8da2c7(0x82));let _0x2b46e5=playlist[_0x8da2c7(0x91)](_0x518d2b=>{var _0x322aaf=_0x8da2c7;let _0x4fb3f9=getTimeString(_0x518d2b[_0x322aaf(0x95)]),_0x2614de=getTimeString(_0x518d2b[_0x322aaf(0x94)]);return _0x518d2b[_0x322aaf(0x93)]+',\x20'+_0x4fb3f9+',\x20'+_0x2614de;});_0xda8144[_0x8da2c7(0x88)]=_0x2b46e5['join']('\x0a');}function getTimeString(_0x10b385){var _0x5c6c93=_0x1e6e,_0x1450ed=_0x10b385[_0x5c6c93(0x83)]('input'),_0x1ec37f=[];for(var _0x58f3e0=0x0;_0x58f3e0<_0x1450ed[_0x5c6c93(0x8e)];_0x58f3e0++){var _0x52dffb=_0x1450ed[_0x58f3e0][_0x5c6c93(0x88)]['trim']();_0x52dffb===''&&(_0x52dffb='00'),_0x52dffb[_0x5c6c93(0x8e)]<0x2&&(_0x52dffb='0'+_0x52dffb),_0x1ec37f[_0x5c6c93(0x7f)](_0x52dffb);}return _0x1ec37f[_0x5c6c93(0x8f)](':');}document[_0x27932a(0x89)]('downloadTxtButton')[_0x27932a(0x8b)]('click',function(){var _0x2cecb4=_0x27932a,_0x52da84='';typeof playlist!==_0x2cecb4(0x79)&&playlist[_0x2cecb4(0x8e)]>0x0?_0x52da84=playlist[_0x2cecb4(0x91)](function(_0x337e1e){var _0x16cc43=_0x2cecb4,_0x12b6d3=_0x337e1e[_0x16cc43(0x93)],_0x1966e8=getTimeString(_0x337e1e['startTimeDiv']),_0x36e041=getTimeString(_0x337e1e[_0x16cc43(0x94)]);return _0x12b6d3+',\x20'+_0x1966e8+',\x20'+_0x36e041;})[_0x2cecb4(0x8f)]('\x0a'):_0x52da84=document['getElementById'](_0x2cecb4(0x82))[_0x2cecb4(0x88)];var _0x4fce84=new Blob([_0x52da84],{'type':_0x2cecb4(0x92)}),_0x594f62=document[_0x2cecb4(0x7e)]('a');_0x594f62[_0x2cecb4(0x7b)]=_0x2cecb4(0x7d),_0x594f62[_0x2cecb4(0x90)]=window['URL'][_0x2cecb4(0x86)](_0x4fce84),_0x594f62['click'](),window['URL']['revokeObjectURL'](_0x594f62[_0x2cecb4(0x90)]);});
+  </script>
 
   <script>
-    
-    let categories = [];
-    let globalPlaylist = [];  
-    let currentGlobalIndex = 0;
-    let currentGroupVideoIndex = 0;
-    let hls = null;
-    
-    let youtubePlayer = null;
-    let minimalMode = false;
-    let ytPollInterval = null;
-    
-    let importCatCounter = 0;
-
-    
-    function createTimeDiv(timeStr, onChangeCallback) {
-      const div = document.createElement('div');
-      const placeholders = ['HH', 'MM', 'SS'];
-      let values = ['', '', ''];
-      if (timeStr && timeStr.includes(':')) {
-        values = timeStr.split(':');
-        while (values.length < 3) { values.push(''); }
-      }
-      placeholders.forEach((placeholder, i) => {
-        const input = document.createElement('input');
-        input.type = 'number';
-        input.placeholder = placeholder;
-        if (placeholder === 'SS') { input.step = "any"; }
-        if (values[i]) { input.value = values[i]; }
-        if(onChangeCallback) {
-          input.addEventListener('change', onChangeCallback);
-        }
-        div.appendChild(input);
-      });
-      return div;
-    }
-    function getTimeString(container) {
-      const inputs = container.getElementsByTagName('input');
-      const parts = [];
-      for (let i = 0; i < inputs.length; i++) {
-        let val = inputs[i].value.trim();
-        if (val === '') { val = '00'; }
-        if (val.length < 2) { val = '0' + val; }
-        parts.push(val);
-      }
-      return parts.join(':');
-    }
-    function calculateSeconds(timeDiv) {
-      const [hh, mm, ss] = [...timeDiv.children].map(input => {
-        const value = parseFloat(input.value);
-        return isNaN(value) ? 0 : value;
-      });
-      return hh * 3600 + mm * 60 + ss;
-    }
-    function extractYouTubeId(url) {
-      const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w-]+)/);
-      return match ? match[1] : null;
-    }
-
-    
-    function updateCategoryRawText(cat) {
-      let lines = [];
-      cat.groups.forEach(group => {
-        let parts = group.map(video => {
-          let start = getTimeString(video.startTimeDiv);
-          let end = getTimeString(video.endTimeDiv);
-          if(start !== "00:00:00" || end !== "00:00:00"){
-            return video.link + ", " + start + ", " + end;
-          } else {
-            return video.link;
-          }
-        });
-        lines.push(parts.join(" && "));
-      });
-      cat.rawText = lines.join("\n");
-      const textarea = document.getElementById("textarea_" + cat.id);
-      if(textarea) { 
-        textarea.value = cat.rawText; 
-      }
-    }
-
-    
-    function parseCategory(cat) {
-      cat.groups = [];
-      const lines = (cat.rawText || "").trim().split('\n').filter(l => l.trim() !== "");
-      lines.forEach(line => {
-        const tokens = line.split("&&").map(t => t.trim());
-        const group = [];
-        tokens.forEach(token => {
-          const parts = token.split(',');
-          const link = parts[0].trim();
-          let start = parts.length === 2 ? parts[1].trim() : (parts.length >=3 ? parts[1].trim() : "00:00:00");
-          let end = parts.length >= 3 ? parts[2].trim() : "00:00:00";
-          const video = {
-            link: link,
-            startTimeDiv: createTimeDiv(start, () => { updateCategoryRawText(cat); }),
-            endTimeDiv: createTimeDiv(end, () => { updateCategoryRawText(cat); }),
-            startTime: 0,
-            endTime: 0
-          };
-          group.push(video);
-        });
-        if(group.length > 0) cat.groups.push(group);
-      });
-    }
-    function renderCategories() {
-      const container = document.getElementById('categoriesContainer');
-      container.innerHTML = "";
-      categories.forEach((cat, index) => {
-        const catDiv = document.createElement('div');
-        catDiv.classList.add('categoryContainer');
-        catDiv.setAttribute('data-id', cat.id);
-        const headerDiv = document.createElement('div');
-        headerDiv.classList.add('categoryHeader');
-        const titleInput = document.createElement('input');
-        titleInput.type = 'text';
-        titleInput.classList.add('categoryTitle');
-        titleInput.value = cat.title;
-        titleInput.addEventListener('input', function () {
-          cat.title = this.value;
-        });
-        headerDiv.appendChild(titleInput);
-        const controlsDiv = document.createElement('div');
-        controlsDiv.classList.add('categoryControls');
-        const upBtn = document.createElement('button');
-        upBtn.textContent = "▲";
-        upBtn.title = "Move Category Up";
-        upBtn.disabled = index === 0;
-        upBtn.addEventListener('click', () => {
-          if(index > 0) {
-            [categories[index-1], categories[index]] = [categories[index], categories[index-1]];
-            renderCategories();
-          }
-        });
-        controlsDiv.appendChild(upBtn);
-        const downBtn = document.createElement('button');
-        downBtn.textContent = "▼";
-        downBtn.title = "Move Category Down";
-        downBtn.disabled = index === categories.length - 1;
-        downBtn.addEventListener('click', () => {
-          if(index < categories.length - 1) {
-            [categories[index], categories[index+1]] = [categories[index+1], categories[index]];
-            renderCategories();
-          }
-        });
-        controlsDiv.appendChild(downBtn);
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = "Remove Category";
-        removeBtn.addEventListener('click', () => {
-          categories.splice(index, 1);
-          renderCategories();
-        });
-        controlsDiv.appendChild(removeBtn);
-        const downloadBtn = document.createElement('button');
-        downloadBtn.textContent = "Download Category TXT";
-        downloadBtn.addEventListener('click', () => {
-          downloadCategory(cat);
-        });
-        controlsDiv.appendChild(downloadBtn);
-        
-        const importTxtBtn = document.createElement('button');
-        importTxtBtn.textContent = "Import TXT file";
-        importTxtBtn.addEventListener('click', () => {
-          cat.txtFileInput.click();
-        });
-        controlsDiv.appendChild(importTxtBtn);
-        
-        const uploadFolderBtn = document.createElement('button');
-        uploadFolderBtn.textContent = "Upload local folder (TXT+Videos)";
-        uploadFolderBtn.addEventListener('click', () => {
-          cat.folderInput.click();
-        });
-        controlsDiv.appendChild(uploadFolderBtn);
-        const shuffleCatBtn = document.createElement('button');
-        shuffleCatBtn.textContent = "Shuffle Videos";
-        shuffleCatBtn.addEventListener('click', () => {
-          if(cat.groups && cat.groups.length > 1) {
-            for(let i = cat.groups.length - 1; i > 0; i--){
-              const j = Math.floor(Math.random() * (i + 1));
-              [cat.groups[i], cat.groups[j]] = [cat.groups[j], cat.groups[i]];
-            }
-            renderCategoryVideos(cat.id);
-          }
-        });
-        controlsDiv.appendChild(shuffleCatBtn);
-        headerDiv.appendChild(controlsDiv);
-        catDiv.appendChild(headerDiv);
-        const textarea = document.createElement('textarea');
-        textarea.id = "textarea_" + cat.id;
-        textarea.placeholder = "Paste video links here. To group videos for one round, separate URLs with '&&'. Format: [link], [start time], [end time].";
-        textarea.value = cat.rawText || "";
-        textarea.addEventListener('input', function () {
-          cat.rawText = this.value;
-          parseCategory(cat);
-          renderCategoryVideos(cat.id);
-        });
-        catDiv.appendChild(textarea);
-        const btnDiv = document.createElement('div');
-        btnDiv.classList.add('topButtons');
-        const uploadBtn = document.createElement('button');
-        uploadBtn.textContent = "Upload Local Video";
-        uploadBtn.addEventListener('click', () => {
-          cat.fileInput.click();
-        });
-        btnDiv.appendChild(uploadBtn);
-        catDiv.appendChild(btnDiv);
-        const videoListContainer = document.createElement('div');
-        videoListContainer.classList.add('videoListContainer');
-        videoListContainer.id = "videoList_" + cat.id;
-        catDiv.appendChild(videoListContainer);
-        const fileInput = document.createElement('input');
-        fileInput.type = "file";
-        fileInput.accept = "video/mp4, video/webm, video/avi, video/mpeg, video/mkv, video/flv, video/ogg, video/mov, video/m4v, video/wmv, video/asf, video/3gp";
-        fileInput.multiple = true;
-        fileInput.style.display = "none";
-        fileInput.addEventListener('change', function(event) {
-          const files = event.target.files;
-          let currentText = textarea.value.trim();
-          for(let i = 0; i < files.length; i++){
-            const file = files[i];
-            const fileURL = URL.createObjectURL(file);
-            currentText += (currentText ? "\n" : "") + fileURL;
-          }
-          textarea.value = currentText;
-          cat.rawText = currentText;
-          parseCategory(cat);
-          renderCategoryVideos(cat.id);
-        });
-        cat.fileInput = fileInput;
-        catDiv.appendChild(fileInput);
-        
-        const txtInput = document.createElement('input');
-        txtInput.type = "file";
-        txtInput.accept = ".txt";
-        txtInput.style.display = "none";
-        txtInput.addEventListener('change', function(event) {
-          const file = event.target.files[0];
-          if(file){
-            const reader = new FileReader();
-            reader.onload = function(e) {
-              const content = e.target.result;
-              const lines = content.split("\n");
-              if(lines[0].startsWith("Title:")){
-                cat.title = lines[0].substring(6).trim();
-                const titleInput = catDiv.querySelector("input.categoryTitle");
-                if(titleInput) titleInput.value = cat.title;
-                lines.shift();
-              }
-              cat.rawText = lines.join("\n");
-              textarea.value = cat.rawText;
-              parseCategory(cat);
-              renderCategoryVideos(cat.id);
-            };
-            reader.readAsText(file);
-          }
-        });
-        cat.txtFileInput = txtInput;
-        catDiv.appendChild(txtInput);
-        
-        const folderInput = document.createElement('input');
-        folderInput.type = "file";
-        folderInput.setAttribute("webkitdirectory", "");
-        folderInput.style.display = "none";
-        folderInput.addEventListener('change', function(event) {
-          const files = Array.from(event.target.files);
-          
-          const txtFiles = files.filter(f => f.name.toLowerCase().endsWith('.txt'));
-          if(txtFiles.length === 0){
-            alert("No TXT file found in folder.");
-            return;
-          }
-          
-          const txtFile = txtFiles[0];
-          
-          const videoMapping = {};
-          files.forEach(f => {
-            if(!f.name.toLowerCase().endsWith('.txt')){
-              videoMapping[f.name] = URL.createObjectURL(f);
-            }
-          });
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            let content = e.target.result;
-            
-            const lines = content.split("\n").map(line => {
-              const tokens = line.split(",");
-              const newTokens = tokens.map(tok => {
-                const ttrim = tok.trim();
-                return videoMapping[ttrim] ? videoMapping[ttrim] : ttrim;
-              });
-              return newTokens.join(", ");
-            });
-            content = lines.join("\n");
-            if(content.startsWith("Title:")){
-              
-              const contentLines = content.split("\n");
-              cat.title = contentLines[0].substring(6).trim();
-              const titleInput = catDiv.querySelector("input.categoryTitle");
-              if(titleInput) titleInput.value = cat.title;
-              contentLines.shift();
-              content = contentLines.join("\n");
-            }
-            cat.rawText = content;
-            textarea.value = cat.rawText;
-            parseCategory(cat);
-            renderCategoryVideos(cat.id);
-          };
-          reader.readAsText(txtFile);
-        });
-        cat.folderInput = folderInput;
-        catDiv.appendChild(folderInput);
-        container.appendChild(catDiv);
-        parseCategory(cat);
-        renderCategoryVideos(cat.id);
-      });
-    }
-    function renderCategoryVideos(catId) {
-      const cat = categories.find(c => c.id === catId);
-      if(!cat) return;
-      const container = document.getElementById("videoList_" + catId);
-      container.innerHTML = "";
-      if(!cat.groups || cat.groups.length === 0) {
-        container.textContent = "No videos added yet.";
-        return;
-      }
-      cat.groups.forEach((group, gIndex) => {
-        const groupDiv = document.createElement('div');
-        groupDiv.classList.add('videoItem');
-        const controlDiv = document.createElement('div');
-        controlDiv.classList.add('reorderButtons');
-        const upButton = document.createElement('button');
-        upButton.innerHTML = "▲";
-        upButton.title = "Move Group Up";
-        upButton.disabled = gIndex === 0;
-        upButton.addEventListener('click', () => {
-          if(gIndex > 0) {
-            [cat.groups[gIndex - 1], cat.groups[gIndex]] = [cat.groups[gIndex], cat.groups[gIndex - 1]];
-            renderCategoryVideos(cat.id);
-          }
-        });
-        controlDiv.appendChild(upButton);
-        const downButton = document.createElement('button');
-        downButton.innerHTML = "▼";
-        downButton.title = "Move Group Down";
-        downButton.disabled = gIndex === cat.groups.length - 1;
-        downButton.addEventListener('click', () => {
-          if(gIndex < cat.groups.length - 1) {
-            [cat.groups[gIndex], cat.groups[gIndex + 1]] = [cat.groups[gIndex + 1], cat.groups[gIndex]];
-            renderCategoryVideos(cat.id);
-          }
-        });
-        controlDiv.appendChild(downButton);
-        const removeButton = document.createElement('button');
-        removeButton.innerHTML = "✖";
-        removeButton.title = "Remove Group";
-        removeButton.addEventListener('click', () => {
-          cat.groups.splice(gIndex, 1);
-          renderCategoryVideos(cat.id);
-        });
-        controlDiv.appendChild(removeButton);
-        groupDiv.appendChild(controlDiv);
-        const orderLabel = document.createElement('div');
-        orderLabel.classList.add('orderLabel');
-        orderLabel.textContent = `Group #${gIndex + 1}`;
-        groupDiv.appendChild(orderLabel);
-        group.forEach(video => {
-          const videoPreview = document.createElement('div');
-          if(video.link.includes('youtube.com') || video.link.includes('youtu.be')){
-            const vidId = extractYouTubeId(video.link);
-            if(vidId){
-              const iframe = document.createElement('iframe');
-              iframe.classList.add('youtubePreview');
-              iframe.src = `https://www.youtube.com/embed/${vidId}?rel=0&modestbranding=1`;
-              iframe.frameBorder = 0;
-              videoPreview.appendChild(iframe);
-            }
-          } else {
-            const preview = document.createElement('video');
-            preview.classList.add('videoPreview');
-            preview.src = video.link;
-            preview.controls = true;
-            videoPreview.appendChild(preview);
-          }
-          groupDiv.appendChild(videoPreview);
-          const controls = document.createElement('div');
-          controls.classList.add('controls');
-          const timeInputs = document.createElement('div');
-          timeInputs.classList.add('timeInputs');
-          const startLabel = document.createElement('span');
-          startLabel.textContent = 'Start Time:';
-          timeInputs.appendChild(startLabel);
-          const startDiv = createTimeDiv(getTimeString(video.startTimeDiv), () => { updateCategoryRawText(cat); });
-          video.startTimeDiv = startDiv;
-          timeInputs.appendChild(startDiv);
-          const endLabel = document.createElement('span');
-          endLabel.textContent = 'End Time:';
-          timeInputs.appendChild(endLabel);
-          const endDiv = createTimeDiv(getTimeString(video.endTimeDiv), () => { updateCategoryRawText(cat); });
-          video.endTimeDiv = endDiv;
-          timeInputs.appendChild(endDiv);
-          controls.appendChild(timeInputs);
-          groupDiv.appendChild(controls);
-        });
-        container.appendChild(groupDiv);
-      });
-    }
-
-    
-    function addCategory() {
-      const newCat = {
-        id: "cat_" + Date.now(),
-        title: "New Category",
-        rawText: "",
-        groups: [],
-        fileInput: null,
-        txtFileInput: null,
-        folderInput: null
-      };
-      categories.push(newCat);
-      renderCategories();
-    }
-    function downloadCategory(cat) {
-      let content = "Title: " + cat.title + "\n";
-      if(cat.groups && cat.groups.length > 0){
-        cat.groups.forEach(group => {
-          const groupText = group.map(video => {
-            const start = getTimeString(video.startTimeDiv);
-            const end = getTimeString(video.endTimeDiv);
-            if(start !== "00:00:00" || end !== "00:00:00"){
-              return video.link + ", " + start + ", " + end;
-            } else {
-              return video.link;
-            }
-          }).join(" && ");
-          content += groupText + "\n";
-        });
-      }
-      const blob = new Blob([content], { type: 'text/plain' });
-      const a = document.createElement('a');
-      a.download = cat.title + ".txt";
-      a.href = window.URL.createObjectURL(blob);
-      a.click();
-      window.URL.revokeObjectURL(a.href);
-    }
-    function downloadAllCategories() {
-      let content = "";
-      categories.forEach(cat => {
-        content += "Title: " + cat.title + "\n";
-        if(cat.groups && cat.groups.length > 0){
-          cat.groups.forEach(group => {
-            const groupText = group.map(video => {
-              const start = getTimeString(video.startTimeDiv);
-              const end = getTimeString(video.endTimeDiv);
-              if(start !== "00:00:00" || end !== "00:00:00"){
-                return video.link + ", " + start + ", " + end;
-              } else {
-                return video.link;
-              }
-            }).join(" && ");
-            content += groupText + "\n";
-          });
-        }
-        content += "\n";
-      });
-      const blob = new Blob([content], { type: 'text/plain' });
-      const a = document.createElement('a');
-      a.download = "all_categories.txt";
-      a.href = window.URL.createObjectURL(blob);
-      a.click();
-      window.URL.revokeObjectURL(a.href);
-    }
-    function shuffleCategories() {
-      for(let i = categories.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1));
-        [categories[i], categories[j]] = [categories[j], categories[i]];
-      }
-      renderCategories();
-    }
-    function shuffleVideosInCategories() {
-      categories.forEach(cat => {
-        if(cat.groups && cat.groups.length > 1){
-          for(let i = cat.groups.length - 1; i > 0; i--){
-            const j = Math.floor(Math.random() * (i + 1));
-            [cat.groups[i], cat.groups[j]] = [cat.groups[j], cat.groups[i]];
-          }
-          renderCategoryVideos(cat.id);
-        }
-      });
-    }
-
-    
-    function buildGlobalPlaylist() {
-      globalPlaylist = [];
-      let maxGroups = 0;
-      categories.forEach(cat => {
-        if(cat.groups) {
-          maxGroups = Math.max(maxGroups, cat.groups.length);
-        }
-      });
-      for(let round = 0; round < maxGroups; round++){
-        categories.forEach(cat => {
-          if(cat.groups && cat.groups.length > 0){
-            const group = cat.groups[round % cat.groups.length];
-            globalPlaylist.push({ catId: cat.id, group: group });
-          }
-        });
-      }
-    }
-    function playGlobalGroup(item, resetGroupIndex = true) {
-      if(resetGroupIndex) { currentGroupVideoIndex = 0; }
-      playVideoInGroup(item);
-    }
-    function playVideoInGroup(item) {
-      const videoData = item.group[currentGroupVideoIndex];
-      videoData.startTime = calculateSeconds(videoData.startTimeDiv);
-      videoData.endTime = calculateSeconds(videoData.endTimeDiv);
-      if(hls){ hls.destroy(); hls = null; }
-      if(youtubePlayer && youtubePlayer.destroy){ youtubePlayer.destroy(); youtubePlayer = null; }
-      const videoPlayer = document.getElementById('videoPlayer');
-      const ytContainer = document.getElementById('youtubePlayerContainer');
-      videoPlayer.pause();
-      videoPlayer.style.display = 'none';
-      if(videoData.link.includes('youtube.com') || videoData.link.includes('youtu.be')){
-        const vidId = extractYouTubeId(videoData.link);
-        ytContainer.style.display = 'block';
-        ytContainer.innerHTML = "";
-        const newDiv = document.createElement('div');
-        newDiv.id = "ytPlayer";
-        ytContainer.appendChild(newDiv);
-        youtubePlayer = new YT.Player('ytPlayer', {
-          height: '360',
-          width: '100%',
-          videoId: vidId,
-          playerVars: {
-            autoplay: 1,
-            controls: minimalMode ? 0 : 1,
-            modestbranding: 1,
-            rel: 0,
-            fs: minimalMode ? 0 : 1,
-            iv_load_policy: minimalMode ? 3 : 1,
-            disablekb: minimalMode ? 1 : 0,
-            playsinline: 1,
-            showinfo: minimalMode ? 0 : 1
-          },
-          events: {
-            onReady: event => {
-              const options = { videoId: vidId, startSeconds: videoData.startTime };
-              if(videoData.endTime && videoData.endTime > 0){
-                options.endSeconds = videoData.endTime;
-              }
-              event.target.loadVideoById(options);
-              if(minimalMode){
-                if(ytPollInterval) clearInterval(ytPollInterval);
-                ytPollInterval = setInterval(() => {
-                  const dur = event.target.getDuration();
-                  const curr = event.target.getCurrentTime();
-                  if(dur && (dur - curr < 0.5)){
-                    clearInterval(ytPollInterval);
-                    advanceAfterVideo(item);
-                  }
-                }, 500);
-              }
-            },
-            onStateChange: event => {
-              if(event.data === YT.PlayerState.ENDED){
-                if(ytPollInterval) clearInterval(ytPollInterval);
-                advanceAfterVideo(item);
-              }
-            }
-          }
-        });
-      } else {
-        ytContainer.style.display = 'none';
-        videoPlayer.style.display = 'block';
-        videoPlayer.controls = !minimalMode;
-        if(videoData.link.endsWith('.m3u8')){
-          hls = new Hls();
-          hls.loadSource(videoData.link);
-          hls.attachMedia(videoPlayer);
-          hls.on(Hls.Events.MANIFEST_PARSED, () => {
-            videoPlayer.currentTime = videoData.startTime || 0;
-            videoPlayer.play();
-          });
-        } else {
-          videoPlayer.src = videoData.link;
-          videoPlayer.currentTime = videoData.startTime || 0;
-          videoPlayer.play();
-        }
-        if(videoData.endTime && videoData.endTime > 0){
-          videoPlayer.ontimeupdate = () => {
-            if(videoPlayer.currentTime >= videoData.endTime){
-              videoPlayer.pause();
-              videoPlayer.ontimeupdate = null;
-              advanceAfterVideo(item);
-            }
-          };
-          videoPlayer.onended = null;
-        } else {
-          videoPlayer.onended = () => {
-            advanceAfterVideo(item);
-          };
-        }
-      }
-    }
-    function advanceAfterVideo(item) {
-      if(currentGroupVideoIndex < item.group.length - 1){
-        currentGroupVideoIndex++;
-        playVideoInGroup(item);
-      } else {
-        currentGlobalIndex = (currentGlobalIndex + 1) % globalPlaylist.length;
-        currentGroupVideoIndex = 0;
-        playGlobalVideo();
-      }
-    }
-    function playGlobalVideo() {
-      if(globalPlaylist.length === 0) return;
-      if(currentGlobalIndex >= globalPlaylist.length){
-        currentGlobalIndex = 0;
-      }
-      playGlobalGroup(globalPlaylist[currentGlobalIndex], true);
-    }
-    function playNextGlobal() {
-      const currentItem = globalPlaylist[currentGlobalIndex];
-      if(currentGroupVideoIndex < currentItem.group.length - 1){
-        currentGroupVideoIndex++;
-        playVideoInGroup(currentItem);
-      } else {
-        currentGlobalIndex = (currentGlobalIndex + 1) % globalPlaylist.length;
-        currentGroupVideoIndex = 0;
-        playGlobalVideo();
-      }
-    }
-    function playPreviousGlobal() {
-      const currentItem = globalPlaylist[currentGlobalIndex];
-      if(currentGroupVideoIndex > 0){
-        currentGroupVideoIndex--;
-        playVideoInGroup(currentItem);
-      } else {
-        currentGlobalIndex = currentGlobalIndex === 0 ? globalPlaylist.length - 1 : currentGlobalIndex - 1;
-        const prevItem = globalPlaylist[currentGlobalIndex];
-        currentGroupVideoIndex = prevItem.group.length - 1;
-        playGlobalGroup(prevItem, false);
-      }
-    }
-    function restartGlobalPlaylist() {
-      currentGlobalIndex = 0;
-      currentGroupVideoIndex = 0;
-      playGlobalVideo();
-    }
-
-    
-    document.getElementById('generatePlaylistButton').addEventListener('click', () => {
-      buildGlobalPlaylist();
-      currentGlobalIndex = 0;
-      currentGroupVideoIndex = 0;
-      playGlobalVideo();
-      document.querySelector('.playlistControls').style.display = 'flex';
-      document.getElementById('emptyMessage').style.display = 'none';
-    });
-    document.getElementById('nextButton').addEventListener('click', playNextGlobal);
-    document.getElementById('prevButton').addEventListener('click', playPreviousGlobal);
-    document.getElementById('restartButton').addEventListener('click', restartGlobalPlaylist);
-    document.getElementById('fullscreenButton').addEventListener('click', () => {
-      const elem = document.getElementById('videoPlayerContainer');
-      if(!document.fullscreenElement){
-        elem.requestFullscreen();
-      } else {
-        document.exitFullscreen();
-      }
-    });
-    
-    document.getElementById('hideUIButton').addEventListener('click', () => {
-      minimalMode = !minimalMode;
-      const btn = document.getElementById('hideUIButton');
-      btn.textContent = minimalMode ? "Normal UI" : "Minimal UI";
-      const videoPlayer = document.getElementById('videoPlayer');
-      if(videoPlayer) videoPlayer.controls = !minimalMode;
-      if(youtubePlayer){
-        let currentTime = youtubePlayer.getCurrentTime();
-        const currentItem = globalPlaylist[currentGlobalIndex];
-        const vidId = extractYouTubeId(currentItem.group[currentGroupVideoIndex].link);
-        youtubePlayer.destroy();
-        youtubePlayer = null;
-        const ytContainer = document.getElementById('youtubePlayerContainer');
-        ytContainer.innerHTML = "";
-        const newDiv = document.createElement('div');
-        newDiv.id = "ytPlayer";
-        ytContainer.appendChild(newDiv);
-        youtubePlayer = new YT.Player('ytPlayer', {
-          height: '360',
-          width: '100%',
-          videoId: vidId,
-          playerVars: {
-            autoplay: 1,
-            controls: minimalMode ? 0 : 1,
-            modestbranding: 1,
-            rel: 0,
-            fs: minimalMode ? 0 : 1,
-            iv_load_policy: minimalMode ? 3 : 1,
-            disablekb: minimalMode ? 1 : 0,
-            playsinline: 1,
-            showinfo: minimalMode ? 0 : 1
-          },
-          events: {
-            onReady: event => {
-              const options = { videoId: vidId, startSeconds: currentTime };
-              if(currentItem.group[currentGroupVideoIndex].endTime && currentItem.group[currentGroupVideoIndex].endTime > 0){
-                options.endSeconds = currentItem.group[currentGroupVideoIndex].endTime;
-              }
-              event.target.loadVideoById(options);
-            },
-            onStateChange: event => {
-              if(event.data === YT.PlayerState.ENDED){
-                advanceAfterVideo(currentItem);
-              }
-            }
-          }
-        });
-      }
-    });
-
-    
-    document.getElementById('addCategoryButton').addEventListener('click', addCategory);
-    document.getElementById('shuffleCategoriesButton').addEventListener('click', () => {
-      for(let i = categories.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1));
-        [categories[i], categories[j]] = [categories[j], categories[i]];
-      }
-      renderCategories();
-    });
-    document.getElementById('downloadAllButton').addEventListener('click', downloadAllCategories);
-    
-    document.getElementById('importAllTxtButton').addEventListener('click', () => {
-      document.getElementById('globalTxtInput').click();
-    });
-    document.getElementById('shuffleVideosButton').addEventListener('click', shuffleVideosInCategories);
-    
-    document.getElementById('globalFolderImportBtn').addEventListener('click', () => {
-      document.getElementById('globalFolderInput').click();
-    });
-
-    
-    document.getElementById('globalTxtInput').addEventListener('change', function(event) {
-      const files = event.target.files;
-      for(let i = 0; i < files.length; i++){
-        const file = files[i];
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const content = e.target.result;
-          
-          const lines = content.split("\n");
-          let categoriesFromFile = [];
-          let currentCategoryLines = [];
-          let currentTitle = "";
-          lines.forEach(line => {
-            if(line.trim().startsWith("Title:")){
-              if(currentCategoryLines.length > 0){
-                categoriesFromFile.push({ title: currentTitle || "Imported Category", rawText: currentCategoryLines.join("\n") });
-                currentCategoryLines = [];
-              }
-              currentTitle = line.trim().substring(6).trim();
-            } else {
-              if(line.trim() !== ""){
-                currentCategoryLines.push(line);
-              }
-            }
-          });
-          if(currentCategoryLines.length > 0){
-            categoriesFromFile.push({ title: currentTitle || "Imported Category", rawText: currentCategoryLines.join("\n") });
-          }
-          categoriesFromFile.forEach(catData => {
-            const newCat = {
-              id: "cat_import_" + (importCatCounter++),
-              title: catData.title,
-              rawText: catData.rawText,
-              groups: [],
-              fileInput: null,
-              txtFileInput: null,
-              folderInput: null
-            };
-            parseCategory(newCat);
-            categories.push(newCat);
-          });
-          renderCategories();
-        };
-        reader.readAsText(file);
-      }
-    });
-
-    
-    document.getElementById('globalFolderInput').addEventListener('change', function(event) {
-      const files = Array.from(event.target.files);
-      
-      let videoMapping = {};
-      files.forEach(f => {
-        if(!f.name.toLowerCase().endsWith('.txt')){
-          videoMapping[f.name] = URL.createObjectURL(f);
-        }
-      });
-      
-      let txtFiles = files.filter(f => f.name.toLowerCase().endsWith('.txt'));
-      txtFiles.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          let content = e.target.result;
-          
-          const lines = content.split("\n").map(line => {
-            const tokens = line.split(",");
-            const newTokens = tokens.map(tok => {
-              const ttrim = tok.trim();
-              return videoMapping[ttrim] ? videoMapping[ttrim] : ttrim;
-            });
-            return newTokens.join(", ");
-          });
-          content = lines.join("\n");
-          
-          const allLines = content.split("\n");
-          let categoriesFromFolder = [];
-          let currentCatLines = [];
-          let currentCatTitle = "";
-          allLines.forEach(line => {
-            if(line.trim().startsWith("Title:")){
-              if(currentCatLines.length > 0){
-                categoriesFromFolder.push({ title: currentCatTitle || "Imported Category", rawText: currentCatLines.join("\n") });
-                currentCatLines = [];
-              }
-              currentCatTitle = line.trim().substring(6).trim();
-            } else {
-              if(line.trim() !== ""){
-                currentCatLines.push(line);
-              }
-            }
-          });
-          if(currentCatLines.length > 0){
-            categoriesFromFolder.push({ title: currentCatTitle || "Imported Category", rawText: currentCatLines.join("\n") });
-          }
-          categoriesFromFolder.forEach(catData => {
-            const newCat = {
-              id: "cat_import_" + (importCatCounter++),
-              title: catData.title,
-              rawText: catData.rawText,
-              groups: [],
-              fileInput: null,
-              txtFileInput: null,
-              folderInput: null
-            };
-            parseCategory(newCat);
-            categories.push(newCat);
-          });
-          renderCategories();
-        };
-        reader.readAsText(file);
-      });
-    });
-
-    
-    document.addEventListener("fullscreenchange", () => {
-      const container = document.getElementById('videoPlayerContainer');
-      if(document.fullscreenElement === container)
-        container.classList.add('full');
-      else
-        container.classList.remove('full');
-    });
-
-    
-    document.addEventListener('DOMContentLoaded', function () {
-      const darkModeEnabled = localStorage.getItem('darkMode') === 'true';
-      if(darkModeEnabled){
-        document.body.classList.add('dark-mode');
-        document.getElementById('darkModeToggle').textContent = 'Light Mode';
-      }
-      document.getElementById('darkModeToggle').addEventListener('click', function () {
-        document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
-        localStorage.setItem('darkMode', isDark);
-        this.textContent = isDark ? 'Light Mode' : 'Dark Mode';
-      });
-    });
-
-    
-    if(categories.length === 0) {
-      addCategory();
-    }
-    function renderCategoriesAndVideos() {
-      renderCategories();
-    }
-    renderCategoriesAndVideos();
+const _0x4d78b9=_0x14ee;function _0x14ee(_0x1c16a4,_0x2c5040){const _0x289c6c=_0x289c();return _0x14ee=function(_0x14ee1b,_0x178467){_0x14ee1b=_0x14ee1b-0xcd;let _0x3f8762=_0x289c6c[_0x14ee1b];return _0x3f8762;},_0x14ee(_0x1c16a4,_0x2c5040);}(function(_0x17145e,_0x378b2a){const _0x7d0cea=_0x14ee,_0x7f813=_0x17145e();while(!![]){try{const _0x557fd3=-parseInt(_0x7d0cea(0x11e))/0x1+parseInt(_0x7d0cea(0x108))/0x2+parseInt(_0x7d0cea(0xd2))/0x3*(-parseInt(_0x7d0cea(0xea))/0x4)+-parseInt(_0x7d0cea(0x143))/0x5+parseInt(_0x7d0cea(0x122))/0x6+-parseInt(_0x7d0cea(0x126))/0x7*(parseInt(_0x7d0cea(0xf9))/0x8)+parseInt(_0x7d0cea(0x13a))/0x9;if(_0x557fd3===_0x378b2a)break;else _0x7f813['push'](_0x7f813['shift']());}catch(_0x1c885b){_0x7f813['push'](_0x7f813['shift']());}}}(_0x289c,0x74ea9));let playlist=[],originalPlaylist=[],currentVideoIndex=0x0,hls=null,isLooping=![],youtubePlayer=null,minimalMode=![];function createTimeDiv(_0x59818c){const _0xcaa2a0=_0x14ee,_0x2a3690=document[_0xcaa2a0(0xd6)](_0xcaa2a0(0x135)),_0x22fa98=['HH','MM','SS'];let _0x1255b7=['','',''];if(_0x59818c&&_0x59818c[_0xcaa2a0(0xfb)](':')){_0x1255b7=_0x59818c['split'](':');while(_0x1255b7[_0xcaa2a0(0xe4)]<0x3){_0x1255b7[_0xcaa2a0(0x10b)]('');}}return _0x22fa98[_0xcaa2a0(0xfa)]((_0xe37c45,_0x2b2df7)=>{const _0x1a9379=_0xcaa2a0,_0x22ccbc=document[_0x1a9379(0xd6)]('input');_0x22ccbc[_0x1a9379(0xff)]=_0x1a9379(0x110),_0x22ccbc[_0x1a9379(0x144)]=_0xe37c45,_0xe37c45==='SS'&&(_0x22ccbc['step']=_0x1a9379(0xfe)),_0x1255b7[_0x2b2df7]&&(_0x22ccbc['value']=_0x1255b7[_0x2b2df7]),_0x22ccbc[_0x1a9379(0xfd)](_0x1a9379(0xcf),updateMainTextBox),_0x2a3690[_0x1a9379(0xf6)](_0x22ccbc);}),_0x2a3690;}document[_0x4d78b9(0xfd)]('DOMContentLoaded',()=>{const _0x363223=_0x4d78b9;document['getElementById'](_0x363223(0x12b))[_0x363223(0xfd)](_0x363223(0x115),addVideos),document[_0x363223(0x12d)](_0x363223(0x12e))[_0x363223(0xfd)](_0x363223(0x115),clearPlaylist),document[_0x363223(0x12d)]('generatePlaylistButton')[_0x363223(0xfd)](_0x363223(0x115),generatePlaylist),document[_0x363223(0x12d)](_0x363223(0x134))[_0x363223(0xfd)](_0x363223(0x115),playPreviousVideo),document[_0x363223(0x12d)]('nextButton')[_0x363223(0xfd)](_0x363223(0x115),playNextVideo),document[_0x363223(0x12d)](_0x363223(0x100))[_0x363223(0xfd)](_0x363223(0x115),restartPlaylist),document[_0x363223(0x12d)]('loopButton')['addEventListener'](_0x363223(0x115),toggleLoop),document[_0x363223(0x12d)](_0x363223(0xcd))[_0x363223(0xfd)](_0x363223(0x115),shufflePlaylist),document[_0x363223(0x12d)](_0x363223(0xd3))['addEventListener'](_0x363223(0x115),returnToDefaultOrder),document['getElementById'](_0x363223(0xe6))[_0x363223(0xfd)](_0x363223(0x115),toggleFullScreen),document[_0x363223(0x12d)](_0x363223(0x109))[_0x363223(0xfd)](_0x363223(0x115),toggleMinimalMode),document[_0x363223(0xfd)](_0x363223(0x138),()=>{const _0x3621a5=_0x363223,_0x239628=document[_0x3621a5(0x12d)](_0x3621a5(0x142));document[_0x3621a5(0xe8)]===_0x239628?_0x239628['classList'][_0x3621a5(0x12c)](_0x3621a5(0x116)):_0x239628[_0x3621a5(0xe9)][_0x3621a5(0xf2)]('full');});});function toggleMinimalMode(){const _0x5504e4=_0x4d78b9;minimalMode=!minimalMode;const _0x40eece=document[_0x5504e4(0x12d)](_0x5504e4(0x109));_0x40eece[_0x5504e4(0xdc)]=minimalMode?'Normal\x20UI':'Minimal\x20UI';const _0x3933fe=document['getElementById'](_0x5504e4(0x105));_0x3933fe&&(_0x3933fe['controls']=!minimalMode);if(youtubePlayer){let _0x3bb1a6=youtubePlayer[_0x5504e4(0x13c)]();const _0x27f9e6=playlist[currentVideoIndex],_0x4013c2=extractYouTubeId(_0x27f9e6[_0x5504e4(0x101)]);youtubePlayer['destroy'](),youtubePlayer=null;const _0x5433b6=document[_0x5504e4(0x12d)](_0x5504e4(0x113));_0x5433b6[_0x5504e4(0x13f)]='';const _0xee6ebb=document[_0x5504e4(0xd6)](_0x5504e4(0x135));_0xee6ebb['id']='ytPlayer',_0x5433b6[_0x5504e4(0xf6)](_0xee6ebb),youtubePlayer=new YT['Player'](_0x5504e4(0xd4),{'height':'360','width':_0x5504e4(0xe7),'videoId':_0x4013c2,'playerVars':{'autoplay':0x1,'controls':minimalMode?0x0:0x1,'modestbranding':0x1,'rel':0x0,'fs':minimalMode?0x0:0x1,'iv_load_policy':minimalMode?0x3:0x1,'disablekb':minimalMode?0x1:0x0,'playsinline':0x1,'showinfo':minimalMode?0x0:0x1},'events':{'onReady':_0x306585=>{const _0x26a6dd=_0x5504e4,_0x94fac6={'videoId':_0x4013c2,'startSeconds':_0x3bb1a6};if(_0x27f9e6[_0x26a6dd(0x128)])_0x94fac6[_0x26a6dd(0x13b)]=_0x27f9e6[_0x26a6dd(0x128)];_0x306585['target'][_0x26a6dd(0x12a)](_0x94fac6);},'onStateChange':_0x157221=>{const _0x2b5a53=_0x5504e4;_0x157221['data']===YT[_0x2b5a53(0x136)]['ENDED']&&(document[_0x2b5a53(0x12d)]('youtubePlayerContainer')[_0x2b5a53(0x11c)][_0x2b5a53(0x121)]=_0x2b5a53(0x145),currentVideoIndex++,playVideo());}}});}}function _0x289c(){const _0x375752=['webkitExitFullscreen','style','webkitFullscreenElement','534052igmABY','Start\x20Time:','.m3u8','display','5640732ABdSFu','querySelector','startTimeDiv','webkitRequestFullscreen','70ckyqCM','msExitFullscreen','endTime','ENDED','loadVideoById','addVideosButton','add','getElementById','clearPlaylistButton','button','findIndex','Events','filter','iframe','prevButton','div','PlayerState','timeInputs','fullscreenchange','map','7827885FhLCNL','endSeconds','getCurrentTime','Remove\x20Video','trim','innerHTML','block','youtube.com','videoPlayerContainer','3484905uRRZny','placeholder','none','children','attachMedia','load','shuffleButton','src','input','pause','videoItem','604041ADwkse','defaultOrderButton','ytPlayer','random','createElement','splice','span','youtu.be','msRequestFullscreen','removeAttribute','textContent','controls','loopButton','data','slice','mozCancelFullScreen','?rel=0&modestbranding=1','emptyMessage','length','.playlistControls','fullscreenButton','100%','fullscreenElement','classList','4AEVccp','split','flex','Move\x20Up','mozRequestFullScreen','onended','destroy','Move\x20Down','remove','inline-block','startTime','videoPreview','appendChild','play','https://www.youtube.com/embed/','345304UvhjqC','forEach','includes','videoLinks','addEventListener','any','type','restartButton','link','Off','title','exitFullscreen','videoPlayer','currentTime','frameBorder','1066024UASYLu','hideUIButton','mozFullScreenElement','push','orderLabel','No\x20videos\x20in\x20the\x20playlist.\x20Please\x20add\x20videos\x20first.','ontimeupdate','endsWith','number','playlistContainer','youtubePreview','youtubePlayerContainer','End\x20Time:','click','full','requestFullscreen','endTimeDiv','value','floor'];_0x289c=function(){return _0x375752;};return _0x289c();}const renderPlaylist=()=>{const _0x281db8=_0x4d78b9,_0x1ec895=document['getElementById'](_0x281db8(0x111));_0x1ec895[_0x281db8(0x13f)]='',playlist[_0x281db8(0xfa)]((_0x469840,_0x4280c4)=>{const _0x1ac395=_0x281db8,_0x432a13=document[_0x1ac395(0xd6)](_0x1ac395(0x135));_0x432a13[_0x1ac395(0xe9)][_0x1ac395(0x12c)](_0x1ac395(0xd1));const _0x48c9c6=document['createElement'](_0x1ac395(0x135));_0x48c9c6[_0x1ac395(0xe9)][_0x1ac395(0x12c)]('reorderButtons');const _0x22a24c=document[_0x1ac395(0xd6)](_0x1ac395(0x12f));_0x22a24c[_0x1ac395(0x13f)]='▲',_0x22a24c[_0x1ac395(0x103)]=_0x1ac395(0xed),_0x22a24c['disabled']=_0x4280c4===0x0,_0x22a24c[_0x1ac395(0xfd)]('click',()=>{const _0x4cc603=_0x1ac395,_0x28f874=playlist[currentVideoIndex];_0x4280c4>0x0&&([playlist[_0x4280c4-0x1],playlist[_0x4280c4]]=[playlist[_0x4280c4],playlist[_0x4280c4-0x1]],currentVideoIndex=playlist[_0x4cc603(0x130)](_0xef04b=>_0xef04b===_0x28f874),renderPlaylist(),updateMainTextBox());}),_0x48c9c6[_0x1ac395(0xf6)](_0x22a24c);const _0x1b1217=document[_0x1ac395(0xd6)](_0x1ac395(0x12f));_0x1b1217[_0x1ac395(0x13f)]='▼',_0x1b1217[_0x1ac395(0x103)]=_0x1ac395(0xf1),_0x1b1217['disabled']=_0x4280c4===playlist['length']-0x1,_0x1b1217[_0x1ac395(0xfd)]('click',()=>{const _0x471908=_0x1ac395,_0x1c80cf=playlist[currentVideoIndex];_0x4280c4<playlist[_0x471908(0xe4)]-0x1&&([playlist[_0x4280c4],playlist[_0x4280c4+0x1]]=[playlist[_0x4280c4+0x1],playlist[_0x4280c4]],currentVideoIndex=playlist[_0x471908(0x130)](_0x122e5f=>_0x122e5f===_0x1c80cf),renderPlaylist(),updateMainTextBox());}),_0x48c9c6[_0x1ac395(0xf6)](_0x1b1217);const _0x3f02b6=document[_0x1ac395(0xd6)](_0x1ac395(0x12f));_0x3f02b6[_0x1ac395(0x13f)]='✖',_0x3f02b6[_0x1ac395(0x103)]=_0x1ac395(0x13d),_0x3f02b6[_0x1ac395(0xfd)]('click',()=>{const _0x31a762=_0x1ac395;if(_0x4280c4<currentVideoIndex)currentVideoIndex--;else _0x4280c4===currentVideoIndex&&(currentVideoIndex>=playlist['length']-0x1&&(currentVideoIndex=Math['max'](0x0,playlist[_0x31a762(0xe4)]-0x2)));playlist[_0x31a762(0xd7)](_0x4280c4,0x1),renderPlaylist(),updateMainTextBox();}),_0x48c9c6[_0x1ac395(0xf6)](_0x3f02b6),_0x432a13['appendChild'](_0x48c9c6);const _0x4e27df=document[_0x1ac395(0xd6)](_0x1ac395(0x135));_0x4e27df['classList'][_0x1ac395(0x12c)](_0x1ac395(0x10c)),_0x4e27df[_0x1ac395(0xdc)]='#'+(_0x4280c4+0x1),_0x432a13[_0x1ac395(0xf6)](_0x4e27df);const _0x3436fc=document[_0x1ac395(0xd6)]('div');if(_0x469840[_0x1ac395(0x101)][_0x1ac395(0xfb)]('youtube.com')||_0x469840[_0x1ac395(0x101)][_0x1ac395(0xfb)](_0x1ac395(0xd9))){const _0xbc76a3=extractYouTubeId(_0x469840[_0x1ac395(0x101)]);if(_0xbc76a3){const _0x11d44b=document[_0x1ac395(0xd6)](_0x1ac395(0x133));_0x11d44b[_0x1ac395(0xe9)][_0x1ac395(0x12c)](_0x1ac395(0x112)),_0x11d44b[_0x1ac395(0xce)]=_0x1ac395(0xf8)+_0xbc76a3+_0x1ac395(0xe2),_0x11d44b[_0x1ac395(0x107)]=0x0,_0x3436fc[_0x1ac395(0xf6)](_0x11d44b);}}else{const _0x5cf4c9=document['createElement']('video');_0x5cf4c9[_0x1ac395(0xe9)][_0x1ac395(0x12c)](_0x1ac395(0xf5)),_0x5cf4c9[_0x1ac395(0xce)]=_0x469840[_0x1ac395(0x101)],_0x5cf4c9[_0x1ac395(0xdd)]=!![],_0x3436fc[_0x1ac395(0xf6)](_0x5cf4c9);}_0x432a13[_0x1ac395(0xf6)](_0x3436fc);const _0x418af1=document[_0x1ac395(0xd6)](_0x1ac395(0x135));_0x418af1[_0x1ac395(0xe9)][_0x1ac395(0x12c)](_0x1ac395(0xdd));const _0x194715=document['createElement']('div');_0x194715[_0x1ac395(0xe9)][_0x1ac395(0x12c)](_0x1ac395(0x137));const _0x3288ac=document[_0x1ac395(0xd6)](_0x1ac395(0xd8));_0x3288ac[_0x1ac395(0xdc)]=_0x1ac395(0x11f),_0x194715['appendChild'](_0x3288ac),_0x194715[_0x1ac395(0xf6)](_0x469840[_0x1ac395(0x124)]);const _0x48b692=document[_0x1ac395(0xd6)](_0x1ac395(0xd8));_0x48b692[_0x1ac395(0xdc)]=_0x1ac395(0x114),_0x194715[_0x1ac395(0xf6)](_0x48b692),_0x194715[_0x1ac395(0xf6)](_0x469840['endTimeDiv']),_0x418af1[_0x1ac395(0xf6)](_0x194715),_0x432a13[_0x1ac395(0xf6)](_0x418af1),_0x1ec895[_0x1ac395(0xf6)](_0x432a13);});},addVideos=()=>{const _0x5d6426=_0x4d78b9,_0x232a13=document['getElementById'](_0x5d6426(0xfc))[_0x5d6426(0x119)]['trim']()['split']('\x0a')[_0x5d6426(0x132)](_0x26200f=>_0x26200f[_0x5d6426(0x13e)]()!==''),_0x26aba5=document[_0x5d6426(0x12d)](_0x5d6426(0xe3));playlist=[],_0x232a13['forEach'](_0x2d6df9=>{const _0x2ae740=_0x5d6426,_0x3da4d8=_0x2d6df9[_0x2ae740(0xeb)](','),_0x49a961=_0x3da4d8[_0x2ae740(0x139)](_0x9637ce=>_0x9637ce['trim']()),_0x4719bd=_0x49a961[0x0];let _0x182642,_0x33c6a1;_0x49a961[_0x2ae740(0xe4)]>=0x3?(_0x182642=createTimeDiv(_0x49a961[0x1]),_0x33c6a1=createTimeDiv(_0x49a961[0x2])):(_0x182642=createTimeDiv(''),_0x33c6a1=createTimeDiv(''));const _0x2bc957={'link':_0x4719bd,'startTimeDiv':_0x182642,'endTimeDiv':_0x33c6a1,'startTime':0x0,'endTime':null};playlist[_0x2ae740(0x10b)](_0x2bc957);}),originalPlaylist=playlist[_0x5d6426(0xe0)](),renderPlaylist(),_0x26aba5['style'][_0x5d6426(0x121)]=playlist['length']>0x0?_0x5d6426(0x145):_0x5d6426(0x140),document[_0x5d6426(0x12d)](_0x5d6426(0xcd))[_0x5d6426(0x11c)]['display']=playlist[_0x5d6426(0xe4)]>0x0?_0x5d6426(0xf3):'none',updateMainTextBox();},clearPlaylist=()=>{const _0x14d81b=_0x4d78b9;playlist=[],originalPlaylist=[],document[_0x14d81b(0x12d)](_0x14d81b(0x111))[_0x14d81b(0x13f)]='',document['getElementById'](_0x14d81b(0xe3))[_0x14d81b(0x11c)][_0x14d81b(0x121)]=_0x14d81b(0x140);const _0x5c0164=document[_0x14d81b(0x12d)](_0x14d81b(0x105));_0x5c0164&&(_0x5c0164[_0x14d81b(0xd0)](),_0x5c0164[_0x14d81b(0xdb)](_0x14d81b(0xce)),_0x5c0164[_0x14d81b(0x148)]()),youtubePlayer&&youtubePlayer[_0x14d81b(0xf0)]&&(youtubePlayer[_0x14d81b(0xf0)](),youtubePlayer=null),document['getElementById'](_0x14d81b(0x105))[_0x14d81b(0x11c)][_0x14d81b(0x121)]=_0x14d81b(0x145),document[_0x14d81b(0x12d)]('youtubePlayerContainer')[_0x14d81b(0x11c)][_0x14d81b(0x121)]='none',document[_0x14d81b(0x12d)](_0x14d81b(0xcd))['style'][_0x14d81b(0x121)]=_0x14d81b(0x145),document[_0x14d81b(0x12d)](_0x14d81b(0xd3))[_0x14d81b(0x11c)][_0x14d81b(0x121)]='none',updateMainTextBox();},generatePlaylist=()=>{const _0x9d9b00=_0x4d78b9;if(playlist[_0x9d9b00(0xe4)]===0x0){alert(_0x9d9b00(0x10d));return;}playlist[_0x9d9b00(0xfa)](_0x31b71d=>{const _0x49501f=_0x9d9b00;_0x31b71d[_0x49501f(0xf4)]=calculateSeconds(_0x31b71d[_0x49501f(0x124)]),_0x31b71d['endTime']=calculateSeconds(_0x31b71d[_0x49501f(0x118)]);}),currentVideoIndex=0x0,playVideo(),document[_0x9d9b00(0x123)]('.playlistControls')['style'][_0x9d9b00(0x121)]=_0x9d9b00(0xec);},restartPlaylist=()=>{const _0x29c293=_0x4d78b9;if(playlist[_0x29c293(0xe4)]===0x0){alert('No\x20videos\x20in\x20the\x20playlist\x20to\x20restart.\x20Please\x20add\x20videos\x20first.');return;}currentVideoIndex=0x0,playVideo();},playVideo=()=>{const _0x34b122=_0x4d78b9,_0x5bcd75=document['getElementById'](_0x34b122(0xe3));if(currentVideoIndex>=playlist[_0x34b122(0xe4)]){if(isLooping)currentVideoIndex=0x0;else return;}_0x5bcd75[_0x34b122(0x11c)][_0x34b122(0x121)]=_0x34b122(0x145);const _0x444b5b=playlist[currentVideoIndex],_0x30655b=_0x444b5b[_0x34b122(0xf4)],_0x238041=_0x444b5b['endTime'];hls&&(hls[_0x34b122(0xf0)](),hls=null);youtubePlayer&&youtubePlayer[_0x34b122(0xf0)]&&(youtubePlayer[_0x34b122(0xf0)](),youtubePlayer=null);const _0x576675=document['getElementById'](_0x34b122(0x105)),_0xd28104=document[_0x34b122(0x12d)](_0x34b122(0x113));_0x576675['pause'](),_0x576675['style']['display']='none';if(_0x444b5b['link'][_0x34b122(0xfb)](_0x34b122(0x141))||_0x444b5b[_0x34b122(0x101)][_0x34b122(0xfb)](_0x34b122(0xd9))){const _0x569693=extractYouTubeId(_0x444b5b[_0x34b122(0x101)]);_0xd28104[_0x34b122(0x11c)][_0x34b122(0x121)]=_0x34b122(0x140),_0xd28104[_0x34b122(0x13f)]='';const _0x195ae4=document[_0x34b122(0xd6)](_0x34b122(0x135));_0x195ae4['id']='ytPlayer',_0xd28104[_0x34b122(0xf6)](_0x195ae4),youtubePlayer=new YT['Player']('ytPlayer',{'height':'360','width':_0x34b122(0xe7),'videoId':_0x569693,'playerVars':{'autoplay':0x1,'controls':minimalMode?0x0:0x1,'modestbranding':0x1,'rel':0x0,'fs':minimalMode?0x0:0x1,'iv_load_policy':minimalMode?0x3:0x1,'disablekb':minimalMode?0x1:0x0,'playsinline':0x1,'showinfo':minimalMode?0x0:0x1},'events':{'onReady':_0x12d9b5=>{const _0x4993df=_0x34b122,_0x386f75={'videoId':_0x569693,'startSeconds':_0x30655b};if(_0x238041)_0x386f75['endSeconds']=_0x238041;_0x12d9b5['target'][_0x4993df(0x12a)](_0x386f75);},'onStateChange':_0x5997d3=>{const _0x2d987f=_0x34b122;_0x5997d3[_0x2d987f(0xdf)]===YT[_0x2d987f(0x136)][_0x2d987f(0x129)]&&(_0xd28104['style'][_0x2d987f(0x121)]='none',currentVideoIndex++,playVideo());}}});}else _0xd28104[_0x34b122(0x11c)]['display']=_0x34b122(0x145),_0x576675[_0x34b122(0x11c)][_0x34b122(0x121)]=_0x34b122(0x140),_0x576675['controls']=!minimalMode,_0x444b5b['link'][_0x34b122(0x10f)](_0x34b122(0x120))?(hls=new Hls(),hls['loadSource'](_0x444b5b[_0x34b122(0x101)]),hls[_0x34b122(0x147)](_0x576675),hls['on'](Hls[_0x34b122(0x131)]['MANIFEST_PARSED'],()=>{const _0x2cae88=_0x34b122;_0x576675[_0x2cae88(0x106)]=_0x30655b||0x0,_0x576675[_0x2cae88(0xf7)]();})):(_0x576675[_0x34b122(0xce)]=_0x444b5b[_0x34b122(0x101)],_0x576675[_0x34b122(0x106)]=_0x30655b||0x0,_0x576675['play']()),_0x238041?(_0x576675[_0x34b122(0x10e)]=()=>{const _0xe7b72a=_0x34b122;_0x576675[_0xe7b72a(0x106)]>=_0x238041&&(_0x576675['pause'](),_0x576675[_0xe7b72a(0x10e)]=null,currentVideoIndex++,playVideo());},_0x576675['onended']=null):_0x576675[_0x34b122(0xef)]=()=>{currentVideoIndex++,playVideo();};},shufflePlaylist=()=>{const _0x10b41f=_0x4d78b9;if(playlist[_0x10b41f(0xe4)]<=0x1)return;const _0x59bf97=document[_0x10b41f(0x123)](_0x10b41f(0xe5))['style'][_0x10b41f(0x121)];if(_0x59bf97===_0x10b41f(0xec)){const _0x175794=playlist[currentVideoIndex],_0x4e51e0=playlist[_0x10b41f(0x132)]((_0x5864ba,_0x246133)=>_0x246133!==currentVideoIndex);for(let _0x14d995=_0x4e51e0[_0x10b41f(0xe4)]-0x1;_0x14d995>0x0;_0x14d995--){const _0x20bb8f=Math[_0x10b41f(0x11a)](Math[_0x10b41f(0xd5)]()*(_0x14d995+0x1));[_0x4e51e0[_0x14d995],_0x4e51e0[_0x20bb8f]]=[_0x4e51e0[_0x20bb8f],_0x4e51e0[_0x14d995]];}playlist=[_0x175794,..._0x4e51e0],currentVideoIndex=0x0,renderPlaylist();}else{for(let _0xd22d45=playlist[_0x10b41f(0xe4)]-0x1;_0xd22d45>0x0;_0xd22d45--){const _0x5588c0=Math[_0x10b41f(0x11a)](Math[_0x10b41f(0xd5)]()*(_0xd22d45+0x1));[playlist[_0xd22d45],playlist[_0x5588c0]]=[playlist[_0x5588c0],playlist[_0xd22d45]];}renderPlaylist();}document[_0x10b41f(0x12d)]('shuffleButton')['style'][_0x10b41f(0x121)]=_0x10b41f(0x145),document[_0x10b41f(0x12d)](_0x10b41f(0xd3))['style'][_0x10b41f(0x121)]='inline-block';},returnToDefaultOrder=()=>{const _0x2ae87e=_0x4d78b9;if(originalPlaylist[_0x2ae87e(0xe4)]===0x0)return;const _0x212111=playlist[currentVideoIndex]['link'];playlist=originalPlaylist[_0x2ae87e(0xe0)]();const _0x569a81=playlist[_0x2ae87e(0x130)](_0x5183ba=>_0x5183ba[_0x2ae87e(0x101)]===_0x212111);currentVideoIndex=_0x569a81===-0x1?0x0:_0x569a81,renderPlaylist(),document[_0x2ae87e(0x12d)](_0x2ae87e(0xd3))[_0x2ae87e(0x11c)][_0x2ae87e(0x121)]=_0x2ae87e(0x145),document[_0x2ae87e(0x12d)](_0x2ae87e(0xcd))[_0x2ae87e(0x11c)][_0x2ae87e(0x121)]='inline-block';},toggleLoop=()=>{const _0x4f0962=_0x4d78b9;isLooping=!isLooping,document[_0x4f0962(0x12d)](_0x4f0962(0xde))[_0x4f0962(0xdc)]='Loop:\x20'+(isLooping?'On':_0x4f0962(0x102));},playNextVideo=()=>{const _0x269b76=_0x4d78b9;currentVideoIndex=(currentVideoIndex+0x1)%playlist[_0x269b76(0xe4)],playVideo();},playPreviousVideo=()=>{const _0x407879=_0x4d78b9;currentVideoIndex=currentVideoIndex===0x0?playlist[_0x407879(0xe4)]-0x1:currentVideoIndex-0x1,playVideo();},calculateSeconds=_0x36e1f5=>{const _0x311a89=_0x4d78b9,[_0x522b18,_0x2ce60c,_0x468476]=[..._0x36e1f5[_0x311a89(0x146)]]['map'](_0x416bec=>{const _0x1e7e4a=_0x311a89,_0x30e85a=parseFloat(_0x416bec[_0x1e7e4a(0x119)]);return isNaN(_0x30e85a)?0x0:_0x30e85a;});return _0x522b18*0xe10+_0x2ce60c*0x3c+_0x468476;},extractYouTubeId=_0x5e34d9=>{const _0x3df604=_0x5e34d9['match'](/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w-]+)/);return _0x3df604?_0x3df604[0x1]:null;},toggleFullScreen=()=>{const _0x2709da=_0x4d78b9,_0x3a2ae2=document[_0x2709da(0x12d)]('videoPlayerContainer');if(!document[_0x2709da(0xe8)]&&!document[_0x2709da(0x11d)]&&!document[_0x2709da(0x10a)]&&!document['msFullscreenElement']){if(_0x3a2ae2[_0x2709da(0x117)])_0x3a2ae2['requestFullscreen']();else{if(_0x3a2ae2[_0x2709da(0xee)])_0x3a2ae2['mozRequestFullScreen']();else{if(_0x3a2ae2[_0x2709da(0x125)])_0x3a2ae2[_0x2709da(0x125)]();else _0x3a2ae2[_0x2709da(0xda)]&&_0x3a2ae2['msRequestFullscreen']();}}}else{if(document[_0x2709da(0x104)])document[_0x2709da(0x104)]();else{if(document[_0x2709da(0xe1)])document[_0x2709da(0xe1)]();else{if(document[_0x2709da(0x11b)])document[_0x2709da(0x11b)]();else document[_0x2709da(0x127)]&&document[_0x2709da(0x127)]();}}}};
   </script>
+
+  <script>
+const _0x444f47=_0x33dd;function _0x33dd(_0x1e81ac,_0x22b178){const _0x2f7f27=_0x2f7f();return _0x33dd=function(_0x33dd0a,_0x14f90b){_0x33dd0a=_0x33dd0a-0x132;let _0x207c86=_0x2f7f27[_0x33dd0a];return _0x207c86;},_0x33dd(_0x1e81ac,_0x22b178);}function _0x2f7f(){const _0xa0e97b=['value','30OGjPqh','target','files','addEventListener','162423YUcbhL','812886nrIhiJ','31278lhoZSn','trim','12884LrrNFj','localVideoInput','7712OpOidd','315TrNXFm','93666MgzJZj','getElementById','createObjectURL','1785plLTBI','295326qFgknW','click','DOMContentLoaded','length','uploadLocalVideoButton','change'];_0x2f7f=function(){return _0xa0e97b;};return _0x2f7f();}(function(_0x102b50,_0x1e55c4){const _0x1e191f=_0x33dd,_0x111473=_0x102b50();while(!![]){try{const _0x7fa1ab=-parseInt(_0x1e191f(0x148))/0x1+parseInt(_0x1e191f(0x13b))/0x2+-parseInt(_0x1e191f(0x137))/0x3+-parseInt(_0x1e191f(0x133))/0x4*(-parseInt(_0x1e191f(0x136))/0x5)+parseInt(_0x1e191f(0x147))/0x6+parseInt(_0x1e191f(0x13a))/0x7*(-parseInt(_0x1e191f(0x135))/0x8)+parseInt(_0x1e191f(0x146))/0x9*(-parseInt(_0x1e191f(0x142))/0xa);if(_0x7fa1ab===_0x1e55c4)break;else _0x111473['push'](_0x111473['shift']());}catch(_0xb9d121){_0x111473['push'](_0x111473['shift']());}}}(_0x2f7f,0x1e2d6),document[_0x444f47(0x145)](_0x444f47(0x13d),function(){const _0x3813a9=_0x444f47,_0x4fda82=document['getElementById'](_0x3813a9(0x13f)),_0x211e14=document[_0x3813a9(0x138)](_0x3813a9(0x134));_0x4fda82[_0x3813a9(0x145)](_0x3813a9(0x13c),function(){const _0x4979bf=_0x3813a9;_0x211e14[_0x4979bf(0x13c)]();}),_0x211e14[_0x3813a9(0x145)](_0x3813a9(0x140),function(_0x3b3571){const _0x4e88df=_0x3813a9,_0x3c6c56=_0x3b3571[_0x4e88df(0x143)][_0x4e88df(0x144)],_0x576fb3=document[_0x4e88df(0x138)]('videoLinks');let _0x1bef02=_0x576fb3['value'][_0x4e88df(0x132)]();for(let _0x12c4b1=0x0;_0x12c4b1<_0x3c6c56[_0x4e88df(0x13e)];_0x12c4b1++){const _0x723d69=_0x3c6c56[_0x12c4b1],_0x3f4eff=URL[_0x4e88df(0x139)](_0x723d69);_0x1bef02+=(_0x1bef02?'\x0a':'')+_0x3f4eff;}_0x576fb3[_0x4e88df(0x141)]=_0x1bef02;});}));
+  </script>
+
+  <script>
+function _0xf46f(_0x5f3a3f,_0x48472e){const _0x58ecb9=_0x58ec();return _0xf46f=function(_0xf46f21,_0x18e85b){_0xf46f21=_0xf46f21-0x1c3;let _0x5744bb=_0x58ecb9[_0xf46f21];return _0x5744bb;},_0xf46f(_0x5f3a3f,_0x48472e);}const _0x2c3885=_0xf46f;function _0x58ec(){const _0x17fb52=['mkv','click','createObjectURL','7555JBadsR','readAsText','1700592PfQcYr','getElementById','includes','target','3688tKxSVP','txt','split','webm','166896edzWzB','addEventListener','uploadFolderButton','avi','m4v','videoLinks','ogg','1128430UODGSB','map','20xHUJAc','3060414VvZswU','change','filter','value','mp4','3gp','name','files','length','flv','1285902zwqmuB','join','onload','20853waCatz','wmv','folderInput'];_0x58ec=function(){return _0x17fb52;};return _0x58ec();}(function(_0x3079ff,_0x553869){const _0x417704=_0xf46f,_0x5c423a=_0x3079ff();while(!![]){try{const _0x407770=parseInt(_0x417704(0x1d5))/0x1*(-parseInt(_0x417704(0x1e8))/0x2)+parseInt(_0x417704(0x1cc))/0x3+parseInt(_0x417704(0x1d7))/0x4+parseInt(_0x417704(0x1e6))/0x5+-parseInt(_0x417704(0x1df))/0x6+parseInt(_0x417704(0x1e9))/0x7+parseInt(_0x417704(0x1db))/0x8*(-parseInt(_0x417704(0x1cf))/0x9);if(_0x407770===_0x553869)break;else _0x5c423a['push'](_0x5c423a['shift']());}catch(_0x125535){_0x5c423a['push'](_0x5c423a['shift']());}}}(_0x58ec,0x5444f),document[_0x2c3885(0x1e0)]('DOMContentLoaded',function(){const _0x2baddc=_0x2c3885,_0x2bd4b2=document[_0x2baddc(0x1d8)](_0x2baddc(0x1e1)),_0x47e9d3=document[_0x2baddc(0x1d8)](_0x2baddc(0x1d1));_0x2bd4b2[_0x2baddc(0x1e0)](_0x2baddc(0x1d3),function(){_0x47e9d3['click']();}),_0x47e9d3['addEventListener'](_0x2baddc(0x1c3),function(_0x390c52){const _0x2eed42=_0x2baddc,_0x5c170c=_0x390c52[_0x2eed42(0x1da)][_0x2eed42(0x1c9)],_0x1320e2=[_0x2eed42(0x1c6),_0x2eed42(0x1de),_0x2eed42(0x1e2),'mpeg',_0x2eed42(0x1d2),_0x2eed42(0x1cb),_0x2eed42(0x1e5),'mov',_0x2eed42(0x1e3),_0x2eed42(0x1d0),'asf',_0x2eed42(0x1c7)];let _0xefc0c3={},_0xc2ab18=null;for(let _0x3c9285=0x0;_0x3c9285<_0x5c170c[_0x2eed42(0x1ca)];_0x3c9285++){const _0x30ea25=_0x5c170c[_0x3c9285],_0x25a7b1=_0x30ea25['name'][_0x2eed42(0x1dd)]('.')['pop']()['toLowerCase']();if(_0x25a7b1===_0x2eed42(0x1dc)){if(!_0xc2ab18)_0xc2ab18=_0x30ea25;}else _0x1320e2[_0x2eed42(0x1d9)](_0x25a7b1)&&(_0xefc0c3[_0x30ea25[_0x2eed42(0x1c8)]]=_0x30ea25);}if(_0xc2ab18){const _0x12b98b=new FileReader();_0x12b98b[_0x2eed42(0x1ce)]=function(_0x20b23e){const _0x691fcf=_0x2eed42,_0x457d61=_0x20b23e[_0x691fcf(0x1da)]['result'],_0x16052c=_0x457d61[_0x691fcf(0x1dd)]('\x0a')[_0x691fcf(0x1e7)](_0x4859f8=>_0x4859f8['trim']())[_0x691fcf(0x1c4)](_0x21e271=>_0x21e271!==''),_0x2d762b=_0x16052c[_0x691fcf(0x1e7)](_0x1e0504=>{const _0x2c8ca0=_0x691fcf;return _0x1e0504['startsWith']('http')?_0x1e0504:_0xefc0c3[_0x1e0504]?URL[_0x2c8ca0(0x1d4)](_0xefc0c3[_0x1e0504]):_0x1e0504;}),_0x21ec4d=document[_0x691fcf(0x1d8)](_0x691fcf(0x1e4));_0x21ec4d['value']=(_0x21ec4d[_0x691fcf(0x1c5)]?_0x21ec4d[_0x691fcf(0x1c5)]+'\x0a':'')+_0x2d762b[_0x691fcf(0x1cd)]('\x0a');},_0x12b98b[_0x2eed42(0x1d6)](_0xc2ab18);}else alert('No\x20TXT\x20file\x20found\x20in\x20the\x20folder.');});}));
+  </script>
+
+  <script>
+const _0x124c9b=_0x5328;(function(_0x211ada,_0x1a44fc){const _0x2176e6=_0x5328,_0x206c5f=_0x211ada();while(!![]){try{const _0xfab68f=parseInt(_0x2176e6(0x1f6))/0x1+-parseInt(_0x2176e6(0x1e6))/0x2*(parseInt(_0x2176e6(0x1f1))/0x3)+parseInt(_0x2176e6(0x1f3))/0x4*(parseInt(_0x2176e6(0x1f4))/0x5)+-parseInt(_0x2176e6(0x1e9))/0x6*(parseInt(_0x2176e6(0x1e2))/0x7)+parseInt(_0x2176e6(0x1f7))/0x8+-parseInt(_0x2176e6(0x1e0))/0x9+parseInt(_0x2176e6(0x1ee))/0xa;if(_0xfab68f===_0x1a44fc)break;else _0x206c5f['push'](_0x206c5f['shift']());}catch(_0x17ec5e){_0x206c5f['push'](_0x206c5f['shift']());}}}(_0x3025,0xb3068),document['addEventListener'](_0x124c9b(0x1ed),function(){const _0x2e7436=_0x124c9b,_0x2d66a6=document[_0x2e7436(0x1eb)](_0x2e7436(0x1e1)),_0x18d5b5=document[_0x2e7436(0x1eb)](_0x2e7436(0x1ec));_0x2d66a6[_0x2e7436(0x1e7)](_0x2e7436(0x1ef),function(){const _0x4a3b15=_0x2e7436;_0x18d5b5[_0x4a3b15(0x1ef)]();}),_0x18d5b5['addEventListener'](_0x2e7436(0x1f5),function(_0x2ed888){const _0x24eb2a=_0x2e7436,_0x179992=_0x2ed888[_0x24eb2a(0x1e8)][_0x24eb2a(0x1e3)][0x0];if(_0x179992){const _0x101b99=new FileReader();_0x101b99[_0x24eb2a(0x1e5)]=function(_0x33e296){const _0x22525a=_0x24eb2a,_0x1cfc66=_0x33e296[_0x22525a(0x1e8)][_0x22525a(0x1ea)],_0x48f893=document[_0x22525a(0x1eb)](_0x22525a(0x1f2));_0x48f893[_0x22525a(0x1e4)]=(_0x48f893[_0x22525a(0x1e4)]?_0x48f893[_0x22525a(0x1e4)]+'\x0a':'')+_0x1cfc66;},_0x101b99[_0x24eb2a(0x1f0)](_0x179992);}});}));function _0x5328(_0xfa57d2,_0x40d8a9){const _0x302585=_0x3025();return _0x5328=function(_0x53285f,_0x419555){_0x53285f=_0x53285f-0x1e0;let _0x57d696=_0x302585[_0x53285f];return _0x57d696;},_0x5328(_0xfa57d2,_0x40d8a9);}function _0x3025(){const _0x5e668b=['videoLinks','60XqSged','433460CivTpY','change','510796hHUiNt','1063824eUwsnz','5062725MbfKHD','importTxtButton','7cSpuIG','files','value','onload','130126qQunLc','addEventListener','target','1605066gMqHOA','result','getElementById','txtImportInput','DOMContentLoaded','3348630EtupnM','click','readAsText','33sAdCsQ'];_0x3025=function(){return _0x5e668b;};return _0x3025();}
+  </script>
+
+  
+  <script>
+  function _0x5049(){const _0x3049f8=['7336812QBfnDm','addEventListener','classList','23190WQkFZM','1933348WhRYGW','9tiSLfi','getElementById','6845152jfJwSS','getItem','toggle','textContent','darkModeToggle','16090UBcozW','326615PJhatq','748VGOVYU','78vwjYRW','Dark\x20Mode','click','dark-mode','4350320RSlIIf','darkMode','Light\x20Mode','1krYhyg','add'];_0x5049=function(){return _0x3049f8;};return _0x5049();}function _0x1795(_0x55c28d,_0x529641){const _0x5049f7=_0x5049();return _0x1795=function(_0x179566,_0x3d9902){_0x179566=_0x179566-0x7b;let _0x438420=_0x5049f7[_0x179566];return _0x438420;},_0x1795(_0x55c28d,_0x529641);}(function(_0x27421f,_0x458cf8){const _0x10f237=_0x1795,_0x4d7a75=_0x27421f();while(!![]){try{const _0x405dc5=parseInt(_0x10f237(0x84))/0x1*(-parseInt(_0x10f237(0x8a))/0x2)+parseInt(_0x10f237(0x89))/0x3+-parseInt(_0x10f237(0x81))/0x4+-parseInt(_0x10f237(0x7b))/0x5*(-parseInt(_0x10f237(0x7d))/0x6)+parseInt(_0x10f237(0x86))/0x7+-parseInt(_0x10f237(0x8d))/0x8*(-parseInt(_0x10f237(0x8b))/0x9)+-parseInt(_0x10f237(0x92))/0xa*(parseInt(_0x10f237(0x7c))/0xb);if(_0x405dc5===_0x458cf8)break;else _0x4d7a75['push'](_0x4d7a75['shift']());}catch(_0x1080fa){_0x4d7a75['push'](_0x4d7a75['shift']());}}}(_0x5049,0x91c1f),document['addEventListener']('DOMContentLoaded',function(){const _0x4bed2d=_0x1795,_0x2984a0=localStorage[_0x4bed2d(0x8e)]('darkMode')==='true';_0x2984a0&&(document['body'][_0x4bed2d(0x88)][_0x4bed2d(0x85)](_0x4bed2d(0x80)),document[_0x4bed2d(0x8c)](_0x4bed2d(0x91))[_0x4bed2d(0x90)]='Light\x20Mode'),document['getElementById'](_0x4bed2d(0x91))[_0x4bed2d(0x87)](_0x4bed2d(0x7f),function(){const _0x4acf86=_0x4bed2d;document['body'][_0x4acf86(0x88)][_0x4acf86(0x8f)]('dark-mode');const _0x5d887a=document['body'][_0x4acf86(0x88)]['contains'](_0x4acf86(0x80));localStorage['setItem'](_0x4acf86(0x82),_0x5d887a),this[_0x4acf86(0x90)]=_0x5d887a?_0x4acf86(0x83):_0x4acf86(0x7e);});}));
+  </script>
+  
+  
+  <input type="file" id="localVideoInput" 
+         accept="video/mp4, video/webm, video/avi, video/mpeg, video/mkv, video/flv, video/ogg, video/mov, video/m4v, video/wmv, video/asf, video/3gp" 
+         style="display: none;" multiple>
+  <input type="file" id="folderInput" webkitdirectory directory style="display: none;">
+  <input type="file" id="txtImportInput" accept=".txt" style="display: none;">
 </body>
 </html>
