@@ -3,14 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <center><img src="Clip_Chain_Logo_New.png" width="500" height="200"></center>
-  <title>Clip-Fusion</title>
+  
+  <center><img src="Clip_Chain_Logo_New.png" width="500" height="200" alt="Clip Fusion Logo"></center>
+  <title>Clip‑Fusion</title>
   <link rel="icon" type="image/x-icon" href="favichai.png">
+  
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1415567035229271"
-crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1415567035229271" crossorigin="anonymous"></script>
   <style>
+    
+    body.dark-mode {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+    body.dark-mode header,
+    body.dark-mode main,
+    body.dark-mode footer {
+      background-color: #1e1e1e;
+    }
+    body.dark-mode .videoItem,
+    body.dark-mode .categoryContainer {
+      background-color: #2e2e2e;
+      border-color: #444;
+    }
+    body.dark-mode textarea {
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+    }
+    body.dark-mode button {
+      background-color: #444;
+      color: #fff;
+      border: 1px solid #555;
+    }
+    body.dark-mode #publisherContent,
+    body.dark-mode #faq {
+      background-color: #1e1e1e;
+      border-color: #444;
+    }
+    
     body {
       font-family: Arial, sans-serif;
       background-color: #f9f9f9;
@@ -28,26 +60,9 @@ crossorigin="anonymous"></script>
       padding: 20px;
       box-sizing: border-box;
     }
-    .nav-bar {
-      border-top: 2px solid #007bff;
-      margin-bottom: 20px;
-      padding: 10px 0;
+    header {
       text-align: center;
-      font-size: 1.2em;
-    }
-    .nav-bar a {
-      color: #007bff;
-      text-decoration: none;
-      margin: 0 10px;
-    }
-    /* Add a vertical bar between links */
-    .nav-bar a:not(:last-child)::after {
-      content: " |";
-      margin-left: 10px;
-      color: #007bff;
-    }
-    .nav-bar a.active {
-      font-weight: bold;
+      margin-bottom: 20px;
     }
     h1 {
       font-size: 2.5em;
@@ -67,14 +82,15 @@ crossorigin="anonymous"></script>
       resize: vertical;
       display: block;
     }
-    /* Button Containers (from Clip-Chain) */
-    .topButtons, .actionButtons, .playlistControls {
+    
+    .topButtons, .actionButtons, .playlistControls, .footerButtons {
       text-align: center;
       margin: 15px auto;
     }
     .topButtons button,
     .actionButtons button,
-    .playlistControls button {
+    .playlistControls button,
+    .footerButtons button {
       padding: 10px 20px;
       background-color: #007bff;
       color: #fff;
@@ -87,89 +103,30 @@ crossorigin="anonymous"></script>
     }
     .topButtons button:hover,
     .actionButtons button:hover,
-    .playlistControls button:hover {
+    .playlistControls button:hover,
+    .footerButtons button:hover {
       background-color: #0056b3;
     }
-    #extraControls button {
-      background-color: #17a2b;
-    }
-    #extraControls button:hover {
-      background-color: #138496;
-    }
-    #extraControls button:active {
-      background-color: #117a8b;
-    }
-    /* Make Remove Category button red */
-    .removeCategoryButton {
-      background-color: #d9534f;
-    }
-    .removeCategoryButton:hover {
-      background-color: #c9302c;
-    }
     
-    .category {
-      background: #ffr;
-      border: 1px solid #ccc;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    .nav-bar {
+      border-top: 2px solid #007bff;
+      margin-bottom: 20px;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 1.2em;
     }
-    .category input.categoryName,
-    .category textarea.videoLinks {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 10px;
-      font-size: 1em;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      display: block;
+    .nav-bar a {
+      color: #007bff;
+      text-decoration: none;
+      margin: 0 10px;
     }
-    
-    .manualTimestampsContainer {
-      margin-top: 15px;
-      padding-top: 10px;
-      border-top: 1px solid #ddd;
+    .nav-bar a:not(:last-child)::after {
+      content: " |";
+      margin-left: 10px;
+      color: #007bff;
     }
-    .manualVideoItem {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      margin-bottom: 10px;
-    }
-    .videoPreviewContainer {
-      margin-right: 15px;
-    }
-    .videoPreviewContainer iframe,
-    .videoPreviewContainer video {
-      width: 150px;
-      height: 100px;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-    .timeInputs {
-      display: flex;
-      flex-direction: column;
-    }
-    .timeInputs span {
+    .nav-bar a.active {
       font-weight: bold;
-      margin-top: 5px;
-    }
-    .timeInputs div {
-      display: flex;
-      gap: 5px;
-      align-items: center;
-      margin-bottom: 5px;
-    }
-    .timeInputs input {
-      width: 50px;
-      padding: 5px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
     }
     
     #videoPlayerContainer {
@@ -209,193 +166,1138 @@ crossorigin="anonymous"></script>
       border-radius: 8px;
     }
     #emptyMessage {
+      display: none;
       color: #ccc;
       font-size: 16px;
       padding: 20px;
       text-align: center;
     }
     
-    .publisherContent, .faqContent {
+    .categoryContainer {
+      width: 100%;
+      max-width: 800px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px auto;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .categoryHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .categoryHeader input.categoryTitle {
+      font-size: 1.2em;
+      font-weight: bold;
+      padding: 5px;
+      width: 70%;
+    }
+    .categoryHeader .categoryControls button {
+      margin-left: 5px;
+    }
+    
+    .videoItem {
+      position: relative;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .videoItem .orderLabel {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.8em;
+    }
+    .videoPreview, iframe.youtubePreview {
+      width: 150px;
+      height: 100px;
+      margin-right: 10px;
+      background-color: #000;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      margin-left: 10px;
+    }
+    .timeInputs {
+      display: flex;
+      flex-direction: column;
+      margin-top: 5px;
+    }
+    .timeInputs div {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    .timeInputs input {
+      width: 50px;
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .actionButtons {
+      text-align: center;
+      margin: 15px 0;
+    }
+    .actionButtons button {
+      padding: 10px 20px;
+      background-color: #17a2b8;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      font-size: 1em;
+      border-radius: 5px;
+      margin: 5px;
+    }
+    .actionButtons button:hover {
+      background-color: #138496;
+    }
+    .actionButtons button:active {
+      background-color: #117a8b;
+    }
+    #publisherContent {
       max-width: 800px;
       margin: 30px auto;
       padding: 20px;
-      background: #ffr;
+      background: #fff;
       border: 1px solid #ddd;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      text-align: left;
     }
-    .faqContent h3 {
-      margin-bottom: 5px;
+    #faq {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
-    .faqContent p {
-      margin-top: 0;
+    #faq h2 {
+      text-align: center;
     }
-    
-    
-body.dark-mode {
-  background-color: #121212;
-  color: #e0e0e0;
-}
-
-
-body.dark-mode header,
-body.dark-mode main,
-body.dark-mode footer {
-  background-color: #1e1e1e;
-}
-
-
-body.dark-mode .nav-bar a {
-  color: #e0e0e0;
-}
-
-
-body.dark-mode textarea {
-  background-color: #333;
-  color: #fff;
-  border: 1px solid #555;
-}
-
-
-body.dark-mode button {
-  background-color: #444;
-  color: #fff;
-  border: none;
-}
-
+    .faq-item {
+      margin-bottom: 20px;
+    }
+    .faq-item h3 {
+      margin: 10px 0;
+    }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      padding: 20px;
+      border: none;
+    }
+    .footerButtons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .footerButtons button {
+      padding: 10px 20px;
+      margin: 5px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      font-size: 1em;
+      border-radius: 5px;
+    }
+    .footerButtons button:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="nav-bar">
-      <a href="index.html" class="nav-button">Clip-Chain</a>
-      <a href="Clip-Fusion.html" class="nav-button active">Clip-Fusion</a>
+      <a href="index.html" class="nav-button">Clip‑Chain</a>
+      <a href="Clip-Fusion.html" class="nav-button active">Clip‑Fusion</a>
     </div>
     <button id="darkModeToggle" style="position: fixed; top: 10px; right: 10px;">Dark Mode</button>
-    <center><h1>Clip-Fusion - Multi-Category Video Playlist Generator</h1></center>
+    <h1>Clip‑Fusion - Multi‑Category Video Playlist Generator</h1>
   </header>
+
   <main>
-    <section id="videoTool">
-      <!-- Categories Input -->
-      <div id="categoriesContainer">
-        <div class="category">
-          <input type="text" class="categoryName" placeholder="Category Name (e.g., Video Group A)" />
-          <textarea class="videoLinks" rows="5" placeholder="Enter video links here (one per line). Use '&&' to separate multiple videos in the same round.
-Format: link, start time, end time
-Example:
-https://youtu.be/XYZabc, 00:00:05, 00:00:15 && video.mp4, 00:00:10, 00:00:20"></textarea>
-          <div class="actionButtons">
-            <button class="removeCategoryButton" onclick="removeCategory(this)">Remove Category</button>
-            <button class="manualTimestampsButton" onclick="toggleManualTimestamps(this)">Manually change timestamps</button>
-            <button class="downloadCategoryButton" onclick="downloadCategory(this)">Download Category as .TXT</button>
-          </div>
-          <div class="manualTimestampsContainer" style="display: none;"></div>
-        </div>
-      </div>
-      <!-- Control Buttons -->
-      <div class="topButtons">
-        <button onclick="addCategory()">Add Category</button>
-      </div>
-      <div class="actionButtons">
-        <button onclick="generatePlaylist()">Generate Playlist & Play</button>
-        <button onclick="clearPlaylist()">Clear Playlist</button>
-        <!-- Global Download Button -->
-        <button id="downloadBtn">Download All as .TXT file</button>
-      </div>
-      
-      <!-- Video Player Area -->
-      <div id="videoPlayerContainer">
-        <video id="videoPlayer" controls></video>
-        <div id="youtubePlayerContainer"></div>
-        <div id="emptyMessage">No video playing</div>
-      </div>
-      
-      <!-- Extra Controls -->
-      <div class="actionButtons" id="extraControls">
-        <button id="minimalUIButton" onclick="toggleMinimalMode()">Minimal UI</button>
-        <button id="fullscreenButton" onclick="toggleFullScreen()">Full Screen</button>
-      </div>
-    </section>
     
-    <!-- About Section -->
-    <section id="about" class="publisherContent">
-    <center><h1><b>How to Use Clip-Fusion</b></h1></center>
+    <div id="categoriesContainer"></div>
 
-<p><b>Step 1:</b> Enter the name for your first category and list the videos you'd like to include in it. The site supports .MP4, .M3U8, and YouTube video links. Please note that YouTube videos will be embedded.</p>
-
-<p><b>Step 2:</b> If you'd like to trim any videos, click the "Manually Change Timestamps" button to adjust the start and end points for each video (optional).</p>
-
-<p><b>Step 3:</b> To add another category, click "Add Category" and repeat the process.</p>
-
-<p><b>Step 4:</b> Click "Generate Playlist" to start your playlist! The system will play one video from each category in order. Once a category finishes its playlist, it will automatically loop back to the first video in that category. Enjoy!</p>
-
-<p><b>Tip:</b>
-You can manually type timestamps directly into the text box by adding a comma after the video URL, followed by the start timestamp, another comma, and the end timestamp. For example:  
-`video.mp4, 01:20:00, 02:20:00`  
-This will trim the video according to the specified timestamps.</p>
-
-<p>Additionally, you can type "&&" followed by the link to another video (with or without timestamps) to include multiple videos in a single category round.</p>
-
-<p>To download the content you've entered in each category, including any manually added timestamps, click "Download Category as .TXT."  
-You can also download all the text from every category by clicking "Download All as .TXT</p>
-      <h2>About Clip-Fusion</h2>
-      <p>
-        Welcome to Clip-Fusion, a cutting-edge solution for curating, trimming, and seamlessly playing back video content across multiple categories. In today’s digital landscape, where video is the dominant form of communication and entertainment, managing a collection of clips from various sources can quickly become overwhelming. Clip-Fusion was designed with the modern user in mind—whether you’re a content creator, educator, or an avid video enthusiast.
-      </p>
-      <!-- Additional about text here -->
-    </section>
     
-    <!-- FAQ Section -->
-    <section id="faq" class="faqContent">
+    <div class="topButtons">
+      <button id="addCategoryButton">Add Category</button>
+      <button id="shuffleCategoriesButton">Shuffle Categories</button>
+      <button id="downloadAllButton">Download All Categories as TXT</button>
+      <button id="importAllTxtButton">Import TXT files</button>
+      <button id="globalFolderImportBtn">Upload Local Folder (TXT+Videos)</button>
+      
+      <input type="file" id="globalTxtInput" accept=".txt" style="display:none;" multiple>
+      <input type="file" id="globalFolderInput" webkitdirectory style="display:none;">
+    </div>
+
+    
+    <div class="topButtons">
+      <button id="generatePlaylistButton">Play Playlist</button>
+      <button id="shuffleVideosButton">Shuffle Videos in Categories</button>
+    </div>
+
+    
+    <div id="videoPlayerContainer">
+      <video id="videoPlayer" controls autoplay></video>
+      <div id="youtubePlayerContainer"></div>
+      <div id="emptyMessage">No videos in the playlist. Please add videos and press "Play Playlist"!</div>
+    </div>
+
+    
+    <div class="playlistControls" style="display: none; justify-content: center; gap: 10px;">
+      <button id="prevButton"><< Previous Video</button>
+      <button id="restartButton">Restart Playlist</button>
+      <button id="nextButton">Next Video >></button>
+      <button id="fullscreenButton">Full Screen</button>
+      <button id="hideUIButton">Minimal UI</button>
+    </div>
+
+    
+    <section id="publisherContent">
+      <center><h1><b>How to Use Clip‑Fusion</b></h1></center>
+      <p><b>Step 1:</b> For each category, enter a title and paste the video URLs (one per line). To group multiple videos for one round, separate the URLs with “&&”. Use the format: [link], [start time], [end time]. If only one timestamp is given, it is treated as the start time (end defaults to “00:00:00”).</p>
+      <p><b>Step 2:</b> Videos are automatically parsed and previewed as you type. You can adjust timestamps, reorder, or remove videos using the buttons beside each preview.</p>
+      <p><b>Step 3:</b> When you press “Play Playlist,” Clip‑Fusion plays one group (round) from each category in a round‑robin fashion. If a category’s list ends, it loops back to the beginning.</p>
+      <p><b>Tip:</b> Download each category’s text (including the title and current timestamps) individually or all categories at once using the download buttons.</p>
+      <center><h2>Welcome to Clip‑Fusion</h2></center>
+      <p>Clip‑Fusion lets you organize videos into categories with grouped rounds and automatic round‑robin playback. Enjoy features like shuffling categories and videos, local file uploads, and full control over timestamps.</p>
+    </section>
+
+    <section id="faq">
       <h2>Frequently Asked Questions</h2>
-      <h3>Why is there no loop on and off button?</h3>
-      <p>
-        Clip-Fusion is designed to automatically cycle through your video playlist using a round-robin approach. This design choice streamlines the interface by eliminating unnecessary buttons, ensuring that every video receives equal playtime without manual intervention.
-      </p>
-      <h3>Where are the next and previous videos buttons?</h3>
-      <p>
-        To maintain a clean and intuitive interface, Clip-Fusion does not include dedicated next or previous buttons. The playlist advances automatically, providing a smooth, uninterrupted playback experience that lets you focus on your content.
-      </p>
+      <div class="faq-item">
+        <h3>How do I group multiple videos for one round?</h3>
+        <p>Type the video URLs on a single line and separate them with “&&”. They will play together in the same round in the order listed.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How are timestamps handled?</h3>
+        <p>If you change a timestamp manually (or provide only an end timestamp), the download will include them. A lone end timestamp is output as “00:00:00, [end]”.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How do next/previous controls work with grouped videos?</h3>
+        <p>Next/Previous buttons navigate within the current group. Pressing Previous on the first video goes to the last video of the previous group; pressing Next on the last video goes to the first video of the next group. At the very beginning or end, it wraps around.</p>
+      </div>
     </section>
   </main>
-  <script>
-const _0x3d651e=_0x4950;(function(_0x4b1a96,_0x19753e){const _0x349177=_0x4950,_0x361cca=_0x4b1a96();while(!![]){try{const _0x51eafe=parseInt(_0x349177(0xad))/0x1*(-parseInt(_0x349177(0x124))/0x2)+-parseInt(_0x349177(0x107))/0x3+parseInt(_0x349177(0xd4))/0x4*(-parseInt(_0x349177(0xe9))/0x5)+parseInt(_0x349177(0x11e))/0x6+parseInt(_0x349177(0x12f))/0x7+-parseInt(_0x349177(0x108))/0x8+parseInt(_0x349177(0xb7))/0x9*(parseInt(_0x349177(0xa6))/0xa);if(_0x51eafe===_0x19753e)break;else _0x361cca['push'](_0x361cca['shift']());}catch(_0x34f161){_0x361cca['push'](_0x361cca['shift']());}}}(_0x5da3,0xba5b1));let categories=[],currentCategoryIndex=0x0,currentCycle=0x0,youtubePlayer=null,hls=null,minimalMode=![],currentVideoEntry=null;function parseTime(_0x53ee50){const _0x183ba5=_0x4950;if(!_0x53ee50)return 0x0;const _0x4d8ad6=_0x53ee50['split'](':')['map'](Number);if(_0x4d8ad6[_0x183ba5(0xf7)]===0x3)return _0x4d8ad6[0x0]*0xe10+_0x4d8ad6[0x1]*0x3c+_0x4d8ad6[0x2];else return _0x4d8ad6[_0x183ba5(0xf7)]===0x2?_0x4d8ad6[0x0]*0x3c+_0x4d8ad6[0x1]:parseFloat(_0x53ee50)||0x0;}function formatTime(_0x3f7643){const _0x5fca83=_0x4950,_0x6446e4=parseInt(_0x3f7643,0xa),_0x5b6231=Math['floor'](_0x6446e4/0xe10),_0x46c192=Math[_0x5fca83(0x11b)]((_0x6446e4-_0x5b6231*0xe10)/0x3c),_0x290001=_0x6446e4-_0x5b6231*0xe10-_0x46c192*0x3c;return[_0x5b6231,_0x46c192,_0x290001][_0x5fca83(0x100)](_0xfbe32c=>String(_0xfbe32c)[_0x5fca83(0x120)](0x2,'0'))[_0x5fca83(0xaa)](':');}function calculateSeconds(_0x3f521e){const _0x1ce51e=_0x4950,_0x1b0cdb=Array[_0x1ce51e(0x101)](_0x3f521e[_0x1ce51e(0x12a)]),[_0x1ed8be,_0x39810d,_0x370824]=_0x1b0cdb['map'](_0x5fbeb4=>{const _0x9e8bc0=_0x1ce51e,_0x3397d8=parseFloat(_0x5fbeb4[_0x9e8bc0(0x105)]);return isNaN(_0x3397d8)?0x0:_0x3397d8;});return _0x1ed8be*0xe10+_0x39810d*0x3c+_0x370824;}function _0x5da3(){const _0x1c6d75=['2684541JCXZtR','9690968UDipwR','addEventListener','.categoryName','webkitRequestFullscreen','.endTimeDiv','block','isSupported','filter','step','getElementsByClassName','?rel=0&modestbranding=1','URL','endTimeStr','match','Minimal\x20UI','startTimeStr','querySelector','placeholder','push','floor','startTimeDiv','.m3u8','5678688sbAKWi','.txt','padStart','style','display','text/plain','27802whvwLu','pauseVideo','ontimeupdate','remove','youtubePlayerContainer','log','children','ENDED','msFullscreenElement','Hide\x20Manual\x20Timestamps','split','5207013xnpurc','6608220eXhyPu','concat','className','No\x20valid\x20video\x20links\x20found\x20in\x20any\x20category.','join','emptyMessage','webkitFullscreenElement','79MuovyJ','createElement','type','href','videoPreviewContainer','endsWith','startTime','destroy','mozFullScreenElement','number','36LqDllY','fullscreenchange','none','appendChild','controls','videoPlayer','\x20&&\x20','Manually\x20change\x20timestamps','640','Now\x20playing\x20group\x20from\x20category:','Player','classList','fullscreenElement','removeAttribute','loadSource','pause','link','exitFullscreen','manualVideoItem','input','target','div','requestFullscreen','innerHTML','slice','parentNode','Category:\x20','revokeObjectURL','category','1732yrUnaS','endTime','src','play','download.txt','textContent','.startTimeDiv','mozRequestFullScreen','timeInputs','forEach','.videoLinks','webkitExitFullscreen','Unnamed\x20Category','youtube.com','https://www.youtube.com/embed/','trim','seekTo','Events','mozCancelFullScreen','full','getCurrentTime','4225SmRimj','span','any','<div\x20id=\x22ytplayer\x22></div>','End\x20Time:','youtu.be','groups','endTimeDiv','application/vnd.apple.mpegurl','PlayerState','playVideo','click','getElementById','categoriesContainer','length','frameBorder','.manualTimestampsContainer','includes','YouTube\x20API\x20Ready','minimalUIButton','360','video','onended','map','from','msRequestFullscreen','download','currentTime','value','videoPlayerContainer'];_0x5da3=function(){return _0x1c6d75;};return _0x5da3();}function createTimeDiv(_0x307284){const _0x49aed4=_0x4950,_0x4f9cc6=document['createElement'](_0x49aed4(0xcc)),_0x385213=['HH','MM','SS'];let _0x2d1572=['','',''];if(_0x307284&&_0x307284[_0x49aed4(0xfa)](':')){_0x2d1572=_0x307284[_0x49aed4(0x12e)](':');while(_0x2d1572['length']<0x3){_0x2d1572[_0x49aed4(0x11a)]('');}}return _0x385213[_0x49aed4(0xdd)]((_0x2071b8,_0x15d92a)=>{const _0x364e31=_0x49aed4,_0x2fd11f=document[_0x364e31(0xae)](_0x364e31(0xca));_0x2fd11f[_0x364e31(0xaf)]=_0x364e31(0xb6),_0x2fd11f[_0x364e31(0x119)]=_0x2071b8,_0x2071b8==='SS'&&(_0x2fd11f[_0x364e31(0x110)]=_0x364e31(0xeb)),_0x2d1572[_0x15d92a]&&(_0x2fd11f['value']=_0x2d1572[_0x15d92a]),_0x4f9cc6[_0x364e31(0xba)](_0x2fd11f);}),_0x4f9cc6;}function parseVideoGroups(_0x323f5a){const _0x513415=_0x4950,_0x52ff76=[],_0x4b186d=_0x323f5a[_0x513415(0x12e)]('\x0a')[_0x513415(0x100)](_0x1d7e34=>_0x1d7e34[_0x513415(0xe3)]())[_0x513415(0x10f)](_0x1f2e06=>_0x1f2e06!=='');return _0x4b186d['forEach'](_0x3877e0=>{const _0x161074=_0x513415;let _0x1f26f7=[];const _0xac3f59=_0x3877e0[_0x161074(0xfa)]('&&')?_0x3877e0[_0x161074(0x12e)]('&&'):[_0x3877e0];_0xac3f59[_0x161074(0xdd)](_0x423395=>{const _0xb3150f=_0x161074,_0x5a05dc=_0x423395[_0xb3150f(0xe3)]();if(_0x5a05dc==='')return;const _0x4d34fa=_0x5a05dc[_0xb3150f(0x12e)](',')[_0xb3150f(0x100)](_0x4c6957=>_0x4c6957[_0xb3150f(0xe3)]());_0x4d34fa[0x0]&&_0x1f26f7[_0xb3150f(0x11a)]({'link':_0x4d34fa[0x0],'startTime':_0x4d34fa[_0xb3150f(0xf7)]>=0x2?parseTime(_0x4d34fa[0x1]):0x0,'endTime':_0x4d34fa[_0xb3150f(0xf7)]>=0x3?parseTime(_0x4d34fa[0x2]):null,'startTimeStr':_0x4d34fa[_0xb3150f(0xf7)]>=0x2?_0x4d34fa[0x1]:'','endTimeStr':_0x4d34fa['length']>=0x3?_0x4d34fa[0x2]:''});}),_0x1f26f7[_0x161074(0xf7)]>0x0&&_0x52ff76[_0x161074(0x11a)](_0x1f26f7);}),_0x52ff76;}function extractYouTubeId(_0x5db1ba){const _0xc9f3e7=_0x4950,_0x167063=/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w-]+)/,_0x48537b=_0x5db1ba[_0xc9f3e7(0x115)](_0x167063);return _0x48537b?_0x48537b[0x1]:null;}function addCategory(){const _0x36e581=_0x4950,_0x4f3793=document[_0x36e581(0xf5)](_0x36e581(0xf6)),_0x474c81=document['createElement'](_0x36e581(0xcc));_0x474c81[_0x36e581(0xa8)]=_0x36e581(0xd3),_0x474c81[_0x36e581(0xce)]='\x0a\x20\x20\x20\x20<input\x20type=\x22text\x22\x20class=\x22categoryName\x22\x20placeholder=\x22Category\x20Name\x20(e.g.,\x20Video\x20Group\x20A)\x22\x20/>\x0a\x20\x20\x20\x20<textarea\x20class=\x22videoLinks\x22\x20rows=\x225\x22\x20placeholder=\x22Enter\x20video\x20links\x20here\x20(one\x20per\x20line).\x20Use\x20\x27&&\x27\x20to\x20separate\x20multiple\x20videos\x20in\x20the\x20same\x20round.\x0aFormat:\x20link,\x20start\x20time,\x20end\x20time\x0aExample:\x0ahttps://youtu.be/XYZabc,\x2000:00:05,\x2000:00:15\x20&&\x20video.mp4,\x2000:00:10,\x2000:00:20\x22></textarea>\x0a\x20\x20\x20\x20<div\x20class=\x22actionButtons\x22>\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22removeCategoryButton\x22\x20onclick=\x22removeCategory(this)\x22>Remove\x20Category</button>\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22manualTimestampsButton\x22\x20onclick=\x22toggleManualTimestamps(this)\x22>Manually\x20change\x20timestamps</button>\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22downloadCategoryButton\x22\x20onclick=\x22downloadCategory(this)\x22>Download\x20Category\x20as\x20.TXT</button>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20<div\x20class=\x22manualTimestampsContainer\x22\x20style=\x22display:\x20none;\x22></div>\x0a\x20\x20',_0x4f3793[_0x36e581(0xba)](_0x474c81);}function _0x4950(_0x1688a8,_0x3b8427){const _0x5da33f=_0x5da3();return _0x4950=function(_0x495040,_0x4bd553){_0x495040=_0x495040-0xa6;let _0x36eef3=_0x5da33f[_0x495040];return _0x36eef3;},_0x4950(_0x1688a8,_0x3b8427);}function removeCategory(_0x754ba2){const _0x3bb70a=_0x4950,_0x5851ab=_0x754ba2[_0x3bb70a(0xd0)][_0x3bb70a(0xd0)];_0x5851ab[_0x3bb70a(0x127)]();}function toggleManualTimestamps(_0x2bab29){const _0x3c0c0f=_0x4950,_0x1fa4de=_0x2bab29[_0x3c0c0f(0xd0)][_0x3c0c0f(0xd0)],_0x406963=_0x1fa4de[_0x3c0c0f(0x118)]('.manualTimestampsContainer'),_0x161b7b=_0x1fa4de['querySelector'](_0x3c0c0f(0xde));if(_0x406963[_0x3c0c0f(0x121)]['display']===_0x3c0c0f(0xb9)||_0x406963[_0x3c0c0f(0x121)][_0x3c0c0f(0x122)]===''){_0x406963[_0x3c0c0f(0xce)]='';const _0xec270a=parseVideoGroups(_0x161b7b[_0x3c0c0f(0x105)]),_0x2cca5e=_0xec270a['flat']();_0x2cca5e[_0x3c0c0f(0xdd)](_0x46cb5d=>{const _0x685bbf=_0x3c0c0f,_0x21c468=document[_0x685bbf(0xae)](_0x685bbf(0xcc));_0x21c468[_0x685bbf(0xa8)]=_0x685bbf(0xc9);const _0x2962bd=document[_0x685bbf(0xae)](_0x685bbf(0xcc));_0x2962bd['className']=_0x685bbf(0xb1);if(_0x46cb5d['link'][_0x685bbf(0xfa)](_0x685bbf(0xe1))||_0x46cb5d[_0x685bbf(0xc7)]['includes'](_0x685bbf(0xee))){const _0x56be15=extractYouTubeId(_0x46cb5d['link']);if(_0x56be15){const _0x2c7c71=document[_0x685bbf(0xae)]('iframe');_0x2c7c71[_0x685bbf(0xd6)]=_0x685bbf(0xe2)+_0x56be15+_0x685bbf(0x112),_0x2c7c71[_0x685bbf(0xf8)]='0',_0x2962bd[_0x685bbf(0xba)](_0x2c7c71);}}else{const _0x21e822=document[_0x685bbf(0xae)](_0x685bbf(0xfe));_0x21e822[_0x685bbf(0xd6)]=_0x46cb5d[_0x685bbf(0xc7)],_0x21e822[_0x685bbf(0xbb)]=!![],_0x2962bd['appendChild'](_0x21e822);}_0x21c468[_0x685bbf(0xba)](_0x2962bd);const _0x5f00ca=document[_0x685bbf(0xae)]('div');_0x5f00ca[_0x685bbf(0xa8)]=_0x685bbf(0xdc);const _0x5e80bc=document[_0x685bbf(0xae)](_0x685bbf(0xea));_0x5e80bc[_0x685bbf(0xd9)]='Start\x20Time:',_0x5f00ca[_0x685bbf(0xba)](_0x5e80bc);const _0x3a3f89=createTimeDiv(_0x46cb5d['startTimeStr']);_0x3a3f89[_0x685bbf(0xa8)]=_0x685bbf(0x11c),_0x5f00ca[_0x685bbf(0xba)](_0x3a3f89);const _0x54c03b=document[_0x685bbf(0xae)]('span');_0x54c03b[_0x685bbf(0xd9)]=_0x685bbf(0xed),_0x5f00ca[_0x685bbf(0xba)](_0x54c03b);const _0x53b3f5=createTimeDiv(_0x46cb5d[_0x685bbf(0x114)]);_0x53b3f5[_0x685bbf(0xa8)]=_0x685bbf(0xf0),_0x5f00ca[_0x685bbf(0xba)](_0x53b3f5),_0x21c468['appendChild'](_0x5f00ca),_0x406963[_0x685bbf(0xba)](_0x21c468);}),_0x406963['style'][_0x3c0c0f(0x122)]=_0x3c0c0f(0x10d),_0x2bab29[_0x3c0c0f(0xd9)]=_0x3c0c0f(0x12d);}else _0x406963[_0x3c0c0f(0x121)][_0x3c0c0f(0x122)]=_0x3c0c0f(0xb9),_0x2bab29[_0x3c0c0f(0xd9)]=_0x3c0c0f(0xbe);}function generatePlaylist(){const _0x116f5b=_0x4950;categories=[];const _0x49b4d2=document[_0x116f5b(0x111)](_0x116f5b(0xd3));for(let _0x2a2d19 of _0x49b4d2){const _0x33ed7d=_0x2a2d19[_0x116f5b(0x118)](_0x116f5b(0x10a)),_0x291592=_0x2a2d19[_0x116f5b(0x118)]('.videoLinks'),_0x2d04a7=_0x33ed7d[_0x116f5b(0x105)]||_0x116f5b(0xe0);let _0x38d84e=parseVideoGroups(_0x291592[_0x116f5b(0x105)]);const _0x2a5c9e=_0x2a2d19['querySelector'](_0x116f5b(0xf9));if(_0x2a5c9e&&_0x2a5c9e['children'][_0x116f5b(0xf7)]>0x0){let _0xb16f1a=[],_0x34e813=[];_0x38d84e[_0x116f5b(0xdd)](_0x3eea50=>{const _0x505a62=_0x116f5b;_0xb16f1a[_0x505a62(0x11a)](_0x3eea50['length']),_0x34e813=_0x34e813['concat'](_0x3eea50);});const _0x437cc1=_0x2a5c9e[_0x116f5b(0x111)](_0x116f5b(0xc9));for(let _0x1a2103=0x0;_0x1a2103<_0x437cc1[_0x116f5b(0xf7)];_0x1a2103++){const _0x57b765=_0x437cc1[_0x1a2103],_0x44b570=_0x57b765['querySelector'](_0x116f5b(0xda)),_0x285aef=_0x57b765[_0x116f5b(0x118)](_0x116f5b(0x10c));if(_0x34e813[_0x1a2103]){let _0x3f4e6f=calculateSeconds(_0x44b570),_0x8d92f1=calculateSeconds(_0x285aef);_0x34e813[_0x1a2103][_0x116f5b(0xb3)]=_0x3f4e6f,_0x34e813[_0x1a2103][_0x116f5b(0xd5)]=_0x8d92f1,_0x34e813[_0x1a2103][_0x116f5b(0x117)]=formatTime(_0x3f4e6f),_0x34e813[_0x1a2103]['endTimeStr']=formatTime(_0x8d92f1);}}let _0x4dcb0a=[],_0x10aa27=0x0;for(let _0xcf099d of _0xb16f1a){_0x4dcb0a[_0x116f5b(0x11a)](_0x34e813[_0x116f5b(0xcf)](_0x10aa27,_0x10aa27+_0xcf099d)),_0x10aa27+=_0xcf099d;}_0x38d84e=_0x4dcb0a;}_0x38d84e[_0x116f5b(0xf7)]>0x0&&categories[_0x116f5b(0x11a)]({'name':_0x2d04a7,'groups':_0x38d84e});}if(categories[_0x116f5b(0xf7)]===0x0){alert(_0x116f5b(0xa9));return;}currentCategoryIndex=0x0,currentCycle=0x0,playNextVideo();}function playNextVideo(){const _0x4959c1=_0x4950;if(categories[_0x4959c1(0xf7)]===0x0)return;const _0x16b7a1=categories[currentCategoryIndex];if(!_0x16b7a1||_0x16b7a1[_0x4959c1(0xef)][_0x4959c1(0xf7)]===0x0){nextCycleAndCategory(),playNextVideo();return;}const _0xd4b235=currentCycle%_0x16b7a1[_0x4959c1(0xef)][_0x4959c1(0xf7)],_0x2ae4d2=_0x16b7a1['groups'][_0xd4b235];console[_0x4959c1(0x129)](_0x4959c1(0xc0),_0x16b7a1['name'],'->',_0x2ae4d2),playGroup(_0x2ae4d2,function(){nextCycleAndCategory(),playNextVideo();});}function nextCycleAndCategory(){currentCategoryIndex++,currentCategoryIndex>=categories['length']&&(currentCategoryIndex=0x0,currentCycle++);}function playGroup(_0x1d9357,_0x277dbb){let _0x4550bd=0x0;function _0x4eb606(){_0x4550bd<_0x1d9357['length']?playVideoEntry(_0x1d9357[_0x4550bd],function(){_0x4550bd++,_0x4eb606();}):_0x277dbb();}_0x4eb606();}function playVideoEntry(_0xecaa38,_0x550f7f){const _0x4b5064=_0x4950;clearExistingPlayers();const _0x3e85af=_0xecaa38[_0x4b5064(0xc7)],_0x4c54e7=_0xecaa38[_0x4b5064(0xb3)]||0x0,_0x19053d=_0xecaa38[_0x4b5064(0xd5)];if(_0x3e85af['includes'](_0x4b5064(0xe1))||_0x3e85af[_0x4b5064(0xfa)]('youtu.be'))playYouTubeVideo(_0x3e85af,_0x4c54e7,_0x19053d,_0x550f7f);else _0x3e85af[_0x4b5064(0xb2)](_0x4b5064(0x11d))?playHLSVideo(_0x3e85af,_0x4c54e7,_0x19053d,_0x550f7f):playHTML5Video(_0x3e85af,_0x4c54e7,_0x19053d,_0x550f7f);}function clearExistingPlayers(){const _0x42fa2c=_0x4950,_0x93e9e8=document[_0x42fa2c(0xf5)](_0x42fa2c(0xbc));_0x93e9e8['pause'](),_0x93e9e8[_0x42fa2c(0xc4)]('src'),_0x93e9e8[_0x42fa2c(0x121)][_0x42fa2c(0x122)]=_0x42fa2c(0xb9),_0x93e9e8[_0x42fa2c(0xff)]=null,_0x93e9e8['ontimeupdate']=null;hls&&(hls[_0x42fa2c(0xb4)](),hls=null);youtubePlayer&&youtubePlayer[_0x42fa2c(0xb4)]&&(youtubePlayer[_0x42fa2c(0xb4)](),youtubePlayer=null);const _0x1461cf=document['getElementById'](_0x42fa2c(0x128));_0x1461cf[_0x42fa2c(0xce)]='',_0x1461cf[_0x42fa2c(0x121)][_0x42fa2c(0x122)]='none',document[_0x42fa2c(0xf5)](_0x42fa2c(0xab))[_0x42fa2c(0x121)][_0x42fa2c(0x122)]='none';}function playHTML5Video(_0x5d9407,_0x5477b0,_0x2045e5,_0x419cbf){const _0x538ec8=_0x4950,_0x18c52d=document[_0x538ec8(0xf5)](_0x538ec8(0xbc));_0x18c52d[_0x538ec8(0xd6)]=_0x5d9407,_0x18c52d[_0x538ec8(0x104)]=_0x5477b0,_0x18c52d[_0x538ec8(0xbb)]=!minimalMode,_0x18c52d[_0x538ec8(0x121)][_0x538ec8(0x122)]=_0x538ec8(0x10d),_0x18c52d['play'](),_0x2045e5?_0x18c52d[_0x538ec8(0x126)]=function(){const _0x15a203=_0x538ec8;_0x18c52d[_0x15a203(0x104)]>=_0x2045e5&&(_0x18c52d['pause'](),_0x18c52d[_0x15a203(0x126)]=null,_0x419cbf?_0x419cbf():playNextVideo());}:_0x18c52d[_0x538ec8(0xff)]=function(){_0x18c52d['onended']=null,_0x419cbf?_0x419cbf():playNextVideo();};}function playHLSVideo(_0x49b1da,_0x4e0849,_0x4339f9,_0x570c66){const _0x5c6d3a=_0x4950,_0xf4a645=document[_0x5c6d3a(0xf5)](_0x5c6d3a(0xbc));_0xf4a645['style'][_0x5c6d3a(0x122)]=_0x5c6d3a(0x10d),_0xf4a645[_0x5c6d3a(0xbb)]=!minimalMode;if(Hls[_0x5c6d3a(0x10e)]())hls=new Hls(),hls[_0x5c6d3a(0xc5)](_0x49b1da),hls['attachMedia'](_0xf4a645),hls['on'](Hls[_0x5c6d3a(0xe5)]['MANIFEST_PARSED'],function(){const _0x4f2668=_0x5c6d3a;_0xf4a645['currentTime']=_0x4e0849,_0xf4a645[_0x4f2668(0xd7)]();});else _0xf4a645['canPlayType'](_0x5c6d3a(0xf1))&&(_0xf4a645[_0x5c6d3a(0xd6)]=_0x49b1da,_0xf4a645['addEventListener']('loadedmetadata',function(){const _0x2ff9a4=_0x5c6d3a;_0xf4a645['currentTime']=_0x4e0849,_0xf4a645[_0x2ff9a4(0xd7)]();}));_0x4339f9?_0xf4a645[_0x5c6d3a(0x126)]=function(){const _0x501b56=_0x5c6d3a;_0xf4a645['currentTime']>=_0x4339f9&&(_0xf4a645[_0x501b56(0xc6)](),_0xf4a645[_0x501b56(0x126)]=null,_0x570c66?_0x570c66():playNextVideo());}:_0xf4a645[_0x5c6d3a(0xff)]=function(){const _0x69e53f=_0x5c6d3a;_0xf4a645[_0x69e53f(0xff)]=null,_0x570c66?_0x570c66():playNextVideo();};}function playYouTubeVideo(_0x1f7843,_0x3d0eb7,_0x4b18b7,_0xb75440){const _0x122140=_0x4950,_0x3a73ee=extractYouTubeId(_0x1f7843);if(!_0x3a73ee){alert('Invalid\x20YouTube\x20link:\x20'+_0x1f7843);_0xb75440?_0xb75440():playNextVideo();return;}const _0x5da41b=document['getElementById'](_0x122140(0x128));_0x5da41b[_0x122140(0x121)]['display']=_0x122140(0x10d),_0x5da41b[_0x122140(0xce)]='<div\x20id=\x22ytplayer\x22></div>',youtubePlayer=new YT['Player']('ytplayer',{'height':_0x122140(0xfd),'width':_0x122140(0xbf),'videoId':_0x3a73ee,'playerVars':{'autoplay':0x1,'start':_0x3d0eb7,'controls':minimalMode?0x0:0x1,'modestbranding':0x1,'rel':0x0,'fs':minimalMode?0x0:0x1,'iv_load_policy':minimalMode?0x3:0x1,'disablekb':minimalMode?0x1:0x0,'playsinline':0x1},'events':{'onReady':function(_0x46753f){const _0xdb9017=_0x122140;_0x46753f[_0xdb9017(0xcb)][_0xdb9017(0xf3)]();if(_0x4b18b7){let _0x49df2c=setInterval(function(){const _0x1766b9=_0xdb9017,_0x140198=youtubePlayer[_0x1766b9(0xe8)]();_0x140198>=_0x4b18b7&&(clearInterval(_0x49df2c),youtubePlayer[_0x1766b9(0x125)](),_0xb75440?_0xb75440():playNextVideo());},0x1f4);}},'onStateChange':function(_0x296cb0){const _0x478ed5=_0x122140;_0x296cb0['data']===YT[_0x478ed5(0xf2)][_0x478ed5(0x12b)]&&(_0xb75440?_0xb75440():playNextVideo());}}});}function toggleMinimalMode(){const _0x11fb89=_0x4950;minimalMode=!minimalMode;const _0x4610a1=document[_0x11fb89(0xf5)](_0x11fb89(0xfc));_0x4610a1['textContent']=minimalMode?'Normal\x20UI':_0x11fb89(0x116);const _0x222029=document[_0x11fb89(0xf5)](_0x11fb89(0xbc));_0x222029&&(_0x222029['controls']=!minimalMode);if(youtubePlayer&&currentVideoEntry&&(currentVideoEntry[_0x11fb89(0xc7)][_0x11fb89(0xfa)]('youtube.com')||currentVideoEntry[_0x11fb89(0xc7)]['includes']('youtu.be'))){let _0x378e3e=youtubePlayer['getCurrentTime']();const _0x221e5c=extractYouTubeId(currentVideoEntry[_0x11fb89(0xc7)]);youtubePlayer[_0x11fb89(0xb4)](),youtubePlayer=null;const _0x4c8428=document['getElementById'](_0x11fb89(0x128));_0x4c8428[_0x11fb89(0xce)]=_0x11fb89(0xec),youtubePlayer=new YT[(_0x11fb89(0xc1))]('ytplayer',{'height':_0x11fb89(0xfd),'width':_0x11fb89(0xbf),'videoId':_0x221e5c,'playerVars':{'autoplay':0x1,'controls':minimalMode?0x0:0x1,'modestbranding':0x1,'rel':0x0,'fs':minimalMode?0x0:0x1,'iv_load_policy':minimalMode?0x3:0x1,'disablekb':minimalMode?0x1:0x0,'playsinline':0x1,'start':Math[_0x11fb89(0x11b)](_0x378e3e)},'events':{'onReady':_0x23867c=>{const _0x136c90=_0x11fb89;_0x23867c[_0x136c90(0xcb)][_0x136c90(0xe4)](_0x378e3e,!![]),_0x23867c[_0x136c90(0xcb)][_0x136c90(0xf3)]();},'onStateChange':_0x3cfe33=>{_0x3cfe33['data']===YT['PlayerState']['ENDED']&&playNextVideo();}}});}}function toggleFullScreen(){const _0x2d8726=_0x4950,_0x3b0824=document[_0x2d8726(0xf5)](_0x2d8726(0x106));if(!document[_0x2d8726(0xc3)]&&!document[_0x2d8726(0xac)]&&!document[_0x2d8726(0xb5)]&&!document[_0x2d8726(0x12c)]){if(_0x3b0824[_0x2d8726(0xcd)])_0x3b0824[_0x2d8726(0xcd)]();else{if(_0x3b0824[_0x2d8726(0xdb)])_0x3b0824['mozRequestFullScreen']();else{if(_0x3b0824[_0x2d8726(0x10b)])_0x3b0824[_0x2d8726(0x10b)]();else _0x3b0824['msRequestFullscreen']&&_0x3b0824[_0x2d8726(0x102)]();}}}else{if(document[_0x2d8726(0xc8)])document['exitFullscreen']();else{if(document[_0x2d8726(0xe6)])document['mozCancelFullScreen']();else{if(document['webkitExitFullscreen'])document[_0x2d8726(0xdf)]();else document['msExitFullscreen']&&document['msExitFullscreen']();}}}}document[_0x3d651e(0x109)](_0x3d651e(0xb8),()=>{const _0x594c49=_0x3d651e,_0x2731a6=document[_0x594c49(0xf5)]('videoPlayerContainer');document[_0x594c49(0xc3)]===_0x2731a6?_0x2731a6[_0x594c49(0xc2)]['add'](_0x594c49(0xe7)):_0x2731a6['classList'][_0x594c49(0x127)](_0x594c49(0xe7));}),document['getElementById']('downloadBtn')[_0x3d651e(0x109)](_0x3d651e(0xf4),function(){const _0x5d5fb9=_0x3d651e;let _0x13b9cc='';const _0x58071c=document[_0x5d5fb9(0x111)](_0x5d5fb9(0xd3));for(let _0x3b8fc1 of _0x58071c){const _0x2c212f=_0x3b8fc1[_0x5d5fb9(0x118)](_0x5d5fb9(0x10a))['value']||_0x5d5fb9(0xe0);let _0x4e1129='';const _0x3b2082=_0x3b8fc1[_0x5d5fb9(0x118)](_0x5d5fb9(0xde)),_0x1cff38=_0x3b8fc1[_0x5d5fb9(0x118)]('.manualTimestampsContainer');if(_0x1cff38&&_0x1cff38[_0x5d5fb9(0x12a)][_0x5d5fb9(0xf7)]>0x0){let _0x352aec=parseVideoGroups(_0x3b2082['value']),_0x39240e=[],_0x5e4e4a=[];_0x352aec[_0x5d5fb9(0xdd)](_0x135d99=>{const _0x141d63=_0x5d5fb9;_0x39240e[_0x141d63(0x11a)](_0x135d99[_0x141d63(0xf7)]),_0x5e4e4a=_0x5e4e4a['concat'](_0x135d99);});const _0x340e2b=_0x1cff38['getElementsByClassName'](_0x5d5fb9(0xc9));for(let _0x36da86=0x0;_0x36da86<_0x340e2b[_0x5d5fb9(0xf7)];_0x36da86++){const _0x25c595=_0x340e2b[_0x36da86],_0x30d363=_0x25c595[_0x5d5fb9(0x118)]('.startTimeDiv'),_0x2105a8=_0x25c595[_0x5d5fb9(0x118)](_0x5d5fb9(0x10c));if(_0x5e4e4a[_0x36da86]){let _0x4bb726=calculateSeconds(_0x30d363),_0x1f8ebf=calculateSeconds(_0x2105a8);_0x5e4e4a[_0x36da86][_0x5d5fb9(0xb3)]=_0x4bb726,_0x5e4e4a[_0x36da86][_0x5d5fb9(0xd5)]=_0x1f8ebf,_0x5e4e4a[_0x36da86][_0x5d5fb9(0x117)]=formatTime(_0x4bb726),_0x5e4e4a[_0x36da86][_0x5d5fb9(0x114)]=formatTime(_0x1f8ebf);}}let _0x4fd3d6=[],_0x369a14=0x0;for(let _0x3e945c of _0x39240e){_0x4fd3d6[_0x5d5fb9(0x11a)](_0x5e4e4a[_0x5d5fb9(0xcf)](_0x369a14,_0x369a14+_0x3e945c)),_0x369a14+=_0x3e945c;}_0x352aec=_0x4fd3d6;let _0xc6c32d=_0x352aec[_0x5d5fb9(0x100)](_0x1f85e4=>{const _0x1bf06c=_0x5d5fb9;return _0x1f85e4['map'](_0x52bce6=>{const _0x462f5b=_0x4950;return(_0x52bce6['link']+',\x20'+_0x52bce6[_0x462f5b(0x117)]+',\x20'+_0x52bce6[_0x462f5b(0x114)])[_0x462f5b(0xe3)]();})[_0x1bf06c(0xaa)](_0x1bf06c(0xbd));});_0x4e1129=_0xc6c32d[_0x5d5fb9(0xaa)]('\x0a');}else _0x4e1129=_0x3b2082['value'];_0x13b9cc+=_0x5d5fb9(0xd1)+_0x2c212f+'\x0a'+_0x4e1129+'\x0a\x0a';}var _0xd5b2=new Blob([_0x13b9cc],{'type':_0x5d5fb9(0x123)}),_0x3f5b10=document[_0x5d5fb9(0xae)]('a');_0x3f5b10['download']=_0x5d5fb9(0xd8),_0x3f5b10['href']=window[_0x5d5fb9(0x113)]['createObjectURL'](_0xd5b2),_0x3f5b10[_0x5d5fb9(0xf4)](),window[_0x5d5fb9(0x113)][_0x5d5fb9(0xd2)](_0x3f5b10[_0x5d5fb9(0xb0)]);});function downloadCategory(_0x2da5f1){const _0x26f6c4=_0x3d651e,_0x530959=_0x2da5f1[_0x26f6c4(0xd0)][_0x26f6c4(0xd0)],_0x237e61=_0x530959[_0x26f6c4(0x118)](_0x26f6c4(0x10a))[_0x26f6c4(0x105)]||_0x26f6c4(0xe0);let _0x382c04='';const _0x1f2078=_0x530959[_0x26f6c4(0x118)](_0x26f6c4(0xde)),_0xab97e4=_0x530959['querySelector'](_0x26f6c4(0xf9));if(_0xab97e4&&_0xab97e4[_0x26f6c4(0x12a)]['length']>0x0){let _0xab3885=parseVideoGroups(_0x1f2078[_0x26f6c4(0x105)]),_0x275c1b=[],_0x22b7b2=[];_0xab3885[_0x26f6c4(0xdd)](_0x1d11b9=>{const _0x1d829c=_0x26f6c4;_0x275c1b[_0x1d829c(0x11a)](_0x1d11b9[_0x1d829c(0xf7)]),_0x22b7b2=_0x22b7b2[_0x1d829c(0xa7)](_0x1d11b9);});const _0x30b4e7=_0xab97e4[_0x26f6c4(0x111)](_0x26f6c4(0xc9));for(let _0x3edca9=0x0;_0x3edca9<_0x30b4e7[_0x26f6c4(0xf7)];_0x3edca9++){const _0x1b6071=_0x30b4e7[_0x3edca9],_0x4beb85=_0x1b6071[_0x26f6c4(0x118)](_0x26f6c4(0xda)),_0x96541c=_0x1b6071[_0x26f6c4(0x118)](_0x26f6c4(0x10c));if(_0x22b7b2[_0x3edca9]){let _0x2735b8=calculateSeconds(_0x4beb85),_0x1a74cd=calculateSeconds(_0x96541c);_0x22b7b2[_0x3edca9][_0x26f6c4(0xb3)]=_0x2735b8,_0x22b7b2[_0x3edca9][_0x26f6c4(0xd5)]=_0x1a74cd,_0x22b7b2[_0x3edca9][_0x26f6c4(0x117)]=formatTime(_0x2735b8),_0x22b7b2[_0x3edca9]['endTimeStr']=formatTime(_0x1a74cd);}}let _0x4980c6=[],_0x3372d9=0x0;for(let _0x283bf2 of _0x275c1b){_0x4980c6[_0x26f6c4(0x11a)](_0x22b7b2[_0x26f6c4(0xcf)](_0x3372d9,_0x3372d9+_0x283bf2)),_0x3372d9+=_0x283bf2;}_0xab3885=_0x4980c6;let _0x3244bc=_0xab3885[_0x26f6c4(0x100)](_0x5e2586=>{const _0x16b675=_0x26f6c4;return _0x5e2586[_0x16b675(0x100)](_0x617e9d=>{const _0x224802=_0x16b675;return(_0x617e9d[_0x224802(0xc7)]+',\x20'+_0x617e9d['startTimeStr']+',\x20'+_0x617e9d['endTimeStr'])[_0x224802(0xe3)]();})[_0x16b675(0xaa)](_0x16b675(0xbd));});_0x382c04=_0x3244bc[_0x26f6c4(0xaa)]('\x0a');}else _0x382c04=_0x1f2078[_0x26f6c4(0x105)];let _0x41af1c=_0x26f6c4(0xd1)+_0x237e61+'\x0a'+_0x382c04+'\x0a\x0a';var _0x1b9bc8=new Blob([_0x41af1c],{'type':_0x26f6c4(0x123)}),_0x28e7fb=document['createElement']('a');_0x28e7fb[_0x26f6c4(0x103)]=_0x237e61['replace'](/\s+/g,'_')+_0x26f6c4(0x11f),_0x28e7fb['href']=window[_0x26f6c4(0x113)]['createObjectURL'](_0x1b9bc8),_0x28e7fb[_0x26f6c4(0xf4)](),window[_0x26f6c4(0x113)]['revokeObjectURL'](_0x28e7fb[_0x26f6c4(0xb0)]);}function onYouTubeIframeAPIReady(){const _0x1bb725=_0x3d651e;console[_0x1bb725(0x129)](_0x1bb725(0xfb));}
-  </script>
-  
-  <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    
-    // Check if dark mode is enabled from localStorage
-    const darkModeEnabled = localStorage.getItem('darkMode') === 'true';
-    if (darkModeEnabled) {
-      document.body.classList.add('dark-mode');
-      darkModeToggle.textContent = 'Light Mode';
-    }
-    
-    // Toggle dark mode on button click
-    darkModeToggle.addEventListener('click', function () {
-      document.body.classList.toggle('dark-mode');
-      const isDarkMode = document.body.classList.contains('dark-mode');
-      
-      // Save the user's preference in localStorage
-      localStorage.setItem('darkMode', isDarkMode);
-      
-      // Update the button text accordingly
-      darkModeToggle.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
-    });
-  });
-</script>
 
-  
   <footer>
-    <div class="playlistControls" style="display: flex; justify-content: center; gap: 10px;">
+    <div class="footerButtons">
       <a href="about.html"><button>About</button></a>
       <a href="terms.html"><button>Terms Of Service</button></a>
       <a href="privacy.html"><button>Privacy Policy</button></a>
       <a href="contact.html"><button>Contact us</button></a>
     </div>
   </footer>
+
+
+  <script>
+    
+    let categories = [];
+    let globalPlaylist = [];  
+    let currentGlobalIndex = 0;
+    let currentGroupVideoIndex = 0;
+    let hls = null;
+    
+    let youtubePlayer = null;
+    let minimalMode = false;
+    let ytPollInterval = null;
+    
+    let importCatCounter = 0;
+
+    
+    function createTimeDiv(timeStr, onChangeCallback) {
+      const div = document.createElement('div');
+      const placeholders = ['HH', 'MM', 'SS'];
+      let values = ['', '', ''];
+      if (timeStr && timeStr.includes(':')) {
+        values = timeStr.split(':');
+        while (values.length < 3) { values.push(''); }
+      }
+      placeholders.forEach((placeholder, i) => {
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.placeholder = placeholder;
+        if (placeholder === 'SS') { input.step = "any"; }
+        if (values[i]) { input.value = values[i]; }
+        if(onChangeCallback) {
+          input.addEventListener('change', onChangeCallback);
+        }
+        div.appendChild(input);
+      });
+      return div;
+    }
+    function getTimeString(container) {
+      const inputs = container.getElementsByTagName('input');
+      const parts = [];
+      for (let i = 0; i < inputs.length; i++) {
+        let val = inputs[i].value.trim();
+        if (val === '') { val = '00'; }
+        if (val.length < 2) { val = '0' + val; }
+        parts.push(val);
+      }
+      return parts.join(':');
+    }
+    function calculateSeconds(timeDiv) {
+      const [hh, mm, ss] = [...timeDiv.children].map(input => {
+        const value = parseFloat(input.value);
+        return isNaN(value) ? 0 : value;
+      });
+      return hh * 3600 + mm * 60 + ss;
+    }
+    function extractYouTubeId(url) {
+      const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w-]+)/);
+      return match ? match[1] : null;
+    }
+
+    
+    function updateCategoryRawText(cat) {
+      let lines = [];
+      cat.groups.forEach(group => {
+        let parts = group.map(video => {
+          let start = getTimeString(video.startTimeDiv);
+          let end = getTimeString(video.endTimeDiv);
+          if(start !== "00:00:00" || end !== "00:00:00"){
+            return video.link + ", " + start + ", " + end;
+          } else {
+            return video.link;
+          }
+        });
+        lines.push(parts.join(" && "));
+      });
+      cat.rawText = lines.join("\n");
+      const textarea = document.getElementById("textarea_" + cat.id);
+      if(textarea) { 
+        textarea.value = cat.rawText; 
+      }
+    }
+
+    
+    function parseCategory(cat) {
+      cat.groups = [];
+      const lines = (cat.rawText || "").trim().split('\n').filter(l => l.trim() !== "");
+      lines.forEach(line => {
+        const tokens = line.split("&&").map(t => t.trim());
+        const group = [];
+        tokens.forEach(token => {
+          const parts = token.split(',');
+          const link = parts[0].trim();
+          let start = parts.length === 2 ? parts[1].trim() : (parts.length >=3 ? parts[1].trim() : "00:00:00");
+          let end = parts.length >= 3 ? parts[2].trim() : "00:00:00";
+          const video = {
+            link: link,
+            startTimeDiv: createTimeDiv(start, () => { updateCategoryRawText(cat); }),
+            endTimeDiv: createTimeDiv(end, () => { updateCategoryRawText(cat); }),
+            startTime: 0,
+            endTime: 0
+          };
+          group.push(video);
+        });
+        if(group.length > 0) cat.groups.push(group);
+      });
+    }
+    function renderCategories() {
+      const container = document.getElementById('categoriesContainer');
+      container.innerHTML = "";
+      categories.forEach((cat, index) => {
+        const catDiv = document.createElement('div');
+        catDiv.classList.add('categoryContainer');
+        catDiv.setAttribute('data-id', cat.id);
+        const headerDiv = document.createElement('div');
+        headerDiv.classList.add('categoryHeader');
+        const titleInput = document.createElement('input');
+        titleInput.type = 'text';
+        titleInput.classList.add('categoryTitle');
+        titleInput.value = cat.title;
+        titleInput.addEventListener('input', function () {
+          cat.title = this.value;
+        });
+        headerDiv.appendChild(titleInput);
+        const controlsDiv = document.createElement('div');
+        controlsDiv.classList.add('categoryControls');
+        const upBtn = document.createElement('button');
+        upBtn.textContent = "▲";
+        upBtn.title = "Move Category Up";
+        upBtn.disabled = index === 0;
+        upBtn.addEventListener('click', () => {
+          if(index > 0) {
+            [categories[index-1], categories[index]] = [categories[index], categories[index-1]];
+            renderCategories();
+          }
+        });
+        controlsDiv.appendChild(upBtn);
+        const downBtn = document.createElement('button');
+        downBtn.textContent = "▼";
+        downBtn.title = "Move Category Down";
+        downBtn.disabled = index === categories.length - 1;
+        downBtn.addEventListener('click', () => {
+          if(index < categories.length - 1) {
+            [categories[index], categories[index+1]] = [categories[index+1], categories[index]];
+            renderCategories();
+          }
+        });
+        controlsDiv.appendChild(downBtn);
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = "Remove Category";
+        removeBtn.addEventListener('click', () => {
+          categories.splice(index, 1);
+          renderCategories();
+        });
+        controlsDiv.appendChild(removeBtn);
+        const downloadBtn = document.createElement('button');
+        downloadBtn.textContent = "Download Category TXT";
+        downloadBtn.addEventListener('click', () => {
+          downloadCategory(cat);
+        });
+        controlsDiv.appendChild(downloadBtn);
+        
+        const importTxtBtn = document.createElement('button');
+        importTxtBtn.textContent = "Import TXT file";
+        importTxtBtn.addEventListener('click', () => {
+          cat.txtFileInput.click();
+        });
+        controlsDiv.appendChild(importTxtBtn);
+        
+        const uploadFolderBtn = document.createElement('button');
+        uploadFolderBtn.textContent = "Upload local folder (TXT+Videos)";
+        uploadFolderBtn.addEventListener('click', () => {
+          cat.folderInput.click();
+        });
+        controlsDiv.appendChild(uploadFolderBtn);
+        const shuffleCatBtn = document.createElement('button');
+        shuffleCatBtn.textContent = "Shuffle Videos";
+        shuffleCatBtn.addEventListener('click', () => {
+          if(cat.groups && cat.groups.length > 1) {
+            for(let i = cat.groups.length - 1; i > 0; i--){
+              const j = Math.floor(Math.random() * (i + 1));
+              [cat.groups[i], cat.groups[j]] = [cat.groups[j], cat.groups[i]];
+            }
+            renderCategoryVideos(cat.id);
+          }
+        });
+        controlsDiv.appendChild(shuffleCatBtn);
+        headerDiv.appendChild(controlsDiv);
+        catDiv.appendChild(headerDiv);
+        const textarea = document.createElement('textarea');
+        textarea.id = "textarea_" + cat.id;
+        textarea.placeholder = "Paste video links here. To group videos for one round, separate URLs with '&&'. Format: [link], [start time], [end time].";
+        textarea.value = cat.rawText || "";
+        textarea.addEventListener('input', function () {
+          cat.rawText = this.value;
+          parseCategory(cat);
+          renderCategoryVideos(cat.id);
+        });
+        catDiv.appendChild(textarea);
+        const btnDiv = document.createElement('div');
+        btnDiv.classList.add('topButtons');
+        const uploadBtn = document.createElement('button');
+        uploadBtn.textContent = "Upload Local Video";
+        uploadBtn.addEventListener('click', () => {
+          cat.fileInput.click();
+        });
+        btnDiv.appendChild(uploadBtn);
+        catDiv.appendChild(btnDiv);
+        const videoListContainer = document.createElement('div');
+        videoListContainer.classList.add('videoListContainer');
+        videoListContainer.id = "videoList_" + cat.id;
+        catDiv.appendChild(videoListContainer);
+        const fileInput = document.createElement('input');
+        fileInput.type = "file";
+        fileInput.accept = "video/mp4, video/webm, video/avi, video/mpeg, video/mkv, video/flv, video/ogg, video/mov, video/m4v, video/wmv, video/asf, video/3gp";
+        fileInput.multiple = true;
+        fileInput.style.display = "none";
+        fileInput.addEventListener('change', function(event) {
+          const files = event.target.files;
+          let currentText = textarea.value.trim();
+          for(let i = 0; i < files.length; i++){
+            const file = files[i];
+            const fileURL = URL.createObjectURL(file);
+            currentText += (currentText ? "\n" : "") + fileURL;
+          }
+          textarea.value = currentText;
+          cat.rawText = currentText;
+          parseCategory(cat);
+          renderCategoryVideos(cat.id);
+        });
+        cat.fileInput = fileInput;
+        catDiv.appendChild(fileInput);
+        
+        const txtInput = document.createElement('input');
+        txtInput.type = "file";
+        txtInput.accept = ".txt";
+        txtInput.style.display = "none";
+        txtInput.addEventListener('change', function(event) {
+          const file = event.target.files[0];
+          if(file){
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              const content = e.target.result;
+              const lines = content.split("\n");
+              if(lines[0].startsWith("Title:")){
+                cat.title = lines[0].substring(6).trim();
+                const titleInput = catDiv.querySelector("input.categoryTitle");
+                if(titleInput) titleInput.value = cat.title;
+                lines.shift();
+              }
+              cat.rawText = lines.join("\n");
+              textarea.value = cat.rawText;
+              parseCategory(cat);
+              renderCategoryVideos(cat.id);
+            };
+            reader.readAsText(file);
+          }
+        });
+        cat.txtFileInput = txtInput;
+        catDiv.appendChild(txtInput);
+        
+        const folderInput = document.createElement('input');
+        folderInput.type = "file";
+        folderInput.setAttribute("webkitdirectory", "");
+        folderInput.style.display = "none";
+        folderInput.addEventListener('change', function(event) {
+          const files = Array.from(event.target.files);
+          
+          const txtFiles = files.filter(f => f.name.toLowerCase().endsWith('.txt'));
+          if(txtFiles.length === 0){
+            alert("No TXT file found in folder.");
+            return;
+          }
+          
+          const txtFile = txtFiles[0];
+          
+          const videoMapping = {};
+          files.forEach(f => {
+            if(!f.name.toLowerCase().endsWith('.txt')){
+              videoMapping[f.name] = URL.createObjectURL(f);
+            }
+          });
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            let content = e.target.result;
+            
+            const lines = content.split("\n").map(line => {
+              const tokens = line.split(",");
+              const newTokens = tokens.map(tok => {
+                const ttrim = tok.trim();
+                return videoMapping[ttrim] ? videoMapping[ttrim] : ttrim;
+              });
+              return newTokens.join(", ");
+            });
+            content = lines.join("\n");
+            if(content.startsWith("Title:")){
+              
+              const contentLines = content.split("\n");
+              cat.title = contentLines[0].substring(6).trim();
+              const titleInput = catDiv.querySelector("input.categoryTitle");
+              if(titleInput) titleInput.value = cat.title;
+              contentLines.shift();
+              content = contentLines.join("\n");
+            }
+            cat.rawText = content;
+            textarea.value = cat.rawText;
+            parseCategory(cat);
+            renderCategoryVideos(cat.id);
+          };
+          reader.readAsText(txtFile);
+        });
+        cat.folderInput = folderInput;
+        catDiv.appendChild(folderInput);
+        container.appendChild(catDiv);
+        parseCategory(cat);
+        renderCategoryVideos(cat.id);
+      });
+    }
+    function renderCategoryVideos(catId) {
+      const cat = categories.find(c => c.id === catId);
+      if(!cat) return;
+      const container = document.getElementById("videoList_" + catId);
+      container.innerHTML = "";
+      if(!cat.groups || cat.groups.length === 0) {
+        container.textContent = "No videos added yet.";
+        return;
+      }
+      cat.groups.forEach((group, gIndex) => {
+        const groupDiv = document.createElement('div');
+        groupDiv.classList.add('videoItem');
+        const controlDiv = document.createElement('div');
+        controlDiv.classList.add('reorderButtons');
+        const upButton = document.createElement('button');
+        upButton.innerHTML = "▲";
+        upButton.title = "Move Group Up";
+        upButton.disabled = gIndex === 0;
+        upButton.addEventListener('click', () => {
+          if(gIndex > 0) {
+            [cat.groups[gIndex - 1], cat.groups[gIndex]] = [cat.groups[gIndex], cat.groups[gIndex - 1]];
+            renderCategoryVideos(cat.id);
+          }
+        });
+        controlDiv.appendChild(upButton);
+        const downButton = document.createElement('button');
+        downButton.innerHTML = "▼";
+        downButton.title = "Move Group Down";
+        downButton.disabled = gIndex === cat.groups.length - 1;
+        downButton.addEventListener('click', () => {
+          if(gIndex < cat.groups.length - 1) {
+            [cat.groups[gIndex], cat.groups[gIndex + 1]] = [cat.groups[gIndex + 1], cat.groups[gIndex]];
+            renderCategoryVideos(cat.id);
+          }
+        });
+        controlDiv.appendChild(downButton);
+        const removeButton = document.createElement('button');
+        removeButton.innerHTML = "✖";
+        removeButton.title = "Remove Group";
+        removeButton.addEventListener('click', () => {
+          cat.groups.splice(gIndex, 1);
+          renderCategoryVideos(cat.id);
+        });
+        controlDiv.appendChild(removeButton);
+        groupDiv.appendChild(controlDiv);
+        const orderLabel = document.createElement('div');
+        orderLabel.classList.add('orderLabel');
+        orderLabel.textContent = `Group #${gIndex + 1}`;
+        groupDiv.appendChild(orderLabel);
+        group.forEach(video => {
+          const videoPreview = document.createElement('div');
+          if(video.link.includes('youtube.com') || video.link.includes('youtu.be')){
+            const vidId = extractYouTubeId(video.link);
+            if(vidId){
+              const iframe = document.createElement('iframe');
+              iframe.classList.add('youtubePreview');
+              iframe.src = `https://www.youtube.com/embed/${vidId}?rel=0&modestbranding=1`;
+              iframe.frameBorder = 0;
+              videoPreview.appendChild(iframe);
+            }
+          } else {
+            const preview = document.createElement('video');
+            preview.classList.add('videoPreview');
+            preview.src = video.link;
+            preview.controls = true;
+            videoPreview.appendChild(preview);
+          }
+          groupDiv.appendChild(videoPreview);
+          const controls = document.createElement('div');
+          controls.classList.add('controls');
+          const timeInputs = document.createElement('div');
+          timeInputs.classList.add('timeInputs');
+          const startLabel = document.createElement('span');
+          startLabel.textContent = 'Start Time:';
+          timeInputs.appendChild(startLabel);
+          const startDiv = createTimeDiv(getTimeString(video.startTimeDiv), () => { updateCategoryRawText(cat); });
+          video.startTimeDiv = startDiv;
+          timeInputs.appendChild(startDiv);
+          const endLabel = document.createElement('span');
+          endLabel.textContent = 'End Time:';
+          timeInputs.appendChild(endLabel);
+          const endDiv = createTimeDiv(getTimeString(video.endTimeDiv), () => { updateCategoryRawText(cat); });
+          video.endTimeDiv = endDiv;
+          timeInputs.appendChild(endDiv);
+          controls.appendChild(timeInputs);
+          groupDiv.appendChild(controls);
+        });
+        container.appendChild(groupDiv);
+      });
+    }
+
+    
+    function addCategory() {
+      const newCat = {
+        id: "cat_" + Date.now(),
+        title: "New Category",
+        rawText: "",
+        groups: [],
+        fileInput: null,
+        txtFileInput: null,
+        folderInput: null
+      };
+      categories.push(newCat);
+      renderCategories();
+    }
+    function downloadCategory(cat) {
+      let content = "Title: " + cat.title + "\n";
+      if(cat.groups && cat.groups.length > 0){
+        cat.groups.forEach(group => {
+          const groupText = group.map(video => {
+            const start = getTimeString(video.startTimeDiv);
+            const end = getTimeString(video.endTimeDiv);
+            if(start !== "00:00:00" || end !== "00:00:00"){
+              return video.link + ", " + start + ", " + end;
+            } else {
+              return video.link;
+            }
+          }).join(" && ");
+          content += groupText + "\n";
+        });
+      }
+      const blob = new Blob([content], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.download = cat.title + ".txt";
+      a.href = window.URL.createObjectURL(blob);
+      a.click();
+      window.URL.revokeObjectURL(a.href);
+    }
+    function downloadAllCategories() {
+      let content = "";
+      categories.forEach(cat => {
+        content += "Title: " + cat.title + "\n";
+        if(cat.groups && cat.groups.length > 0){
+          cat.groups.forEach(group => {
+            const groupText = group.map(video => {
+              const start = getTimeString(video.startTimeDiv);
+              const end = getTimeString(video.endTimeDiv);
+              if(start !== "00:00:00" || end !== "00:00:00"){
+                return video.link + ", " + start + ", " + end;
+              } else {
+                return video.link;
+              }
+            }).join(" && ");
+            content += groupText + "\n";
+          });
+        }
+        content += "\n";
+      });
+      const blob = new Blob([content], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.download = "all_categories.txt";
+      a.href = window.URL.createObjectURL(blob);
+      a.click();
+      window.URL.revokeObjectURL(a.href);
+    }
+    function shuffleCategories() {
+      for(let i = categories.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [categories[i], categories[j]] = [categories[j], categories[i]];
+      }
+      renderCategories();
+    }
+    function shuffleVideosInCategories() {
+      categories.forEach(cat => {
+        if(cat.groups && cat.groups.length > 1){
+          for(let i = cat.groups.length - 1; i > 0; i--){
+            const j = Math.floor(Math.random() * (i + 1));
+            [cat.groups[i], cat.groups[j]] = [cat.groups[j], cat.groups[i]];
+          }
+          renderCategoryVideos(cat.id);
+        }
+      });
+    }
+
+    
+    function buildGlobalPlaylist() {
+      globalPlaylist = [];
+      let maxGroups = 0;
+      categories.forEach(cat => {
+        if(cat.groups) {
+          maxGroups = Math.max(maxGroups, cat.groups.length);
+        }
+      });
+      for(let round = 0; round < maxGroups; round++){
+        categories.forEach(cat => {
+          if(cat.groups && cat.groups.length > 0){
+            const group = cat.groups[round % cat.groups.length];
+            globalPlaylist.push({ catId: cat.id, group: group });
+          }
+        });
+      }
+    }
+    function playGlobalGroup(item, resetGroupIndex = true) {
+      if(resetGroupIndex) { currentGroupVideoIndex = 0; }
+      playVideoInGroup(item);
+    }
+    function playVideoInGroup(item) {
+      const videoData = item.group[currentGroupVideoIndex];
+      videoData.startTime = calculateSeconds(videoData.startTimeDiv);
+      videoData.endTime = calculateSeconds(videoData.endTimeDiv);
+      if(hls){ hls.destroy(); hls = null; }
+      if(youtubePlayer && youtubePlayer.destroy){ youtubePlayer.destroy(); youtubePlayer = null; }
+      const videoPlayer = document.getElementById('videoPlayer');
+      const ytContainer = document.getElementById('youtubePlayerContainer');
+      videoPlayer.pause();
+      videoPlayer.style.display = 'none';
+      if(videoData.link.includes('youtube.com') || videoData.link.includes('youtu.be')){
+        const vidId = extractYouTubeId(videoData.link);
+        ytContainer.style.display = 'block';
+        ytContainer.innerHTML = "";
+        const newDiv = document.createElement('div');
+        newDiv.id = "ytPlayer";
+        ytContainer.appendChild(newDiv);
+        youtubePlayer = new YT.Player('ytPlayer', {
+          height: '360',
+          width: '100%',
+          videoId: vidId,
+          playerVars: {
+            autoplay: 1,
+            controls: minimalMode ? 0 : 1,
+            modestbranding: 1,
+            rel: 0,
+            fs: minimalMode ? 0 : 1,
+            iv_load_policy: minimalMode ? 3 : 1,
+            disablekb: minimalMode ? 1 : 0,
+            playsinline: 1,
+            showinfo: minimalMode ? 0 : 1
+          },
+          events: {
+            onReady: event => {
+              const options = { videoId: vidId, startSeconds: videoData.startTime };
+              if(videoData.endTime && videoData.endTime > 0){
+                options.endSeconds = videoData.endTime;
+              }
+              event.target.loadVideoById(options);
+              if(minimalMode){
+                if(ytPollInterval) clearInterval(ytPollInterval);
+                ytPollInterval = setInterval(() => {
+                  const dur = event.target.getDuration();
+                  const curr = event.target.getCurrentTime();
+                  if(dur && (dur - curr < 0.5)){
+                    clearInterval(ytPollInterval);
+                    advanceAfterVideo(item);
+                  }
+                }, 500);
+              }
+            },
+            onStateChange: event => {
+              if(event.data === YT.PlayerState.ENDED){
+                if(ytPollInterval) clearInterval(ytPollInterval);
+                advanceAfterVideo(item);
+              }
+            }
+          }
+        });
+      } else {
+        ytContainer.style.display = 'none';
+        videoPlayer.style.display = 'block';
+        videoPlayer.controls = !minimalMode;
+        if(videoData.link.endsWith('.m3u8')){
+          hls = new Hls();
+          hls.loadSource(videoData.link);
+          hls.attachMedia(videoPlayer);
+          hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            videoPlayer.currentTime = videoData.startTime || 0;
+            videoPlayer.play();
+          });
+        } else {
+          videoPlayer.src = videoData.link;
+          videoPlayer.currentTime = videoData.startTime || 0;
+          videoPlayer.play();
+        }
+        if(videoData.endTime && videoData.endTime > 0){
+          videoPlayer.ontimeupdate = () => {
+            if(videoPlayer.currentTime >= videoData.endTime){
+              videoPlayer.pause();
+              videoPlayer.ontimeupdate = null;
+              advanceAfterVideo(item);
+            }
+          };
+          videoPlayer.onended = null;
+        } else {
+          videoPlayer.onended = () => {
+            advanceAfterVideo(item);
+          };
+        }
+      }
+    }
+    function advanceAfterVideo(item) {
+      if(currentGroupVideoIndex < item.group.length - 1){
+        currentGroupVideoIndex++;
+        playVideoInGroup(item);
+      } else {
+        currentGlobalIndex = (currentGlobalIndex + 1) % globalPlaylist.length;
+        currentGroupVideoIndex = 0;
+        playGlobalVideo();
+      }
+    }
+    function playGlobalVideo() {
+      if(globalPlaylist.length === 0) return;
+      if(currentGlobalIndex >= globalPlaylist.length){
+        currentGlobalIndex = 0;
+      }
+      playGlobalGroup(globalPlaylist[currentGlobalIndex], true);
+    }
+    function playNextGlobal() {
+      const currentItem = globalPlaylist[currentGlobalIndex];
+      if(currentGroupVideoIndex < currentItem.group.length - 1){
+        currentGroupVideoIndex++;
+        playVideoInGroup(currentItem);
+      } else {
+        currentGlobalIndex = (currentGlobalIndex + 1) % globalPlaylist.length;
+        currentGroupVideoIndex = 0;
+        playGlobalVideo();
+      }
+    }
+    function playPreviousGlobal() {
+      const currentItem = globalPlaylist[currentGlobalIndex];
+      if(currentGroupVideoIndex > 0){
+        currentGroupVideoIndex--;
+        playVideoInGroup(currentItem);
+      } else {
+        currentGlobalIndex = currentGlobalIndex === 0 ? globalPlaylist.length - 1 : currentGlobalIndex - 1;
+        const prevItem = globalPlaylist[currentGlobalIndex];
+        currentGroupVideoIndex = prevItem.group.length - 1;
+        playGlobalGroup(prevItem, false);
+      }
+    }
+    function restartGlobalPlaylist() {
+      currentGlobalIndex = 0;
+      currentGroupVideoIndex = 0;
+      playGlobalVideo();
+    }
+
+    
+    document.getElementById('generatePlaylistButton').addEventListener('click', () => {
+      buildGlobalPlaylist();
+      currentGlobalIndex = 0;
+      currentGroupVideoIndex = 0;
+      playGlobalVideo();
+      document.querySelector('.playlistControls').style.display = 'flex';
+      document.getElementById('emptyMessage').style.display = 'none';
+    });
+    document.getElementById('nextButton').addEventListener('click', playNextGlobal);
+    document.getElementById('prevButton').addEventListener('click', playPreviousGlobal);
+    document.getElementById('restartButton').addEventListener('click', restartGlobalPlaylist);
+    document.getElementById('fullscreenButton').addEventListener('click', () => {
+      const elem = document.getElementById('videoPlayerContainer');
+      if(!document.fullscreenElement){
+        elem.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    });
+    
+    document.getElementById('hideUIButton').addEventListener('click', () => {
+      minimalMode = !minimalMode;
+      const btn = document.getElementById('hideUIButton');
+      btn.textContent = minimalMode ? "Normal UI" : "Minimal UI";
+      const videoPlayer = document.getElementById('videoPlayer');
+      if(videoPlayer) videoPlayer.controls = !minimalMode;
+      if(youtubePlayer){
+        let currentTime = youtubePlayer.getCurrentTime();
+        const currentItem = globalPlaylist[currentGlobalIndex];
+        const vidId = extractYouTubeId(currentItem.group[currentGroupVideoIndex].link);
+        youtubePlayer.destroy();
+        youtubePlayer = null;
+        const ytContainer = document.getElementById('youtubePlayerContainer');
+        ytContainer.innerHTML = "";
+        const newDiv = document.createElement('div');
+        newDiv.id = "ytPlayer";
+        ytContainer.appendChild(newDiv);
+        youtubePlayer = new YT.Player('ytPlayer', {
+          height: '360',
+          width: '100%',
+          videoId: vidId,
+          playerVars: {
+            autoplay: 1,
+            controls: minimalMode ? 0 : 1,
+            modestbranding: 1,
+            rel: 0,
+            fs: minimalMode ? 0 : 1,
+            iv_load_policy: minimalMode ? 3 : 1,
+            disablekb: minimalMode ? 1 : 0,
+            playsinline: 1,
+            showinfo: minimalMode ? 0 : 1
+          },
+          events: {
+            onReady: event => {
+              const options = { videoId: vidId, startSeconds: currentTime };
+              if(currentItem.group[currentGroupVideoIndex].endTime && currentItem.group[currentGroupVideoIndex].endTime > 0){
+                options.endSeconds = currentItem.group[currentGroupVideoIndex].endTime;
+              }
+              event.target.loadVideoById(options);
+            },
+            onStateChange: event => {
+              if(event.data === YT.PlayerState.ENDED){
+                advanceAfterVideo(currentItem);
+              }
+            }
+          }
+        });
+      }
+    });
+
+    
+    document.getElementById('addCategoryButton').addEventListener('click', addCategory);
+    document.getElementById('shuffleCategoriesButton').addEventListener('click', () => {
+      for(let i = categories.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [categories[i], categories[j]] = [categories[j], categories[i]];
+      }
+      renderCategories();
+    });
+    document.getElementById('downloadAllButton').addEventListener('click', downloadAllCategories);
+    
+    document.getElementById('importAllTxtButton').addEventListener('click', () => {
+      document.getElementById('globalTxtInput').click();
+    });
+    document.getElementById('shuffleVideosButton').addEventListener('click', shuffleVideosInCategories);
+    
+    document.getElementById('globalFolderImportBtn').addEventListener('click', () => {
+      document.getElementById('globalFolderInput').click();
+    });
+
+    
+    document.getElementById('globalTxtInput').addEventListener('change', function(event) {
+      const files = event.target.files;
+      for(let i = 0; i < files.length; i++){
+        const file = files[i];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const content = e.target.result;
+          
+          const lines = content.split("\n");
+          let categoriesFromFile = [];
+          let currentCategoryLines = [];
+          let currentTitle = "";
+          lines.forEach(line => {
+            if(line.trim().startsWith("Title:")){
+              if(currentCategoryLines.length > 0){
+                categoriesFromFile.push({ title: currentTitle || "Imported Category", rawText: currentCategoryLines.join("\n") });
+                currentCategoryLines = [];
+              }
+              currentTitle = line.trim().substring(6).trim();
+            } else {
+              if(line.trim() !== ""){
+                currentCategoryLines.push(line);
+              }
+            }
+          });
+          if(currentCategoryLines.length > 0){
+            categoriesFromFile.push({ title: currentTitle || "Imported Category", rawText: currentCategoryLines.join("\n") });
+          }
+          categoriesFromFile.forEach(catData => {
+            const newCat = {
+              id: "cat_import_" + (importCatCounter++),
+              title: catData.title,
+              rawText: catData.rawText,
+              groups: [],
+              fileInput: null,
+              txtFileInput: null,
+              folderInput: null
+            };
+            parseCategory(newCat);
+            categories.push(newCat);
+          });
+          renderCategories();
+        };
+        reader.readAsText(file);
+      }
+    });
+
+    
+    document.getElementById('globalFolderInput').addEventListener('change', function(event) {
+      const files = Array.from(event.target.files);
+      
+      let videoMapping = {};
+      files.forEach(f => {
+        if(!f.name.toLowerCase().endsWith('.txt')){
+          videoMapping[f.name] = URL.createObjectURL(f);
+        }
+      });
+      
+      let txtFiles = files.filter(f => f.name.toLowerCase().endsWith('.txt'));
+      txtFiles.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          let content = e.target.result;
+          
+          const lines = content.split("\n").map(line => {
+            const tokens = line.split(",");
+            const newTokens = tokens.map(tok => {
+              const ttrim = tok.trim();
+              return videoMapping[ttrim] ? videoMapping[ttrim] : ttrim;
+            });
+            return newTokens.join(", ");
+          });
+          content = lines.join("\n");
+          
+          const allLines = content.split("\n");
+          let categoriesFromFolder = [];
+          let currentCatLines = [];
+          let currentCatTitle = "";
+          allLines.forEach(line => {
+            if(line.trim().startsWith("Title:")){
+              if(currentCatLines.length > 0){
+                categoriesFromFolder.push({ title: currentCatTitle || "Imported Category", rawText: currentCatLines.join("\n") });
+                currentCatLines = [];
+              }
+              currentCatTitle = line.trim().substring(6).trim();
+            } else {
+              if(line.trim() !== ""){
+                currentCatLines.push(line);
+              }
+            }
+          });
+          if(currentCatLines.length > 0){
+            categoriesFromFolder.push({ title: currentCatTitle || "Imported Category", rawText: currentCatLines.join("\n") });
+          }
+          categoriesFromFolder.forEach(catData => {
+            const newCat = {
+              id: "cat_import_" + (importCatCounter++),
+              title: catData.title,
+              rawText: catData.rawText,
+              groups: [],
+              fileInput: null,
+              txtFileInput: null,
+              folderInput: null
+            };
+            parseCategory(newCat);
+            categories.push(newCat);
+          });
+          renderCategories();
+        };
+        reader.readAsText(file);
+      });
+    });
+
+    
+    document.addEventListener("fullscreenchange", () => {
+      const container = document.getElementById('videoPlayerContainer');
+      if(document.fullscreenElement === container)
+        container.classList.add('full');
+      else
+        container.classList.remove('full');
+    });
+
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      const darkModeEnabled = localStorage.getItem('darkMode') === 'true';
+      if(darkModeEnabled){
+        document.body.classList.add('dark-mode');
+        document.getElementById('darkModeToggle').textContent = 'Light Mode';
+      }
+      document.getElementById('darkModeToggle').addEventListener('click', function () {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDark);
+        this.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+      });
+    });
+
+    
+    if(categories.length === 0) {
+      addCategory();
+    }
+    function renderCategoriesAndVideos() {
+      renderCategories();
+    }
+    renderCategoriesAndVideos();
+  </script>
 </body>
 </html>
