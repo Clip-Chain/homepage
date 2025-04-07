@@ -323,6 +323,41 @@
     .footerButtons button:hover {
       background-color: #0056b3;
     }
+    @media (max-width: 600px) {
+  header, main, footer {
+    padding: 10px;
+    width: 100%;
+  }
+  h1 {
+    font-size: 1.8em;
+  }
+  h2, h3 {
+    font-size: 1.2em;
+  }
+  .topButtons button,
+  .actionButtons button,
+  .footerButtons button {
+    font-size: 0.9em;
+    padding: 8px 16px;
+  }
+  .videoItem {
+    flex-direction: column;
+    align-items: center;
+  }
+  .videoPreview, iframe.youtubePreview {
+    width: 100%;
+    height: auto;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  #videoPlayer, #youtubePlayerContainer {
+    height: auto;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
   </style>
 </head>
 <body>
